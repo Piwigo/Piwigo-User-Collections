@@ -17,6 +17,7 @@ $lang['Please give a name'] = 'Veuillez donner un nom';
 $lang['Invalid collection'] = 'Collection invalide';
 $lang['by %s'] = 'par %s';
 $lang['Collections'] = 'Collections';
+$lang['Collection'] = 'Collection';
 $lang['Remove from collection'] = 'Supprimer de la collection';
 $lang['Add to collection'] = 'Ajouter à la collection';
 $lang['Display collection'] = 'Afficher';

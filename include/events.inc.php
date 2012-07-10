@@ -74,7 +74,7 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
   global $page, $template, $UserCollection;
   
   // the prefilter is different on collection page
-  if (isset($page['section']) and $page['section'] == 'collections') return $tpl_thumbnails_var;
+  if (isset($page['section']) and ($page['section'] == 'collections' or $page['section'] == 'download')) return $tpl_thumbnails_var;
   
   // get existing collections
   if (empty($UserCollection) and ($col_id = get_current_collection_id(false)) !== false)
@@ -236,10 +236,10 @@ function user_collections_applymenu($menu_ref_arr)
     }
     
     $data['U_LIST'] = USER_COLLEC_PUBLIC;
-      
+    
     $template->set_template_dir(USER_COLLEC_PATH . 'template/');
     $block->set_title(l10n('Collections'));
-    $block->template = 'menublock.tpl';
+    $block->template = 'menublock_user_collec.tpl';
     $block->data = $data;
   }
 }
