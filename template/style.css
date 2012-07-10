@@ -1,0 +1,155 @@
+#colProperties {}
+  #colProperties p {
+    text-align:left;
+    margin:2px 0;
+  }
+  #colProperties p.title {
+    font-weight:bold;
+  }
+  #colProperties p:not(.title) {
+    margin-bottom:10px;
+  }
+  
+#publicURL {}
+  #publicURL .url {
+    display:inline-block;
+    position:relative;
+    font-family:monospace;
+    font-size:12px;
+    background:#fff;
+    color:#666;
+    padding:3px 10px;
+    border:1px solid #999;
+    border-radius:0 3px 3px 0;
+  }
+  #publicURL .button {
+    display:inline-block;
+    background:#e7e7e7 url('link.png') center center no-repeat;
+    width:25px;
+    height:20px;
+    color:#666;
+    border:1px solid #999;
+    border-right:none;
+    border-radius:3px 0 0 3px;
+  }
+  #publicURL .confirm {
+    font-weight:bold;
+    margin-left:5px;
+  }
+  
+.collecList {
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+  .collecList li {
+    height:35px;
+    padding:5px 10px;
+    margin:4px 0;
+    background:#444;
+    border-radius:5px;
+  }
+    .collecList li.active {
+      background:#555;
+      border:1px solid #999;
+    }
+  .collecList p {
+    margin:0;
+  }
+    .collecList .collecDate {
+      float:right;
+      font-size:0.9em;
+    }
+    .collecList .collecActions { 
+      margin-top:2px;
+      display:none;
+    }
+    .collecList li:hover .collecActions { 
+      display:block;
+    }
+  
+  
+/* TipTip CSS - Version 1.2 */
+#tiptip_holder {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 99999;
+}
+#tiptip_holder.tip_top {
+	padding-bottom: 5px;
+}
+#tiptip_holder.tip_bottom {
+	padding-top: 5px;
+}
+#tiptip_holder.tip_right {
+	padding-left: 5px;
+}
+#tiptip_holder.tip_left {
+	padding-right: 5px;
+}
+#tiptip_content {
+	font-size: 11px;
+	color: #fff;
+	text-shadow: 0 0 2px #000;
+	padding: 4px 8px;
+	border: 1px solid rgba(255,255,255,0.25);
+	background-color: rgb(25,25,25);
+	background-color: rgba(25,25,25,0.92);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), to(#000));
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	box-shadow: 0 0 3px #555;
+	-webkit-box-shadow: 0 0 3px #555;
+	-moz-box-shadow: 0 0 3px #555;
+}
+#tiptip_arrow, #tiptip_arrow_inner {
+	position: absolute;
+	border-color: transparent;
+	border-style: solid;
+	border-width: 6px;
+	height: 0;
+	width: 0;
+}
+#tiptip_holder.tip_top #tiptip_arrow {
+	border-top-color: #fff;
+	border-top-color: rgba(255,255,255,0.35);
+}
+#tiptip_holder.tip_bottom #tiptip_arrow {
+	border-bottom-color: #fff;
+	border-bottom-color: rgba(255,255,255,0.35);
+}
+#tiptip_holder.tip_right #tiptip_arrow {
+	border-right-color: #fff;
+	border-right-color: rgba(255,255,255,0.35);
+}
+#tiptip_holder.tip_left #tiptip_arrow {
+	border-left-color: #fff;
+	border-left-color: rgba(255,255,255,0.35);
+}
+#tiptip_holder.tip_top #tiptip_arrow_inner {
+	margin-top: -7px;
+	margin-left: -6px;
+	border-top-color: rgb(25,25,25);
+	border-top-color: rgba(25,25,25,0.92);
+}
+#tiptip_holder.tip_bottom #tiptip_arrow_inner {
+	margin-top: -5px;
+	margin-left: -6px;
+	border-bottom-color: rgb(25,25,25);
+	border-bottom-color: rgba(25,25,25,0.92);
+}
+#tiptip_holder.tip_right #tiptip_arrow_inner {
+	margin-top: -6px;
+	margin-left: -5px;
+	border-right-color: rgb(25,25,25);
+	border-right-color: rgba(25,25,25,0.92);
+}
+#tiptip_holder.tip_left #tiptip_arrow_inner {
+	margin-top: -6px;
+	margin-left: -7px;
+	border-left-color: rgb(25,25,25);
+	border-left-color: rgba(25,25,25,0.92);
+}
