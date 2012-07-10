@@ -3,7 +3,7 @@
 {$MENUBAR}
 
 <div id="content" class="content{if isset($MENUBAR)} contentWithMenu{/if}">
-<div class="titrePage{if isset($chronology.TITLE)} calendarTitleBar{/if}">
+<div class="titrePage">
   <ul class="categoryActions">
   {if !empty($COLLECTION_ACTIONS)}{$COLLECTION_ACTIONS}{/if}
   </ul>
@@ -13,21 +13,6 @@
 {if isset($errors) or not empty($infos)}
 {include file='infos_errors.tpl'}
 {/if}
-
-{if $collection}
-<fieldset id="colProperties">
-  <legend>{'Properties'|@translate}</legend>
-  
-  <p class="title">{'Name'|@translate}</p>
-  <p>{$collection.NAME}</p>
-  <p class="title">{'Owner'|@translate}</p>
-  <p>{$OWNER}</p>
-  <p class="title">{'Creation date'|@translate}</p>
-  <p>{$collection.DATE_CREATION}</p>
-</fieldset>
-</form>
-{/if}
-
 
 {if !empty($THUMBNAILS)}
 <ul class="thumbnails" id="thumbnails">

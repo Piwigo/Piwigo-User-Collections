@@ -6,9 +6,6 @@ defined('USER_COLLEC_PATH') or die('Hacking attempt!');
 /* unserialize conf and load language */
 function user_collections_init()
 {
-  global $conf;
-  
-  // $conf['user_collections'] = unserialize($conf['user_collections']);
   load_language('plugin.lang', USER_COLLEC_PATH);
 }
 
@@ -23,22 +20,13 @@ function user_collections_section_init()
     $page['section'] = 'collections';
     $page['title'] = '<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>';
     
-    switch (@$tokens[1])
+    if (in_array(@$tokens[1], array('edit','view','list')))
     {
-      case 'edit':
-        $page['sub_section'] = 'edit';
-        $page['title'].= $conf['level_separator'].' '.l10n('Edit');
-        break;
-      case 'view':
-        $page['sub_section'] = 'view';
-        $page['title'].= $conf['level_separator'].' '.l10n('View');
-        break;
-      // case 'send':
-        // $page['sub_section'] = 'send';
-        // $page['title'].= $conf['level_separator'].' '.l10n('Send');
-        // break;
-      default:
-        $page['sub_section'] = 'list';
+       $page['sub_section'] = $tokens[1];
+    }
+    else
+    {
+      $page['sub_section'] = 'list';
     }
     
     if (!empty($tokens[2]))
@@ -63,6 +51,8 @@ function user_collections_page()
 /* add buttons on thumbnails list */
 function user_collections_index_actions()
 {
+  if (is_a_guest()) return;
+  
   global $page, $UserCollection;
      
   // add image to collection list
@@ -79,6 +69,8 @@ function user_collections_index_actions()
 
 function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
 {
+  if (is_a_guest()) return $tpl_thumbnails_var;
+  
   global $page, $template, $UserCollection;
   
   // the prefilter is different on collection page
@@ -98,7 +90,6 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
   {
     $collection = array();
   }
-  
   
   
   $self_url = duplicate_index_url(array(), array('collection_toggle'));  
@@ -141,6 +132,8 @@ function user_collections_thumbnails_list_prefilter($content, &$smarty)
 /* add button on picture page */
 function user_collections_picture_page()
 {
+  if (is_a_guest()) return;
+  
   global $template, $picture, $UserCollection;
   
   // add image to collection list
@@ -185,12 +178,24 @@ function user_collections_picture_page()
 /* menu block */
 function user_collections_add_menublock($menu_ref_arr)
 {
+  if (is_a_guest()) return;
+  
+  global $user;
+  
   $menu = &$menu_ref_arr[0];
   if ($menu->get_id() != 'menubar') return;
   
-  if (get_current_collection_id(false) === false) return;
+  $query = '
+SELECT id
+  FROM '.COLLECTIONS_TABLE.'
+  WHERE user_id = '.$user['id'].'
+  LIMIT 1
+;';
+  $result = pwg_query($query);
   
-  $menu->register_block(new RegisteredBlock('mbUserCollection', l10n('Download Basket'), 'UserCollection'));
+  if (!pwg_db_num_rows($result)) return;
+  
+  $menu->register_block(new RegisteredBlock('mbUserCollection', l10n('Collections'), 'UserCollection'));
 }
 
 function user_collections_applymenu($menu_ref_arr)
@@ -200,33 +205,37 @@ function user_collections_applymenu($menu_ref_arr)
   
   if (($block = $menu->get_block('mbUserCollection')) != null)
   {
-    if (empty($UserCollection))
+    if (($col_id = get_current_collection_id(false)) !== false)
     {
-      $UserCollection = new UserCollection(get_current_collection_id());
+      if (empty($UserCollection))
+      {
+        $UserCollection = new UserCollection($col_id);
+      }
+    
+      $data = array(
+        'current' => array(
+          'NAME' => $UserCollection->getParam('name'),
+          'NB_IMAGES' => $UserCollection->getParam('nb_images'),
+          ),
+        'links' => array(),
+        );
+        
+      if ($data['current']['NB_IMAGES'] > 0)
+      {
+        $data['links'] = array(
+          array(
+            'URL' => USER_COLLEC_PUBLIC.'edit/'.$UserCollection->getParam('col_id'),
+            'NAME' => l10n('Display collection'),
+            ),
+          array(
+            'URL' => USER_COLLEC_PUBLIC.'&amp;action=clear&amp;col_id='.$UserCollection->getParam('col_id'),
+            'NAME' => l10n('Clear collection'),
+            ),
+          );
+      }
     }
     
-    $data = array(
-      'U_LIST' => USER_COLLEC_PUBLIC,
-      'current' => array(
-        'NAME' => $UserCollection->getParam('name'),
-        'NB_IMAGES' => $UserCollection->getParam('nb_images'),
-        ),
-      'links' => array(),
-      );
-      
-    if ($data['current']['NB_IMAGES'] > 0)
-    {
-      $data['links'] = array(
-        array(
-          'URL' => USER_COLLEC_PUBLIC.'view/'.$UserCollection->getParam('col_id'),
-          'NAME' => l10n('View'),
-          ),
-        array(
-          'URL' => USER_COLLEC_PUBLIC.'&amp;action=clear&amp;col_id='.$UserCollection->getParam('col_id'),
-          'NAME' => l10n('Clear'),
-          ),
-        );
-    }
+    $data['U_LIST'] = USER_COLLEC_PUBLIC;
       
     $template->set_template_dir(USER_COLLEC_PATH . 'template/');
     $block->set_title(l10n('Collections'));

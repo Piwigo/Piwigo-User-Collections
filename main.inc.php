@@ -2,8 +2,8 @@
 /*
 Plugin Name: User Collections
 Version: auto
-Description: Registered users can select pictures from the gallery and save them into collections, kind of advanced favorites.
-Plugin URI: http://piwigo.org/ext/extension_view.php?eid=
+Description: Registered users can select pictures from the gallery and save them into collections, like advanced favorites.
+Plugin URI: http://piwigo.org/ext/extension_view.php?eid=615
 Author: Mistic
 Author URI: http://www.strangeplanet.fr
 */
@@ -12,11 +12,11 @@ defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
 global $conf, $prefixeTable;
 
-define('USER_COLLEC_PATH',      PHPWG_PLUGINS_PATH . basename(dirname(__FILE__)) . '/');
-define('COLLECTIONS_TABLE',     $prefixeTable.'collections');
+define('USER_COLLEC_PATH',       PHPWG_PLUGINS_PATH . basename(dirname(__FILE__)) . '/');
+define('COLLECTIONS_TABLE',      $prefixeTable.'collections');
 define('COLLECTION_IMAGES_TABLE',$prefixeTable.'collection_images');
-define('USER_COLLEC_ADMIN',     get_root_url() . 'admin.php?page=plugin-' . basename(dirname(__FILE__)));
-define('USER_COLLEC_PUBLIC',    make_index_url(array('section' => 'collections')) . '/');
+define('USER_COLLEC_ADMIN',      get_root_url() . 'admin.php?page=plugin-' . basename(dirname(__FILE__)));
+define('USER_COLLEC_PUBLIC',     make_index_url(array('section' => 'collections')) . '/');
 
 
 add_event_handler('init', 'user_collections_init');

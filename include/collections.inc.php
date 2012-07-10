@@ -7,8 +7,11 @@ global $page, $template, $conf, $user, $tokens;
 
 switch ($page['sub_section'])
 {
+  /* list */
   case 'list':
   {
+    if (is_a_guest()) access_denied();
+    
     $template->set_filename('index', dirname(__FILE__) . '/../template/list.tpl');
     
     if ( isset($_GET['action']) and filter_var($_GET['col_id'], FILTER_VALIDATE_INT) !== false )
@@ -124,7 +127,6 @@ SELECT *
     foreach ($collections as $col)
     {
       $col['date_creation'] = format_date($col['date_creation'], true);
-      $col['U_VIEW'] = USER_COLLEC_PUBLIC.'view/'.$col['id'];
       $col['U_EDIT'] = USER_COLLEC_PUBLIC.'edit/'.$col['id'];
       $col['U_ACTIVE'] = USER_COLLEC_PUBLIC.'&amp;action=set_active&amp;col_id='.$col['id'];
       $col['U_DELETE'] = USER_COLLEC_PUBLIC.'&amp;action=delete&amp;col_id='.$col['id'];
@@ -132,11 +134,13 @@ SELECT *
       if ($col['name'] == 'temp')
       {
         $col['name'] = 'temp #'.$col['id'];
+        $col['U_VIEW'] = $col['U_EDIT'];
         $col['U_SAVE'] = USER_COLLEC_PUBLIC.'&amp;action=save&amp;col_id='.$col['id'];
         $template->append('temp_col', $col);
       }
       else
       {
+        $col['U_VIEW'] = USER_COLLEC_PUBLIC.'view/'.$col['id'];
         $template->append('collections', $col);
       }
     }
@@ -144,7 +148,8 @@ SELECT *
     $template->assign('U_CREATE', USER_COLLEC_PUBLIC.'&amp;action=new&amp;col_id=0');
     break;
   }
-    
+  
+  /* edit */
   case 'edit':
   {
     if (empty($page['col_id']))
@@ -164,6 +169,11 @@ SELECT *
     
     try {
       $UserCollection = new UserCollection($page['col_id']);
+      
+      if (!is_admin() and $UserCollection->getParam('user_id') != $user['id'])
+      {
+        access_denied();
+      }
       
       // save properties
       if (isset($_POST['save_col']))
@@ -198,6 +208,8 @@ SELECT *
       }
       
       include(PHPWG_ROOT_PATH . 'include/category_default.inc.php');
+      
+      $template->concat('TITLE', $conf['level_separator'].$UserCollection->getParam('name'));
     }
     catch (Exception $e)
     {
@@ -207,6 +219,7 @@ SELECT *
     break;
   }
   
+  /* view */
   case 'view':
   {
     if (empty($page['col_id']))
@@ -234,9 +247,6 @@ SELECT *
       
       $template->assign('collection', $UserCollection->getCollectionInfo());
       
-      include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
-      $template->assign('OWNER', get_username($UserCollection->getParam('user_id')));
-      
       $page['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
       $page['items'] = $UserCollection->getImages();
       
@@ -253,20 +263,20 @@ SELECT *
       }
       
       include(PHPWG_ROOT_PATH . 'include/category_default.inc.php');
+      
+      include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
+      $template->concat('TITLE', 
+        $conf['level_separator'].$UserCollection->getParam('name').
+        ' ('.sprintf(l10n('by %s'), get_username($UserCollection->getParam('user_id'))).')'
+        );
     }
     catch (Exception $e)
     {
-      array_push($page['errors'], $e->getMessage());
+      access_denied();
     }
     
     break;
   }
-    
-  // case 'send':
-  // {
-    
-    // break;
-  // }
 }
 
 $template->assign('USER_COLLEC_PATH', USER_COLLEC_PATH);

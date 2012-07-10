@@ -3,8 +3,12 @@
 {footer_script require='jquery'}
 jQuery(".save_col").click(function() {ldelim}
   var name = prompt("{'Collection name:'|@translate}");
-  $(this).attr("href",  $(this).attr("href") +"&name="+ name);
-  return true;
+  if (name != null) {ldelim}
+    $(this).attr("href",  $(this).attr("href") +"&name="+ name);
+    return true;
+  } else {ldelim}
+    return false;
+  }
 });
 {/footer_script}
 

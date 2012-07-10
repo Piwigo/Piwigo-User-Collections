@@ -28,7 +28,7 @@ jQuery("#publicURL .button").tipTip({ldelim}
 {$MENUBAR}
 
 <div id="content" class="content{if isset($MENUBAR)} contentWithMenu{/if}">
-<div class="titrePage{if isset($chronology.TITLE)} calendarTitleBar{/if}">
+<div class="titrePage">
   <ul class="categoryActions">
   {if !empty($COLLECTION_ACTIONS)}{$COLLECTION_ACTIONS}{/if}
   </ul>
@@ -46,11 +46,11 @@ jQuery("#publicURL .button").tipTip({ldelim}
   
   <p class="title"><label for="name">{'Name'|@translate}</label></p>
   <p><input type="text" name="name" id="name" value="{$collection.NAME}" size="60"></p>
-  <p class="title">{'Public'|@translate}</p>
+  <p class="title">{'Public collection'|@translate}</p>
   <p>
     <label><input type="radio" name="public" value="0" {if not $collection.PUBLIC}checked="checked"{/if}> {'No'|@translate}</label>
     <label><input type="radio" name="public" value="1" {if $collection.PUBLIC}checked="checked"{/if}> {'Yes'|@translate}</label>
-    <span id="publicURL" {if not $collection.PUBLIC}style="display:none;"{/if}><span class="button" title="{'Copy to clipborad'|@translate}">&nbsp;</span><span class="url">{$collection.U_PUBLIC}</span></span>
+    <span id="publicURL" {if not $collection.PUBLIC}style="display:none;"{/if}><span class="button" title="{'Copy to clipboard'|@translate}">&nbsp;</span><span class="url">{$collection.U_PUBLIC}</span></span>
   </p>
   <p>
     <input type="submit" name="save_col" value="{'Save'|@translate}">
