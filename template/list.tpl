@@ -34,8 +34,8 @@ jQuery(".save_col").click(function() {ldelim}
   {foreach from=$temp_col item=col}
     <li {if $col.active}class="active"{/if}>
       <p class="collecTitle">
-        <a href="{$col.U_VIEW}" rel="nofollow"><b>{$col.name}</b></a> 
-        <i>{'%d images'|@translate|@sprintf:$col.nb_images}</i>
+        <a href="{$col.U_EDIT}" rel="nofollow"><b>{$col.name}</b></a> 
+        <i>{'%d photos'|@translate|@sprintf:$col.nb_images}</i>
       </p>
       <p class="collecActions">
         <a href="{$col.U_EDIT}" rel="nofollow">{'Edit'|@translate}</a> |
@@ -60,8 +60,8 @@ jQuery(".save_col").click(function() {ldelim}
         {'created on %s'|@translate|@sprintf:$col.date_creation}
       </p>
       <p class="collecTitle">
-        <a href="{$col.U_VIEW}" rel="nofollow"><b>{$col.name}</b></a> 
-        <i>{'%d images'|@translate|@sprintf:$col.nb_images}</i>
+        <a href="{$col.U_EDIT}" rel="nofollow"><b>{$col.name}</b></a> 
+        <i>{'%d photos'|@translate|@sprintf:$col.nb_images}</i>
       </p>
       <p class="collecActions">
         <a href="{$col.U_EDIT}" rel="nofollow">{'Edit'|@translate}</a> |

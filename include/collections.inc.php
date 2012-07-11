@@ -134,13 +134,11 @@ SELECT *
       if ($col['name'] == 'temp')
       {
         $col['name'] = 'temp #'.$col['id'];
-        $col['U_VIEW'] = $col['U_EDIT'];
         $col['U_SAVE'] = USER_COLLEC_PUBLIC.'&amp;action=save&amp;col_id='.$col['id'];
         $template->append('temp_col', $col);
       }
       else
       {
-        $col['U_VIEW'] = USER_COLLEC_PUBLIC.'view/'.$col['id'];
         $template->append('collections', $col);
       }
     }
@@ -165,6 +163,7 @@ SELECT *
       'USER_COLLEC_PATH' => USER_COLLEC_PATH,
       'U_VIEW' => $self_url,
       'U_LIST' => USER_COLLEC_PUBLIC,
+      'COL_ID' => $page['col_id'],
       ));
     
     try {
@@ -190,7 +189,7 @@ SELECT *
       
       $template->assign('collection', $UserCollection->getCollectionInfo());
       
-      $template->set_prefilter('index_thumbnails', 'user_collection_thumbnails_list_prefilter');
+      $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_special_prefilter');
       
       $page['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
       $page['items'] = $UserCollection->getImages();
@@ -281,15 +280,48 @@ SELECT *
 
 $template->assign('USER_COLLEC_PATH', USER_COLLEC_PATH);
 
-function user_collection_thumbnails_list_prefilter($content, &$smarty)
-{
-  $search = '<span class="thumbName">';
-  
-  $add = '<a href="{$U_VIEW}&amp;remove={$thumbnail.id}" rel="nofollow">
-<img src="{$USER_COLLEC_PATH}template/image_delete.png" title="{\'Remove from collection\'|@translate}">
-</a>&nbsp;';
 
-  return str_replace($search, $search.$add, $content);
+function user_collections_thumbnails_list_special_prefilter($content, &$smarty)
+{
+  // custom style
+  $search[0] = '{/html_style}';
+  $replace[0] = '.thumbnails  .wrap1 {ldelim} position:relative; }
+.addCollection {ldelim} width:100%;height:16px;display:none;position:absolute;top:0;background:rgba(0,0,0,0.8);padding:2px;border-radius:2px;font-size:0.8em; }
+.wrap1:hover .addCollection {ldelim} display:block; }'
+.$search[0];
+
+  // links
+  $search[1] = '<span class="wrap1">';
+  $replace[1] = $search[1].'
+{strip}<a class="addCollection" href="{$U_VIEW}&amp;remove={$thumbnail.id}" data-id="{$thumbnail.id}" rel="nofollow">
+{\'Remove from collection\'|@translate}&nbsp;<img src="{$USER_COLLEC_PATH}template/image_delete.png" title="{\'Remove from collection\'|@translate}">
+</a>{/strip}';
+
+  // AJAX request
+  $search[2] = '{/html_style}';
+  $replace[2] = $search[2].'
+{footer_script require=\'jquery\'}
+jQuery(".addCollection").click(function() {ldelim}
+  var toggle_id = jQuery(this).data("id");
+  var $trigger = jQuery(this);
+  
+  jQuery.ajax({ldelim}
+    type: "POST",
+    url: "{$USER_COLLEC_PATH}toggle_image.php",
+    data: {ldelim} "col_id": "{$COL_ID}", "toggle_id": toggle_id }
+  }).done(function(msg) {ldelim}
+    if (msg == "false") {ldelim}
+      $trigger.parent(".wrap1").hide("fast", function() {ldelim} $trigger.remove() });
+    } else {ldelim}
+      $trigger.html(\'{\'Un unknown error occured\'|@translate}\');
+    }
+  });
+  
+  return false;
+});
+{/footer_script}';
+
+  return str_replace($search, $replace, $content);
 }
 
 ?>

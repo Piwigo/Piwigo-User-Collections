@@ -8,6 +8,7 @@ function bindZclip() {ldelim}
     path:'{$USER_COLLEC_PATH}template/ZeroClipboard.swf',
     copy:$("#publicURL .url").html(),
     afterCopy: function() {ldelim}
+      $('.confirm').remove();
       $('<span class="confirm" style="display:none;">{'Copied'|@translate}</span>').appendTo("#publicURL")
         .fadeIn(400).delay(1000).fadeOut(400, function(){ldelim} $(this).remove(); });
     }
