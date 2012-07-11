@@ -34,9 +34,20 @@ function user_collections_section_init()
       $page['col_id'] = $tokens[2];
     }
   }
+  
+  // if ( script_basename() == 'picture' and @$tokens[1] == 'collections' and preg_match('#^[0-9]+$#', @$tokens[2]) )
+  // {
+    // try
+    // {
+      // $UserCollection = new UserCollection($tokens[2]);
+      // $page['title'].= $conf['level_separator'].l10n('Collection').': <a href="'.USER_COLLEC_PUBLIC . 'view/'.$tokens[2].'">'.$UserCollection->getParam('name').'</a>';
+      // $page['items'] = $UserCollection->getImages();
+      // $page['col_id'] = $tokens[2];
+    // } catch (Exception $e) {}
+  // }
 }
 
-/* collection section */
+/* collections section */
 function user_collections_page()
 {
   global $page;
@@ -115,49 +126,19 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
 
 function user_collections_thumbnails_list_prefilter($content, &$smarty)
 {
-  // custom style
-  $search[0] = '{/html_style}';
-  $replace[0] = '.thumbnails  .wrap1 {ldelim} position:relative; }
-.addCollection {ldelim} width:100%;height:16px;display:none;position:absolute;top:0;background:rgba(0,0,0,0.8);padding:2px;border-radius:2px;font-size:0.8em; }
-.wrap1:hover .addCollection {ldelim} display:block; }'
-.$search[0];
-
-  // links
-  $search[1] = '<span class="wrap1">';
-  $replace[1] = $search[1].'
+  // add links
+  $search = '<span class="wrap1">';
+  $replace = $search.'
 {strip}<a class="addCollection" href="{$collection_toggle_url}&amp;collection_toggle={$thumbnail.id}" data-id="{$thumbnail.id}" rel="nofollow">
-{if $thumbnail.COLLECTION_SELECTED}
+{if $COL_ID or $thumbnail.COLLECTION_SELECTED}
 {\'Remove from collection\'|@translate}&nbsp;<img src="{$USER_COLLEC_PATH}template/image_delete.png" title="{\'Remove from collection\'|@translate}">
 {else}
 {\'Add to collection\'|@translate}&nbsp;<img src="{$USER_COLLEC_PATH}template/image_add.png" title="{\'Add to collection\'|@translate}">
 {/if}
 </a>{/strip}';
 
-  // AJAX request
-  $search[2] = '{/html_style}';
-  $replace[2] = $search[2].'
-{footer_script require=\'jquery\'}
-jQuery(".addCollection").click(function() {ldelim}
-  var toggle_id = jQuery(this).data("id");
-  var $trigger = jQuery(this);
-  
-  jQuery.ajax({ldelim}
-    type: "POST",
-    url: "{$USER_COLLEC_PATH}toggle_image.php",
-    data: {ldelim} "toggle_id": toggle_id }
-  }).done(function(msg) {ldelim}
-    if (msg == "true") {ldelim}
-      $trigger.html(\'{\'Remove from collection\'|@translate}&nbsp;<img src="{$USER_COLLEC_PATH}template/image_delete.png" title="{\'Remove from collection\'|@translate}">\');
-    } else if (msg == "false") {ldelim}
-      $trigger.html(\'{\'Add to collection\'|@translate}&nbsp;<img src="{$USER_COLLEC_PATH}template/image_add.png" title="{\'Add to collection\'|@translate}">\');
-    } else {ldelim}
-      $trigger.html(\'{\'Un unknown error occured\'|@translate}\');
-    }
-  });
-  
-  return false;
-});
-{/footer_script}';
+  // custom CSS and AJAX request
+  $content.= file_get_contents(USER_COLLEC_PATH.'template/thumbnails_css_js.tpl');
 
   return str_replace($search, $replace, $content);
 }

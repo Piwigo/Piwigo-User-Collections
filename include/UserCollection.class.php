@@ -3,7 +3,6 @@ defined('USER_COLLEC_PATH') or die('Hacking attempt!');
 
 class UserCollection
 {
-  // private $conf;
   private $data;
   private $images;
   
@@ -14,9 +13,8 @@ class UserCollection
    */
   function __construct($col_id, $images=array(), $name=null, $active=false, $public=false)
   {
-    global $user, $conf;
+    global $user;
     
-    // $this->conf = $conf['user_collections'];
     $this->data = array(
       'col_id' => 0,
       'user_id' => $user['id'],

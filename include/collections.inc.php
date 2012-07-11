@@ -3,7 +3,7 @@ defined('USER_COLLEC_PATH') or die('Hacking attempt!');
 
 # this file is called on basket public page #
 
-global $page, $template, $conf, $user, $tokens;
+global $page, $template, $conf, $user, $tokens, $pwg_loaded_plugins;
 
 switch ($page['sub_section'])
 {
@@ -131,6 +131,11 @@ SELECT *
       $col['U_ACTIVE'] = USER_COLLEC_PUBLIC.'&amp;action=set_active&amp;col_id='.$col['id'];
       $col['U_DELETE'] = USER_COLLEC_PUBLIC.'&amp;action=delete&amp;col_id='.$col['id'];
       
+      if (isset($pwg_loaded_plugins['BatchDownloader']))
+      {
+        $col['U_DOWNLOAD'] = USER_COLLEC_PUBLIC.'view/'.$col['id'].'&amp;action=advdown_set';
+      }
+      
       if ($col['name'] == 'temp')
       {
         $col['name'] = 'temp #'.$col['id'];
@@ -162,6 +167,7 @@ SELECT *
     $template->assign(array(
       'USER_COLLEC_PATH' => USER_COLLEC_PATH,
       'U_VIEW' => $self_url,
+      'collection_toggle_url' => $self_url,
       'U_LIST' => USER_COLLEC_PUBLIC,
       'COL_ID' => $page['col_id'],
       ));
@@ -182,14 +188,15 @@ SELECT *
       }
       
       // remove an element
-      if ( isset($_GET['remove']) and preg_match('#^[0-9]+$#', $_GET['remove']) )
+      if ( isset($_GET['collection_toggle']) and preg_match('#^[0-9]+$#', $_GET['collection_toggle']) )
       {
-        $UserCollection->removeImages(array($_GET['remove']));
+        $UserCollection->removeImages(array($_GET['collection_toggle']));
       }
       
       $template->assign('collection', $UserCollection->getCollectionInfo());
       
-      $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_special_prefilter');
+      // add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL, 2);
+      $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_prefilter');
       
       $page['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
       $page['items'] = $UserCollection->getImages();
@@ -281,47 +288,23 @@ SELECT *
 $template->assign('USER_COLLEC_PATH', USER_COLLEC_PATH);
 
 
-function user_collections_thumbnails_list_special_prefilter($content, &$smarty)
-{
-  // custom style
-  $search[0] = '{/html_style}';
-  $replace[0] = '.thumbnails  .wrap1 {ldelim} position:relative; }
-.addCollection {ldelim} width:100%;height:16px;display:none;position:absolute;top:0;background:rgba(0,0,0,0.8);padding:2px;border-radius:2px;font-size:0.8em; }
-.wrap1:hover .addCollection {ldelim} display:block; }'
-.$search[0];
-
-  // links
-  $search[1] = '<span class="wrap1">';
-  $replace[1] = $search[1].'
-{strip}<a class="addCollection" href="{$U_VIEW}&amp;remove={$thumbnail.id}" data-id="{$thumbnail.id}" rel="nofollow">
-{\'Remove from collection\'|@translate}&nbsp;<img src="{$USER_COLLEC_PATH}template/image_delete.png" title="{\'Remove from collection\'|@translate}">
-</a>{/strip}';
-
-  // AJAX request
-  $search[2] = '{/html_style}';
-  $replace[2] = $search[2].'
-{footer_script require=\'jquery\'}
-jQuery(".addCollection").click(function() {ldelim}
-  var toggle_id = jQuery(this).data("id");
-  var $trigger = jQuery(this);
+// function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $pictures)
+// {
+  // global $page;
   
-  jQuery.ajax({ldelim}
-    type: "POST",
-    url: "{$USER_COLLEC_PATH}toggle_image.php",
-    data: {ldelim} "col_id": "{$COL_ID}", "toggle_id": toggle_id }
-  }).done(function(msg) {ldelim}
-    if (msg == "false") {ldelim}
-      $trigger.parent(".wrap1").hide("fast", function() {ldelim} $trigger.remove() });
-    } else {ldelim}
-      $trigger.html(\'{\'Un unknown error occured\'|@translate}\');
-    }
-  });
+  // foreach ($tpl_thumbnails_var as &$thumbnail)
+  // {
+    // $thumbnail['URL'] = duplicate_picture_url(
+        // array(
+          // 'image_id' => $thumbnail['id'],
+          // 'image_file' => $thumbnail['file'],
+          // 'section' => 'collections',
+        // ),
+        // array('start')
+      // ).'/'.$page['col_id'];
+  // }
   
-  return false;
-});
-{/footer_script}';
-
-  return str_replace($search, $replace, $content);
-}
+  // return $tpl_thumbnails_var;
+// }
 
 ?>

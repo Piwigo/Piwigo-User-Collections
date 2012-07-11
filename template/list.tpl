@@ -12,9 +12,14 @@ jQuery(".save_col").click(function() {ldelim}
 });
 {/footer_script}
 
-{$MENUBAR}
-
+{if $themeconf.name != "stripped" and $themeconf.parent != "stripped" and $themeconf.name != "simple-grey" and $themeconf.parent != "simple"}
+  {$MENUBAR}
+{else}
+  {assign var="intern_menu" value="true"}
+{/if}
 <div id="content" class="content{if isset($MENUBAR)} contentWithMenu{/if}">
+{if $intern_menu}{$MENUBAR}{/if}
+
 <div class="titrePage">
   <ul class="categoryActions"></ul>
   <h2>{$TITLE}</h2>
@@ -38,9 +43,10 @@ jQuery(".save_col").click(function() {ldelim}
         <i>{'%d photos'|@translate|@sprintf:$col.nb_images}</i>
       </p>
       <p class="collecActions">
-        <a href="{$col.U_EDIT}" rel="nofollow">{'Edit'|@translate}</a> |
-        <a href="{$col.U_SAVE}" class="save_col" rel="nofollow">{'save'|@translate}</a> |
-        <a href="{$col.U_DELETE}" onClick="return confirm('{'Are you sure?'|@translate}');" rel="nofollow">{'delete'|@translate}</a>
+        <a href="{$col.U_EDIT}" rel="nofollow">{'Edit'|@translate}</a>
+        | <a href="{$col.U_SAVE}" class="save_col" rel="nofollow">{'save'|@translate}</a>
+        {if $col.U_DOWNLOAD}| <a href="{$col.U_DOWNLOAD}" rel="nofollow">{'download'|@translate}</a>{/if}
+        | <a href="{$col.U_DELETE}" onClick="return confirm('{'Are you sure?'|@translate}');" rel="nofollow">{'delete'|@translate}</a>
         {if not $col.active}| <a href="{$col.U_ACTIVE}" rel="nofollow">{'set active'|@translate}</a>{/if}
       </p>
     </li>
@@ -64,8 +70,9 @@ jQuery(".save_col").click(function() {ldelim}
         <i>{'%d photos'|@translate|@sprintf:$col.nb_images}</i>
       </p>
       <p class="collecActions">
-        <a href="{$col.U_EDIT}" rel="nofollow">{'Edit'|@translate}</a> |
-        <a href="{$col.U_DELETE}" onClick="return confirm('{'Are you sure?'|@translate}');" rel="nofollow">{'delete'|@translate}</a>
+        <a href="{$col.U_EDIT}" rel="nofollow">{'Edit'|@translate}</a>
+        {if $col.U_DOWNLOAD}| <a href="{$col.U_DOWNLOAD}" rel="nofollow">{'download'|@translate}</a>{/if}
+        | <a href="{$col.U_DELETE}" onClick="return confirm('{'Are you sure?'|@translate}');" rel="nofollow">{'delete'|@translate}</a>
         {if not $col.active}| <a href="{$col.U_ACTIVE}" rel="nofollow">{'set active'|@translate}</a>{/if}
       </p>
     </li>
