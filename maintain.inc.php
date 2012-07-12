@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collections` (
   `nb_images` mediumint(8) NOT NULL DEFAULT 0,
   `active` tinyint(1) DEFAULT 0,
   `public` tinyint(1) DEFAULT 0,
+  `public_id` varchar(10) NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1
 ;';
@@ -30,7 +31,17 @@ CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collection_images` (
 }
 
 function plugin_activate()
-{}
+{
+  global $prefixeTable;
+  
+  // new collumn in beta2
+  $query = 'SHOW COLUMNS FROM `'.$prefixeTable.'collections`;';
+  $columns = array_from_query($query, 'Field');
+  if (!in_array('public_id', $columns))
+  {
+    pwg_query('ALTER TABLE `'.$prefixeTable.'collections` ADD `public_id` varchar(10) NULL;');
+  }
+}
 
 function plugin_uninstall() 
 {

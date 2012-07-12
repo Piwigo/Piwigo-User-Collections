@@ -12,6 +12,12 @@ jQuery(".save_col").click(function() {ldelim}
 });
 {/footer_script}
 
+{if $themeconf.name == "clear"}
+{html_head}{literal}
+<style type="text/css">.collecList a { color:#eee; }</style>
+{/literal}{/html_head}
+{/if}
+
 {if $themeconf.name != "stripped" and $themeconf.parent != "stripped" and $themeconf.name != "simple-grey" and $themeconf.parent != "simple"}
   {$MENUBAR}
 {else}
@@ -19,6 +25,7 @@ jQuery(".save_col").click(function() {ldelim}
 {/if}
 <div id="content" class="content{if isset($MENUBAR)} contentWithMenu{/if}">
 {if $intern_menu}{$MENUBAR}{/if}
+
 
 <div class="titrePage">
   <ul class="categoryActions"></ul>
@@ -29,7 +36,9 @@ jQuery(".save_col").click(function() {ldelim}
 {include file='infos_errors.tpl'}
 {/if}
 
+
 <p style="text-align:left;font-weight:bold;margin:20px;"><a href="{$U_CREATE}" class="save_col">{'Create a new collection'|@translate}</a></p>
+
 
 {if $temp_col}
 <fieldset>
@@ -54,6 +63,7 @@ jQuery(".save_col").click(function() {ldelim}
   </ul>
 </fieldset>
 {/if}
+
 
 {if $collections}
 <fieldset>
@@ -80,5 +90,6 @@ jQuery(".save_col").click(function() {ldelim}
   </ul>
 </fieldset>
 {/if}
+
 
 </div>{* <!-- content --> *}

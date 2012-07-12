@@ -23,8 +23,29 @@ class UserCollection
       'nb_images' => 0,
       'active' => false,
       'public' => false,
+      'public_id' => null,
       );
     $this->images = array();
+    
+    // access from public id
+    if ( strlen($col_id) == 10 and strpos($col_id, 'uc') === 0 )
+    {
+      $query = '
+SELECT id
+  FROM '.COLLECTIONS_TABLE.'
+  WHERE public_id = "'.$col_id.'"
+;';
+      $result = pwg_query($query);
+      
+      if (!pwg_db_num_rows($result))
+      {
+        $col_id = 0;
+      }
+      else
+      {
+        list($col_id) = pwg_db_fetch_row($result);
+      }
+    }
     
     // load specific collection
     if (preg_match('#^[0-9]+$#', $col_id))
@@ -36,7 +57,8 @@ SELECT
     date_creation,
     nb_images,
     active,
-    public
+    public,
+    public_id
   FROM '.COLLECTIONS_TABLE.'
   WHERE
     id = '.$col_id.'
@@ -47,14 +69,10 @@ SELECT
       if (pwg_db_num_rows($result))
       {
         $this->data['col_id'] = $col_id;
-        list(
-          $this->data['user_id'],
-          $this->data['name'],
-          $this->data['date_creation'],
-          $this->data['nb_images'],
-          $this->data['active'],
-          $this->data['public']
-          ) = pwg_db_fetch_row($result);
+        $this->data = array_merge(
+          $this->data,
+          pwg_db_fetch_assoc($result)
+          );
         
         // make sur all pictures of the collection exist
         $query = '
@@ -88,6 +106,7 @@ SELECT image_id
       $this->data['name'] = $name;
       $this->data['active'] = $active;
       $this->data['public'] = $public;
+      $this->data['public_id'] = 'uc'.hash('crc32', uniqid(serialize($this->data, true)));
       
       $query = '
 INSERT INTO '.COLLECTIONS_TABLE.'(
@@ -95,14 +114,16 @@ INSERT INTO '.COLLECTIONS_TABLE.'(
     name,
     date_creation,
     active,
-    public
+    public,
+    public_id
   ) 
   VALUES(
     '.$this->data['user_id'].',
     "'.$this->data['name'].'",
     NOW(),
     '.(int)$this->data['active'].',
-    '.(int)$this->data['public'].'
+    '.(int)$this->data['public'].',
+    "'.$this->data['public_id'].'"
   )
 ;';
       pwg_query($query);
@@ -270,7 +291,7 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
       'ACTIVE' => (bool)$this->data['active'],
       'PUBLIC' => (bool)$this->data['public'],
       'DATE_CREATION' => format_date($this->data['date_creation'], true),
-      'U_PUBLIC' => get_absolute_root_url().USER_COLLEC_PUBLIC . 'view/'.$this->data['col_id'],
+      'U_PUBLIC' => get_absolute_root_url().USER_COLLEC_PUBLIC . 'view/'.$this->data['public_id'],
       'IS_TEMP' =>  $this->data['name'] == 'temp',
       );
     

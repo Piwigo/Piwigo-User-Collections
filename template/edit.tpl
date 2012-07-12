@@ -26,6 +26,7 @@ jQuery("#publicURL .button").tipTip({ldelim}
 {if $collection.PUBLIC}bindZclip();{/if}
 {/footer_script}
 
+
 {if $themeconf.name != "stripped" and $themeconf.parent != "stripped" and $themeconf.name != "simple-grey" and $themeconf.parent != "simple"}
   {$MENUBAR}
 {else}
@@ -33,6 +34,7 @@ jQuery("#publicURL .button").tipTip({ldelim}
 {/if}
 <div id="content" class="content{if isset($MENUBAR)} contentWithMenu{/if}">
 {if $intern_menu}{$MENUBAR}{/if}
+
 
 <div class="titrePage">
   <ul class="categoryActions">
@@ -45,8 +47,9 @@ jQuery("#publicURL .button").tipTip({ldelim}
 {include file='infos_errors.tpl'}
 {/if}
 
+
 {if $collection and not $collection.IS_TEMP}
-<form action="{$U_VIEW}" method="post">
+<form action="{$F_ACTION}" method="post">
 <fieldset id="colProperties">
   <legend>{'Properties'|@translate}</legend>
   
@@ -66,7 +69,6 @@ jQuery("#publicURL .button").tipTip({ldelim}
 </form>
 {/if}
 
-  
 
 {if !empty($THUMBNAILS)}
 <ul class="thumbnails" id="thumbnails">
@@ -77,6 +79,7 @@ jQuery("#publicURL .button").tipTip({ldelim}
 {/if}
 
 {if !empty($navbar)}{include file='navigation_bar.tpl'|@get_extent:'navbar'}{/if}
+
 
 <p style="text-align:center;font-weight:bold;margin:20px;"><a href="{$U_LIST}" rel="nofollow">{'Return to collections list'|@translate}</a></p>
 

@@ -10,15 +10,19 @@
     margin-bottom:10px;
   }
   
-#publicURL {}
+#publicURL {
+  display:inline-block;
+  height:22px;
+}
   #publicURL .url {
     display:inline-block;
-    position:relative;
+    height:14px;
+    vertical-align:bottom;
+    padding:3px 10px;
+    background:#fff;
     font-family:monospace;
     font-size:12px;
-    background:#fff;
     color:#666;
-    padding:3px 10px;
     border:1px solid #999;
     border-radius:0 3px 3px 0;
   }
@@ -27,7 +31,7 @@
     background:#e7e7e7 url('link.png') center center no-repeat;
     width:25px;
     height:20px;
-    color:#666;
+    vertical-align:bottom;
     border:1px solid #999;
     border-right:none;
     border-radius:3px 0 0 3px;

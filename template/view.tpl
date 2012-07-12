@@ -1,5 +1,6 @@
 {combine_css path=$USER_COLLEC_PATH|@cat:"template/style.css"}
 
+
 {if $themeconf.name != "stripped" and $themeconf.parent != "stripped" and $themeconf.name != "simple-grey" and $themeconf.parent != "simple"}
   {$MENUBAR}
 {else}
@@ -7,6 +8,7 @@
 {/if}
 <div id="content" class="content{if isset($MENUBAR)} contentWithMenu{/if}">
 {if $intern_menu}{$MENUBAR}{/if}
+
 
 <div class="titrePage">
   <ul class="categoryActions">
@@ -19,6 +21,7 @@
 {include file='infos_errors.tpl'}
 {/if}
 
+
 {if !empty($THUMBNAILS)}
 <ul class="thumbnails" id="thumbnails">
 {$THUMBNAILS}
@@ -26,6 +29,7 @@
 {/if}
 
 {if !empty($navbar)}{include file='navigation_bar.tpl'|@get_extent:'navbar'}{/if}
+
 
 {if $U_LIST}<p style="text-align:center;font-weight:bold;margin:20px;"><a href="{$U_LIST}" rel="nofollow">{'Return to collections list'|@translate}</a></p>{/if}
 

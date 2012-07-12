@@ -10,10 +10,12 @@ switch ($page['sub_section'])
   /* list */
   case 'list':
   {
+    // security
     if (is_a_guest()) access_denied();
     
     $template->set_filename('index', dirname(__FILE__) . '/../template/list.tpl');
     
+    // actions
     if ( isset($_GET['action']) and filter_var($_GET['col_id'], FILTER_VALIDATE_INT) !== false )
     {
       switch ($_GET['action'])
@@ -114,7 +116,8 @@ UPDATE '.COLLECTIONS_TABLE.'
         }
       }
     }
-      
+    
+    
     // get collections
     $query = '
 SELECT * 
@@ -133,9 +136,10 @@ SELECT *
       
       if (isset($pwg_loaded_plugins['BatchDownloader']))
       {
-        $col['U_DOWNLOAD'] = USER_COLLEC_PUBLIC.'view/'.$col['id'].'&amp;action=advdown_set';
+        $col['U_DOWNLOAD'] = USER_COLLEC_PUBLIC.'view/'.$col['public_id'].'&amp;action=advdown_set';
       }
       
+      // temporary collections are above save collections
       if ($col['name'] == 'temp')
       {
         $col['name'] = 'temp #'.$col['id'];
@@ -155,18 +159,19 @@ SELECT *
   /* edit */
   case 'edit':
   {
+    // security
     if (empty($page['col_id']))
     {
       $_SESSION['page_errors'][] = l10n('Invalid collection');
       redirect(USER_COLLEC_PUBLIC);
     }
     
-    $self_url = USER_COLLEC_PUBLIC . 'edit/'.$page['col_id'];
-    
     $template->set_filename('index', dirname(__FILE__).'/../template/edit.tpl');
+    
+    $self_url = USER_COLLEC_PUBLIC . 'edit/'.$page['col_id'];
     $template->assign(array(
       'USER_COLLEC_PATH' => USER_COLLEC_PATH,
-      'U_VIEW' => $self_url,
+      'F_ACTION' => $self_url,
       'collection_toggle_url' => $self_url,
       'U_LIST' => USER_COLLEC_PUBLIC,
       'COL_ID' => $page['col_id'],
@@ -175,7 +180,8 @@ SELECT *
     try {
       $UserCollection = new UserCollection($page['col_id']);
       
-      if (!is_admin() and $UserCollection->getParam('user_id') != $user['id'])
+      // security
+      if ( !is_admin() and $UserCollection->getParam('user_id') != $user['id'] )
       {
         access_denied();
       }
@@ -193,14 +199,16 @@ SELECT *
         $UserCollection->removeImages(array($_GET['collection_toggle']));
       }
       
-      $template->assign('collection', $UserCollection->getCollectionInfo());
-      
-      // add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL, 2);
+      // special template
+      add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL+10, 2); // +10 to overload GThumb+
       $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_prefilter');
       
-      $page['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
+      // collection content
+      $template->assign('collection', $UserCollection->getCollectionInfo());
       $page['items'] = $UserCollection->getImages();
       
+      // navigation bar
+      $page['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
       if (count($page['items']) > $page['nb_image_page'])
       {
         $page['navigation_bar'] = create_navigation_bar(
@@ -213,6 +221,7 @@ SELECT *
         $template->assign('navbar', $page['navigation_bar']);
       }
       
+      // display
       include(PHPWG_ROOT_PATH . 'include/category_default.inc.php');
       
       $template->concat('TITLE', $conf['level_separator'].$UserCollection->getParam('name'));
@@ -228,34 +237,35 @@ SELECT *
   /* view */
   case 'view':
   {
-    if (empty($page['col_id']))
+    // security
+    if ( empty($page['col_id']) or strlen($page['col_id']) != 10 or strpos($page['col_id'], 'uc') === false )
     {
       $_SESSION['page_errors'][] = l10n('Invalid collection');
-      redirect(get_home_url());
+      redirect('index.php');
     }
+    
+    $template->set_filename('index', dirname(__FILE__).'/../template/view.tpl');
     
     $self_url = USER_COLLEC_PUBLIC . 'view/'.$page['col_id'];
     
-    $template->set_filename('index', dirname(__FILE__).'/../template/view.tpl');
-    $template->assign(array(
-      'USER_COLLEC_PATH' => USER_COLLEC_PATH,
-      'U_VIEW' => $self_url,
-      ));
-    
-    try
-    {
+    try {
       $UserCollection = new UserCollection($page['col_id']);
       
+      // backlink for owner
       if ($UserCollection->getParam('user_id') == $user['id'])
       {
         $template->assign('U_LIST', USER_COLLEC_PUBLIC);
       }
       
-      $template->assign('collection', $UserCollection->getCollectionInfo());
+      // special template
+      add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL+10, 2); // +10 to overload GThumb+
       
-      $page['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
+      // collection content
+      $template->assign('collection', $UserCollection->getCollectionInfo());
       $page['items'] = $UserCollection->getImages();
       
+      // navigation bar
+      $page['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
       if (count($page['items']) > $page['nb_image_page'])
       {
         $page['navigation_bar'] = create_navigation_bar(
@@ -268,6 +278,7 @@ SELECT *
         $template->assign('navbar', $page['navigation_bar']);
       }
       
+      // display
       include(PHPWG_ROOT_PATH . 'include/category_default.inc.php');
       
       include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
@@ -288,23 +299,28 @@ SELECT *
 $template->assign('USER_COLLEC_PATH', USER_COLLEC_PATH);
 
 
-// function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $pictures)
-// {
-  // global $page;
+function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $pictures)
+{
+  global $template, $page;
   
-  // foreach ($tpl_thumbnails_var as &$thumbnail)
-  // {
-    // $thumbnail['URL'] = duplicate_picture_url(
-        // array(
-          // 'image_id' => $thumbnail['id'],
-          // 'image_file' => $thumbnail['file'],
-          // 'section' => 'collections',
-        // ),
-        // array('start')
-      // ).'/'.$page['col_id'];
-  // }
+  $template->set_filename('index_thumbnails', dirname(__FILE__).'/../template/thumbnails.tpl');
   
-  // return $tpl_thumbnails_var;
-// }
+  foreach ($tpl_thumbnails_var as &$thumbnail)
+  {
+    $src_image = new SrcImage($thumbnail);
+    
+    $thumbnail['FILE_SRC'] = DerivativeImage::url(IMG_LARGE, $src_image);
+    $thumbnail['URL'] = duplicate_picture_url(
+        array(
+          'image_id' => $thumbnail['id'],
+          'image_file' => $thumbnail['file'],
+          'section' => 'none',
+        ),
+        array('start')
+      );
+  }
+  
+  return $tpl_thumbnails_var;
+}
 
 ?>
