@@ -76,6 +76,12 @@ jQuery("#actions input").click(function() {ldelim}
 </form>
 
 
+<form id="actions" style="text-align:center;">
+<input type="submit" data-href="{$collection.U_CLEAR}" value="{'Clear collection'|@translate}">
+<input type="submit" data-href="{$collection.U_DELETE}" value="{'Delete'|@translate}">
+</form>
+
+
 {if $collection.NB_IMAGES > 0}
 <ul class="thumbnails" id="thumbnails">
 {$THUMBNAILS}
@@ -85,12 +91,6 @@ jQuery("#actions input").click(function() {ldelim}
 {/if}
 
 {if !empty($navbar)}{include file='navigation_bar.tpl'|@get_extent:'navbar'}{/if}
-
-
-<form id="actions" style="text-align:center;">
-<input type="submit" data-href="{$collection.U_CLEAR}" value="{'Clear collection'|@translate}">
-<input type="submit" data-href="{$collection.U_DELETE}" value="{'Delete'|@translate}">
-</form>
 {/if}
 
 

@@ -4,6 +4,7 @@
 .wrap1:hover .addCollection {ldelim} display:block; }
 {/html_style}
 
+{if not $NO_AJAX}
 {footer_script require='jquery'}
 jQuery(".addCollection").click(function() {ldelim}
   var toggle_id = jQuery(this).data("id");
@@ -20,6 +21,7 @@ jQuery(".addCollection").click(function() {ldelim}
     } else if (msg == "false") {ldelim}
     {if $COL_ID}
       $trigger.parent(".wrap1").hide("fast", function() {ldelim} $trigger.remove() });
+      if (typeof batchdown_count != 'undefined') batchdown_count-=1;
     {else}
       $trigger.html('{'Add to collection'|@translate}&nbsp;<img src="{$USER_COLLEC_PATH}template/image_add.png" title="{'Add to collection'|@translate}">');
     {/if}
@@ -32,3 +34,4 @@ jQuery(".addCollection").click(function() {ldelim}
   return false;
 });
 {/footer_script}
+{/if}

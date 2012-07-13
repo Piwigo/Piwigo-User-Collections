@@ -88,7 +88,8 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
   if (isset($page['section']) and ($page['section'] == 'collections' or $page['section'] == 'download')) return $tpl_thumbnails_var;
   
   // get existing collections
-  if (empty($UserCollection) and ($col_id = get_current_collection_id(false)) !== false)
+  $col_id = get_current_collection_id(false);
+  if (empty($UserCollection) and $col_id !== false)
   {
     $UserCollection = new UserCollection($col_id);
     $collection = $UserCollection->getImages();
@@ -100,6 +101,12 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
   else
   {
     $collection = array();
+  }
+  
+  // if the collection is created we don't use AJAX to force menu refresh
+  if ($col_id === false)
+  {
+    $template->assign('NO_AJAX', true);
   }
   
   
@@ -195,21 +202,9 @@ function user_collections_add_menublock($menu_ref_arr)
 {
   if (is_a_guest()) return;
   
-  global $user;
-  
   $menu = &$menu_ref_arr[0];
   if ($menu->get_id() != 'menubar') return;
-  
-  $query = '
-SELECT id
-  FROM '.COLLECTIONS_TABLE.'
-  WHERE user_id = '.$user['id'].'
-  LIMIT 1
-;';
-  $result = pwg_query($query);
-  
-  if (!pwg_db_num_rows($result)) return;
-  
+    
   $menu->register_block(new RegisteredBlock('mbUserCollection', l10n('Collections'), 'UserCollection'));
 }
 

@@ -1,6 +1,11 @@
 <dt>{$block->get_title()}</dt>
 <dd>
-  <p><a href="{$block->data.U_LIST}">{'You have %d collections'|@translate|sprintf:$block->data.NB_COL}</a></p>
+  <p>
+    {if $block->data.NB_COL == 0}
+      {'You have no collection'|@translate|sprintf:$block->data.NB_COL}
+    {else}
+      <a href="{$block->data.U_LIST}">{$pwg->l10n_dec('You have %d collection', 'You have %d collections', $block->data.NB_COL)}</a>
+    {/if}</p>
   {if $block->data.collections}
   <ul>{strip}
 		{foreach from=$block->data.collections item=col}
