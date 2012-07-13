@@ -1,0 +1,1 @@
+Registrovaní používatelia môžu označiť fotky z galérie a uložiť ich do kolekcií ako obľúbené.
