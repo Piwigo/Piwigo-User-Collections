@@ -23,6 +23,13 @@ jQuery("#publicURL .button").tipTip({ldelim}
   delay: 0,
   defaultPosition: 'right'
 });
+
+jQuery("#actions input").click(function() {ldelim}
+  if (confirm("{'Are you sure?'|@translate}")) {ldelim}
+    document.location.href = jQuery(this).data("href");
+  }
+  return false;
+});
 {if $collection.PUBLIC}bindZclip();{/if}
 {/footer_script}
 
@@ -48,7 +55,7 @@ jQuery("#publicURL .button").tipTip({ldelim}
 {/if}
 
 
-{if $collection and not $collection.IS_TEMP}
+{if $collection}
 <form action="{$F_ACTION}" method="post">
 <fieldset id="colProperties">
   <legend>{'Properties'|@translate}</legend>
@@ -67,10 +74,9 @@ jQuery("#publicURL .button").tipTip({ldelim}
   </p>
 </fieldset>
 </form>
-{/if}
 
 
-{if !empty($THUMBNAILS)}
+{if $collection.NB_IMAGES > 0}
 <ul class="thumbnails" id="thumbnails">
 {$THUMBNAILS}
 </ul>
@@ -81,6 +87,11 @@ jQuery("#publicURL .button").tipTip({ldelim}
 {if !empty($navbar)}{include file='navigation_bar.tpl'|@get_extent:'navbar'}{/if}
 
 
-<p style="text-align:center;font-weight:bold;margin:20px;"><a href="{$U_LIST}" rel="nofollow">{'Return to collections list'|@translate}</a></p>
+<form id="actions" style="text-align:center;">
+<input type="submit" data-href="{$collection.U_CLEAR}" value="{'Clear collection'|@translate}">
+<input type="submit" data-href="{$collection.U_DELETE}" value="{'Delete'|@translate}">
+</form>
+{/if}
+
 
 </div>{* <!-- content --> *}

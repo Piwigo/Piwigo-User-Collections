@@ -22,7 +22,7 @@ define('USER_COLLEC_PUBLIC',     make_index_url(array('section' => 'collections'
 add_event_handler('init', 'user_collections_init');
 
 add_event_handler('loc_end_section_init', 'user_collections_section_init');
-add_event_handler('loc_end_index', 'user_collections_page');
+add_event_handler('loc_end_index', 'user_collections_page', EVENT_HANDLER_PRIORITY_NEUTRAL-10);
 
 add_event_handler('loc_end_index', 'user_collections_index_actions');
 add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_list', EVENT_HANDLER_PRIORITY_NEUTRAL, 2);

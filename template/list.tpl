@@ -55,7 +55,7 @@ jQuery(".save_col").click(function() {ldelim}
         <a href="{$col.U_EDIT}" rel="nofollow">{'Edit'|@translate}</a>
         | <a href="{$col.U_SAVE}" class="save_col" rel="nofollow">{'save'|@translate}</a>
         {if $col.U_DOWNLOAD}| <a href="{$col.U_DOWNLOAD}" rel="nofollow">{'download'|@translate}</a>{/if}
-        | <a href="{$col.U_DELETE}" onClick="return confirm('{'Are you sure?'|@translate}');" rel="nofollow">{'delete'|@translate}</a>
+        | <a href="{$col.U_DELETE}" onClick="return confirm('{'Are you sure?'|@translate}');" rel="nofollow">{'Delete'|@translate}</a>
         {if not $col.active}| <a href="{$col.U_ACTIVE}" rel="nofollow">{'set active'|@translate}</a>{/if}
       </p>
     </li>
@@ -82,7 +82,7 @@ jQuery(".save_col").click(function() {ldelim}
       <p class="collecActions">
         <a href="{$col.U_EDIT}" rel="nofollow">{'Edit'|@translate}</a>
         {if $col.U_DOWNLOAD}| <a href="{$col.U_DOWNLOAD}" rel="nofollow">{'download'|@translate}</a>{/if}
-        | <a href="{$col.U_DELETE}" onClick="return confirm('{'Are you sure?'|@translate}');" rel="nofollow">{'delete'|@translate}</a>
+        | <a href="{$col.U_DELETE}" onClick="return confirm('{'Are you sure?'|@translate}');" rel="nofollow">{'Delete'|@translate}</a>
         {if not $col.active}| <a href="{$col.U_ACTIVE}" rel="nofollow">{'set active'|@translate}</a>{/if}
       </p>
     </li>

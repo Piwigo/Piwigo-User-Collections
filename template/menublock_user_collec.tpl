@@ -1,13 +1,17 @@
 <dt>{$block->get_title()}</dt>
 <dd>
-{if $block->data.current}
-  {assign var="nb_images" value='<span class="nbImagesCollec">'|@cat:$block->data.current.NB_IMAGES|@cat:'</span>'}
-  <p>{'Current collection:'|@translate} <b>{$block->data.current.NAME}</b>, {'%d photos'|@translate|replace:'%d':'%s'|sprintf:$nb_images}</p>
-	<ul>{strip}
-		{foreach from=$block->data.links item=link}
-		<li><a href="{$link.URL}" title="{$link.TITLE}" rel="nofollow">{$link.NAME}</a></li>
+  <p><a href="{$block->data.U_LIST}">{'You have %d collections'|@translate|sprintf:$block->data.NB_COL}</a></p>
+  {if $block->data.collections}
+  <ul>{strip}
+		{foreach from=$block->data.collections item=col}
+		<li>{if $col.active}
+      <a href="{$col.U_EDIT}" style="font-weight:bold;" rel="nofollow">{$col.name}</a> <i class="menuInfoCat">({'active'|@translate})</i> <span class="menuInfoCat">[<span class="nbImagesCollec">{$col.nb_images}</span>]</span>
+    {else}
+      <a href="{$col.U_EDIT}" rel="nofollow">{$col.name}</a> <span class="menuInfoCat">[{$col.nb_images}]</span>
+    {/if}</li>
 		{/foreach}
+    {if $block->data.MORE}<li class="menuInfoCat">{'%d more...'|@translate|sprintf:$block->data.MORE}</li>{/if}
 	{/strip}</ul>
-{/if}
-  <p><a href="{$block->data.U_LIST}" rel="nofollow">{'See all my collections'|@translate}</a></p>
+  {/if}
+  <p><a href="{$block->data.U_CREATE}" rel="nofollow">{'Create a new collection'|@translate}</a></p>
 </dd>

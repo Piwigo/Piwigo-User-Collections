@@ -23,29 +23,17 @@ switch ($page['sub_section'])
         // new
         case 'new':
         {
-          new UserCollection('new', array(), empty($_GET['name']) ? 'temp' : $_GET['name'], 1);
-          redirect(USER_COLLEC_PUBLIC);
-          break;
-        }
-        
-        // clear
-        case 'clear':
-        {
-          $query = '
-DELETE ci
-  FROM '.COLLECTION_IMAGES_TABLE.' AS ci
-    INNER JOIN '.COLLECTIONS_TABLE.' AS c 
-    ON ci.col_id = c.id
-  WHERE
-    c.user_id = '.$user['id'].'
-    AND c.id = '.$_GET['col_id'].'
-;';
-          pwg_query($query);
+          $UserCollection = new UserCollection('new', array(), empty($_GET['name']) ? 'temp' : $_GET['name'], 1);
           
-          if (!empty($_SERVER['HTTP_REFERER']))
+          if (isset($_GET['redirect']))
           {
-            redirect($_SERVER['HTTP_REFERER']);
+            $redirect = USER_COLLEC_PUBLIC.'edit/'.$UserCollection->getParam('id');
           }
+          else
+          {
+            $redirect = USER_COLLEC_PUBLIC;
+          }
+          redirect($redirect);
           break;
         }
           
@@ -193,10 +181,17 @@ SELECT *
         $UserCollection->updateParam('public', $_POST['public']);
       }
       
+      // clear
+      if ( isset($_GET['action']) and $_GET['action'] == 'clear' )
+      {
+        $UserCollection->clearImages();
+      }
+      
       // remove an element
       if ( isset($_GET['collection_toggle']) and preg_match('#^[0-9]+$#', $_GET['collection_toggle']) )
       {
         $UserCollection->removeImages(array($_GET['collection_toggle']));
+        unset($_GET['collection_toggle']);
       }
       
       // special template
@@ -204,7 +199,11 @@ SELECT *
       $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_prefilter');
       
       // collection content
-      $template->assign('collection', $UserCollection->getCollectionInfo());
+      $col = $UserCollection->getCollectionInfo();
+      $col['U_CLEAR'] = $self_url.'&amp;action=clear';
+      $col['U_DELETE'] = USER_COLLEC_PUBLIC.'&amp;action=delete&amp;col_id='.$page['col_id'];
+      $template->assign('collection', $col);
+      
       $page['items'] = $UserCollection->getImages();
       
       // navigation bar
@@ -251,17 +250,10 @@ SELECT *
     try {
       $UserCollection = new UserCollection($page['col_id']);
       
-      // backlink for owner
-      if ($UserCollection->getParam('user_id') == $user['id'])
-      {
-        $template->assign('U_LIST', USER_COLLEC_PUBLIC);
-      }
-      
       // special template
       add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL+10, 2); // +10 to overload GThumb+
       
       // collection content
-      $template->assign('collection', $UserCollection->getCollectionInfo());
       $page['items'] = $UserCollection->getImages();
       
       // navigation bar

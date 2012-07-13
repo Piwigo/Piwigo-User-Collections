@@ -25,7 +25,7 @@ SELECT id
   if ($create)
   {
     $UserCollection = new UserCollection('new', array(), 'temp', 1);
-    return $UserCollection->getParam('col_id');
+    return $UserCollection->getParam('id');
   }
   
   return false;

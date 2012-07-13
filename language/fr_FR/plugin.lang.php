@@ -11,7 +11,6 @@ $lang['Unsaved collections'] = 'Collections temporaires';
 $lang['save'] = 'sauvegarder';
 $lang['set active'] = 'choisir comme collection active';
 $lang['Saved collections'] = 'Collections sauvegardées';
-$lang['Current collection:'] = 'Collection actuelle:';
 $lang['See all my collections'] = 'Voir toutes mes collections';
 $lang['Please give a name'] = 'Veuillez donner un nom';
 $lang['Invalid collection'] = 'Collection invalide';
@@ -20,7 +19,10 @@ $lang['Collections'] = 'Collections';
 $lang['Collection'] = 'Collection';
 $lang['Remove from collection'] = 'Supprimer de la collection';
 $lang['Add to collection'] = 'Ajouter à la collection';
-$lang['Display collection'] = 'Afficher';
 $lang['Clear collection'] = 'Vider';
+$lang['You have %d collections'] = 'Vous avez %d collections';
+$lang['active'] = 'active';
+$lang['Save'] = 'Sauvegarder';
+$lang['%d more...'] = 'et %d autres...';
 
 ?>

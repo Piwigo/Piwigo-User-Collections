@@ -215,45 +215,41 @@ SELECT id
 
 function user_collections_applymenu($menu_ref_arr)
 {
-  global $template, $conf, $UserCollection;
+  $max = 6;
+  
+  global $template, $conf, $user, $UserCollection;
   $menu = &$menu_ref_arr[0];
   
   if (($block = $menu->get_block('mbUserCollection')) != null)
   {
-    if (($col_id = get_current_collection_id(false)) !== false)
-    {
-      if (empty($UserCollection))
-      {
-        $UserCollection = new UserCollection($col_id);
-      }
+    $query = '
+SELECT *
+  FROM '.COLLECTIONS_TABLE.'
+  WHERE user_id = '.$user['id'].'
+  ORDER BY
+    active DESC,
+    date_creation DESC
+;';
+    $collections = array_values(hash_from_query($query, 'id'));
     
-      $data = array(
-        'current' => array(
-          'NAME' => $UserCollection->getParam('name'),
-          'NB_IMAGES' => $UserCollection->getParam('nb_images'),
-          ),
-        'links' => array(),
-        );
-        
-      if ($data['current']['NB_IMAGES'] > 0)
-      {
-        $data['links'] = array(
-          array(
-            'URL' => USER_COLLEC_PUBLIC.'edit/'.$UserCollection->getParam('col_id'),
-            'NAME' => l10n('Display collection'),
-            ),
-          array(
-            'URL' => USER_COLLEC_PUBLIC.'&amp;action=clear&amp;col_id='.$UserCollection->getParam('col_id'),
-            'NAME' => l10n('Clear collection'),
-            ),
-          );
-      }
+    $data['collections'] = array();
+    for ($i=0; $i<$max && $i<count($collections); $i++)
+    {
+      $collections[$i]['U_EDIT'] = USER_COLLEC_PUBLIC.'edit/'.$collections[$i]['id'];
+      array_push($data['collections'], $collections[$i]);
+    }
+    
+    $data['NB_COL'] = count($collections);
+    if ($data['NB_COL'] > $max)
+    {
+      $data['MORE'] = count($collections)-$max;
     }
     
     $data['U_LIST'] = USER_COLLEC_PUBLIC;
+    $data['U_CREATE'] = USER_COLLEC_PUBLIC.'&amp;action=new&amp;col_id=0&amp;redirect=true';
     
     $template->set_template_dir(USER_COLLEC_PATH . 'template/');
-    $block->set_title(l10n('Collections'));
+    $block->set_title('<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>');
     $block->template = 'menublock_user_collec.tpl';
     $block->data = $data;
   }

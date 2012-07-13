@@ -4,8 +4,16 @@
 jQuery("a.preview-box").colorbox({ldelim}
   rel: ".preview-box",
   title: function() {ldelim}
-    return $(this).attr("title") +' · <a href="'+ $(this).data('url') +'" target="_blank">{'jump to photo'|@translate} →</a>';
+    var title = $(this).attr("title");
+    {if $F_ACTION} title+= ' · <a href="{$collection_toggle_url}&amp;collection_toggle='+ $(this).data('id') +'" class="addCollection" data-id="'+ $(this).data('id') +'">{'Remove from collection'|@translate}</a>';{/if}
+    title+= ' · <a href="'+ $(this).data('url') +'" target="_blank">{'jump to photo'|@translate} →</a>';
+    return  title;
   }
+});
+jQuery(document).on("click", "#cboxTitle .addCollection", function() {ldelim}
+  jQuery.colorbox.close();
+  jQuery("#thumbnails a.addCollection[data-id='"+ $(this).data('id')+"']").trigger("click");
+  return false;
 });
 {/footer_script}
 
@@ -41,7 +49,7 @@ jQuery("a.preview-box").colorbox({ldelim}
 <li>
 	<span class="wrap1">
 		<span class="wrap2">
-		<a href="{$thumbnail.FILE_SRC}" class="preview-box" title="{$thumbnail.NAME}" data-url="{$thumbnail.URL}">
+		<a href="{$thumbnail.FILE_SRC}" class="preview-box" title="{$thumbnail.NAME}" data-url="{$thumbnail.URL}" data-id="{$thumbnail.id}">
 			<img class="thumbnail" {if $derivative->is_cached()}src="{$derivative->get_url()}"{else}src="{$ROOT_URL}{$themeconf.img_dir}/ajax-loader-small.gif" data-src="{$derivative->get_url()}"{/if} alt="{$thumbnail.TN_ALT}" title="{$thumbnail.TN_TITLE}">
 		</a>
 		</span>

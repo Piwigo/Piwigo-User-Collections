@@ -31,6 +31,4 @@
 {if !empty($navbar)}{include file='navigation_bar.tpl'|@get_extent:'navbar'}{/if}
 
 
-{if $U_LIST}<p style="text-align:center;font-weight:bold;margin:20px;"><a href="{$U_LIST}" rel="nofollow">{'Return to collections list'|@translate}</a></p>{/if}
-
 </div>{* <!-- content --> *}

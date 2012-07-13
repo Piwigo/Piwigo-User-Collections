@@ -16,7 +16,7 @@ class UserCollection
     global $user;
     
     $this->data = array(
-      'col_id' => 0,
+      'id' => 0,
       'user_id' => $user['id'],
       'name' => null,
       'date_creation' => '0000-00-00 00:00:00',
@@ -52,6 +52,7 @@ SELECT id
     {
       $query = '
 SELECT
+    id,
     user_id,
     name,
     date_creation,
@@ -68,7 +69,6 @@ SELECT
       
       if (pwg_db_num_rows($result))
       {
-        $this->data['col_id'] = $col_id;
         $this->data = array_merge(
           $this->data,
           pwg_db_fetch_assoc($result)
@@ -86,7 +86,7 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
         $query = '
 SELECT image_id
   FROM '.COLLECTION_IMAGES_TABLE.'
-  WHERE col_id = '.$this->data['col_id'].'
+  WHERE col_id = '.$this->data['id'].'
 ;';
         $this->images = array_from_query($query, 'image_id');
         
@@ -106,7 +106,7 @@ SELECT image_id
       $this->data['name'] = $name;
       $this->data['active'] = $active;
       $this->data['public'] = $public;
-      $this->data['public_id'] = 'uc'.hash('crc32', uniqid(serialize($this->data, true)));
+      $this->data['public_id'] = 'uc'.hash('crc32', uniqid(serialize($this->data), true));
       
       $query = '
 INSERT INTO '.COLLECTIONS_TABLE.'(
@@ -127,7 +127,7 @@ INSERT INTO '.COLLECTIONS_TABLE.'(
   )
 ;';
       pwg_query($query);
-      $this->data['col_id'] = pwg_db_insert_id();
+      $this->data['id'] = pwg_db_insert_id();
       
       $date = pwg_query('SELECT FROM_UNIXTIME(NOW());');
       list($this->data['date_creation']) = pwg_db_fetch_row($date);
@@ -145,7 +145,7 @@ UPDATE '.COLLECTIONS_TABLE.'
   SET active = 0
   WHERE
     user_id = '.$this->data['user_id'].'
-    AND id != '.$this->data['col_id'].'
+    AND id != '.$this->data['id'].'
 ;';
         pwg_query($query);
       }
@@ -164,7 +164,7 @@ UPDATE '.COLLECTIONS_TABLE.'
   function updateParam($name, $value)
   {
     $this->data[$name] = $value;
-    pwg_query('UPDATE '.COLLECTIONS_TABLE.' SET '.$name.' = "'.$value.'" WHERE id = '.$this->data['col_id'].';');
+    pwg_query('UPDATE '.COLLECTIONS_TABLE.' SET '.$name.' = "'.$value.'" WHERE id = '.$this->data['id'].';');
   }
   
   /**
@@ -212,7 +212,7 @@ UPDATE '.COLLECTIONS_TABLE.'
     $query = '
 DELETE FROM '.COLLECTION_IMAGES_TABLE.'
   WHERE 
-    col_id = '.$this->data['col_id'].'
+    col_id = '.$this->data['id'].'
     AND image_id IN('.implode(',', $image_ids).')
 ;';
     pwg_query($query);
@@ -236,7 +236,7 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
       if ($this->isInSet($image_id)) continue;
       
       array_push($this->images, $image_id);
-      array_push($inserts, array('col_id'=>$this->data['col_id'], 'image_id'=>$image_id));
+      array_push($inserts, array('col_id'=>$this->data['id'], 'image_id'=>$image_id));
     }
     
     mass_inserts(
@@ -274,7 +274,7 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
     
     $query = '
 DELETE FROM '.COLLECTION_IMAGES_TABLE.'
-  WHERE col_id = '.$this->data['col_id'].'
+  WHERE col_id = '.$this->data['id'].'
 ;';
     pwg_query($query);
   }
