@@ -28,8 +28,6 @@ $lang['Collections'] = 'Συλλογές';
 $lang['Copied'] = 'Αντιγράφτηκε ';
 $lang['Copy to clipboard'] = 'Αντιγραφή στο πρόχειρο';
 $lang['Create a new collection'] = 'Δημιουργήστε μια νέα συλλογή';
-$lang['Current collection:'] = 'Τρέχουσα συλλογή:';
-$lang['Display collection'] = 'Εμφάνιση';
 $lang['Invalid collection'] = 'Άκυρη συλλογή';
 $lang['Please give a name'] = 'Παρακαλούμε δώστε ένα όνομα';
 $lang['Public collection'] = 'Δημόσιο';
@@ -42,4 +40,8 @@ $lang['Unsaved collections'] = 'Οι μη αποθηκευμένες συλλο�
 $lang['by %s'] = 'από %s';
 $lang['save'] = 'αποθηκεύω';
 $lang['set active'] = 'ενεργοποιήστε';
+$lang['%d more...'] = '%d περισσότερα ...';
+$lang['Save'] = 'Αποθήκευση';
+$lang['You have %d collections'] = 'Έχετε %d συλλογές';
+$lang['active'] = 'ενεργός';
 ?>
