@@ -44,4 +44,6 @@ $lang['%d more...'] = '%d περισσότερα ...';
 $lang['Save'] = 'Αποθήκευση';
 $lang['You have %d collections'] = 'Έχετε %d συλλογές';
 $lang['active'] = 'ενεργός';
+$lang['You have %d collection'] = 'Έχετε %d συλλογή';
+$lang['You have no collection'] = 'Δεν έχετε καμία συλλογή';
 ?>
