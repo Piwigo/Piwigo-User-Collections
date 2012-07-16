@@ -20,7 +20,7 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['Add to collection'] = 'Добывить в коллекцию';
+$lang['Add to collection'] = 'Добавить в коллекцию';
 $lang['Clear collection'] = 'Очистить';
 $lang['Collection name:'] = 'Название коллекции:';
 $lang['Collection'] = 'Коллекция';
@@ -44,4 +44,6 @@ $lang['You have no collection'] = 'У вас нет коллекций';
 $lang['active'] = 'активная';
 $lang['save'] = 'сохранить';
 $lang['set active'] = 'сделать активной';
+$lang['%d more...'] = ' еще %d';
+$lang['by %s'] = 'к %s';
 ?>
