@@ -1,0 +1,1 @@
+Los usuarios registrados pueden guardar fotos en colecciones como un sistema de favoritos avanzado.
