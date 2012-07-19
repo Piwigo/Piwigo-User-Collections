@@ -1,0 +1,1 @@
+A regisztrált felhasználók a képeket gyűjteményekbe gyűjthetik a galériából. Egy fejlett "Kedvencek" funkció.
