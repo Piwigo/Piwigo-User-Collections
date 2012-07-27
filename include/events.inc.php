@@ -15,6 +15,8 @@ function user_collections_section_init()
 {
   global $tokens, $page, $conf;
   
+  define('USER_COLLEC_PUBLIC',     make_index_url(array('section' => 'collections')) . '/');
+
   if ($tokens[0] == 'collections')
   {
     $page['section'] = 'collections';
@@ -34,17 +36,6 @@ function user_collections_section_init()
       $page['col_id'] = $tokens[2];
     }
   }
-  
-  // if ( script_basename() == 'picture' and @$tokens[1] == 'collections' and preg_match('#^[0-9]+$#', @$tokens[2]) )
-  // {
-    // try
-    // {
-      // $UserCollection = new UserCollection($tokens[2]);
-      // $page['title'].= $conf['level_separator'].l10n('Collection').': <a href="'.USER_COLLEC_PUBLIC . 'view/'.$tokens[2].'">'.$UserCollection->getParam('name').'</a>';
-      // $page['items'] = $UserCollection->getImages();
-      // $page['col_id'] = $tokens[2];
-    // } catch (Exception $e) {}
-  // }
 }
 
 /* collections section */
@@ -124,7 +115,7 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
   // thumbnails buttons
   $template->assign(array(
     'USER_COLLEC_PATH' => USER_COLLEC_PATH,
-    'collection_toggle_url' =>  $self_url,
+    'collection_toggle_url' =>  add_url_params($self_url, array('collection_toggle'=>'')),
     ));
   $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_prefilter');
   
@@ -136,11 +127,11 @@ function user_collections_thumbnails_list_prefilter($content, &$smarty)
   // add links
   $search = '<span class="wrap1">';
   $replace = $search.'
-{strip}<a class="addCollection" href="{$collection_toggle_url}&amp;collection_toggle={$thumbnail.id}" data-id="{$thumbnail.id}" rel="nofollow">
+{strip}<a class="addCollection" href="{$collection_toggle_url}{$thumbnail.id}" data-id="{$thumbnail.id}" rel="nofollow">
 {if $COL_ID or $thumbnail.COLLECTION_SELECTED}
-{\'Remove from collection\'|@translate}&nbsp;<img src="{$USER_COLLEC_PATH}template/image_delete.png" title="{\'Remove from collection\'|@translate}">
+{\'Remove from collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/image_delete.png" title="{\'Remove from collection\'|@translate}">
 {else}
-{\'Add to collection\'|@translate}&nbsp;<img src="{$USER_COLLEC_PATH}template/image_add.png" title="{\'Add to collection\'|@translate}">
+{\'Add to collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/image_add.png" title="{\'Add to collection\'|@translate}">
 {/if}
 </a>{/strip}';
 
@@ -185,14 +176,14 @@ function user_collections_picture_page()
     $collection = false;
   }  
   
-  $url = duplicate_picture_url().'&amp;action=collection_toggle';    
+  $url = add_url_params(duplicate_picture_url(), array('action'=>'collection_toggle'));    
   
   $button = '
 <a href="'.$url.'" title="'.($collection?l10n('Remove from collection'):l10n('Add to collection')).'" class="pwg-state-default pwg-button" rel="nofollow">
-  <span class="pwg-icon" style="background:url(\''.USER_COLLEC_PATH.'template/image_'.($collection?'delete':'add').'.png\') center center no-repeat;"> </span>
+  <span class="pwg-icon" style="background:url(\''.get_root_url().USER_COLLEC_PATH.'template/image_'.($collection?'delete':'add').'.png\') center center no-repeat;"> </span>
   <span class="pwg-button-text">'.($collection?l10n('Remove from collection'):l10n('Add to collection')).'</span>
 </a>';
-    
+  // $template->add_picture_button($button, 50);
   $template->concat('PLUGIN_PICTURE_ACTIONS', $button);
 }
 
@@ -241,7 +232,7 @@ SELECT *
     }
     
     $data['U_LIST'] = USER_COLLEC_PUBLIC;
-    $data['U_CREATE'] = USER_COLLEC_PUBLIC.'&amp;action=new&amp;col_id=0&amp;redirect=true';
+    $data['U_CREATE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'new','col_id'=>'0','redirect'=>'true'));
     
     $template->set_template_dir(USER_COLLEC_PATH . 'template/');
     $block->set_title('<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>');

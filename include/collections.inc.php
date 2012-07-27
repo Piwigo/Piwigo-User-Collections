@@ -119,19 +119,19 @@ SELECT *
     {
       $col['date_creation'] = format_date($col['date_creation'], true);
       $col['U_EDIT'] = USER_COLLEC_PUBLIC.'edit/'.$col['id'];
-      $col['U_ACTIVE'] = USER_COLLEC_PUBLIC.'&amp;action=set_active&amp;col_id='.$col['id'];
-      $col['U_DELETE'] = USER_COLLEC_PUBLIC.'&amp;action=delete&amp;col_id='.$col['id'];
+      $col['U_ACTIVE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'set_active','col_id'=>$col['id']));
+      $col['U_DELETE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$col['id']));
       
       if (isset($pwg_loaded_plugins['BatchDownloader']))
       {
-        $col['U_DOWNLOAD'] = USER_COLLEC_PUBLIC.'view/'.$col['public_id'].'&amp;action=advdown_set';
+        $col['U_DOWNLOAD'] = add_url_params(USER_COLLEC_PUBLIC.'view/'.$col['public_id'], array('action'=>'advdown_set'));
       }
       
       // temporary collections are above save collections
       if ($col['name'] == 'temp')
       {
         $col['name'] = 'temp #'.$col['id'];
-        $col['U_SAVE'] = USER_COLLEC_PUBLIC.'&amp;action=save&amp;col_id='.$col['id'];
+        $col['U_SAVE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'save','col_id'=>$col['id']));
         $template->append('temp_col', $col);
       }
       else
@@ -140,7 +140,7 @@ SELECT *
       }
     }
     
-    $template->assign('U_CREATE', USER_COLLEC_PUBLIC.'&amp;action=new&amp;col_id=0');
+    $template->assign('U_CREATE', add_url_params(USER_COLLEC_PUBLIC, array('action'=>'new','col_id'=>'0')));
     break;
   }
   
@@ -201,7 +201,7 @@ SELECT *
       // collection content
       $col = $UserCollection->getCollectionInfo();
       $col['U_CLEAR'] = $self_url.'&amp;action=clear';
-      $col['U_DELETE'] = USER_COLLEC_PUBLIC.'&amp;action=delete&amp;col_id='.$page['col_id'];
+      $col['U_DELETE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$page['col_id']));
       $template->assign('collection', $col);
       
       $page['items'] = $UserCollection->getImages();
