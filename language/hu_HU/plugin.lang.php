@@ -42,4 +42,8 @@ $lang['You have no collection'] = 'Nincsenek gyűjtemények';
 $lang['active'] = 'aktív';
 $lang['by %s'] = 'összeállította: %s';
 $lang['set active'] = 'Aktiválás';
+$lang['save'] = 'ment';
+$lang['%d more...'] = '% több...';
+$lang['See all my collections'] = 'Az összes saját gyűjtemény';
+$lang['Please give a name'] = 'Kérjük adja meg a nevét';
 ?>
