@@ -20,30 +20,30 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['You have %d collections'] = 'tem %d colecções';
-$lang['You have no collection'] = 'Não tem nenhuma colecção';
-$lang['active'] = 'activo';
+$lang['You have %d collections'] = 'Tem %d colecções';
+$lang['You have no collection'] = 'Não tem colecção';
+$lang['active'] = 'Ativo';
 $lang['by %s'] = 'por %S';
-$lang['save'] = 'Salvaguardar';
-$lang['set active'] = 'escolher como colecção activa';
-$lang['%d more...'] = 'e % autros';
-$lang['Add to collection'] = 'acrescentar a colecção';
-$lang['Clear collection'] = 'esvaziar';
-$lang['Collection'] = 'colecção';
-$lang['Collection name:'] = 'nome da colecção';
-$lang['Collections'] = 'colecções';
-$lang['Copied'] = 'copia';
-$lang['Copy to clipboard'] = 'copiar na área de transferência';
-$lang['Create a new collection'] = 'criar uma nova colecção ';
-$lang['Invalid collection'] = 'colecção invalida';
-$lang['Please give a name'] = 'dé um nome';
-$lang['Public collection'] = 'publico';
-$lang['Remove from collection'] = 'suprimir a colecção';
-$lang['Return to collections list'] = 'Voltar a lista das colecções';
-$lang['Save'] = 'salvaguardar';
-$lang['Saved collections'] = 'colecções salvaguardadas';
-$lang['See all my collections'] = 'ver todas as colecções';
-$lang['This collection is empty'] = 'esta colecção esta vazia';
-$lang['Unsaved collections'] = 'colecções temporárias';
-$lang['You have %d collection'] = 'tem % colecções';
+$lang['save'] = 'Salvar';
+$lang['set active'] = 'Ativar';
+$lang['%d more...'] = '%d mais';
+$lang['Add to collection'] = 'acrescentar à colecção';
+$lang['Clear collection'] = 'Limpar';
+$lang['Collection'] = 'Colecção';
+$lang['Collection name:'] = 'Nome da colecção';
+$lang['Collections'] = 'Colecções';
+$lang['Copied'] = 'Copiado';
+$lang['Copy to clipboard'] = 'Copiar para área de trabalho';
+$lang['Create a new collection'] = 'Criar uma nova colecção ';
+$lang['Invalid collection'] = 'Colecção inválida';
+$lang['Please give a name'] = 'Atribua um nome';
+$lang['Public collection'] = 'Publico';
+$lang['Remove from collection'] = 'Apagar a colecção';
+$lang['Return to collections list'] = 'Voltar à lista das colecções';
+$lang['Save'] = 'Salvar';
+$lang['Saved collections'] = 'Colecções salvas';
+$lang['See all my collections'] = 'Ver todas as colecções';
+$lang['This collection is empty'] = 'Esta colecção esta vazia';
+$lang['Unsaved collections'] = 'Coleções não salvas';
+$lang['You have %d collection'] = 'Tem %d colecções';
 ?>
