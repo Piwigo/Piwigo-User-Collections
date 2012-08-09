@@ -88,5 +88,6 @@ jQuery(".save_col").click(function() {ldelim}
 </fieldset>
 {/if}
 
-{if $clear}<div style="clear: both;"></div>{/if}
+{if $clear}<div style="clear: both;"></div>
+</div>{/if}
 </div>{* <!-- content --> *}

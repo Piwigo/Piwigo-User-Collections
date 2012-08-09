@@ -11,3 +11,4 @@
 
 <div id="content">
 {$MENUBAR}
+<div>

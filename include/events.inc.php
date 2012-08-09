@@ -14,8 +14,6 @@ function user_collections_init()
 function user_collections_section_init()
 {
   global $tokens, $page, $conf;
-  
-  define('USER_COLLEC_PUBLIC', make_index_url(array('section' => 'collections')) . '/');
 
   if ($tokens[0] == 'collections')
   {
@@ -202,8 +200,6 @@ function user_collections_add_menublock($menu_ref_arr)
 function user_collections_applymenu($menu_ref_arr)
 {
   $max = 6;
-  
-  if (!defined('USER_COLLEC_PUBLIC')) define('USER_COLLEC_PUBLIC', make_index_url(array('section' => 'collections')) . '/');
   
   global $template, $conf, $user, $UserCollection;
   $menu = &$menu_ref_arr[0];

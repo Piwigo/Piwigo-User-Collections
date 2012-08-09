@@ -288,7 +288,10 @@ SELECT *
   }
 }
 
-$template->assign('USER_COLLEC_PATH', USER_COLLEC_PATH);
+$template->assign(array(
+  'USER_COLLEC_PATH' => USER_COLLEC_PATH,
+  'USER_COLLEC_ABS_PATH' => realpath(USER_COLLEC_PATH).'/',
+  ));
 
 
 function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $pictures)

@@ -291,7 +291,7 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
       'ACTIVE' => (bool)$this->data['active'],
       'PUBLIC' => (bool)$this->data['public'],
       'DATE_CREATION' => format_date($this->data['date_creation'], true),
-      'U_PUBLIC' => get_absolute_root_url().'collection/view/'.$this->data['public_id'],
+      'U_PUBLIC' => USER_COLLEC_PUBLIC . 'view/'.$this->data['public_id'],
       'IS_TEMP' =>  $this->data['name'] == 'temp',
       );
     
