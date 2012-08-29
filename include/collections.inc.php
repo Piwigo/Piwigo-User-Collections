@@ -16,7 +16,7 @@ switch ($page['sub_section'])
     $template->set_filename('index', dirname(__FILE__) . '/../template/list.tpl');
     
     // actions
-    if ( isset($_GET['action']) and filter_var($_GET['col_id'], FILTER_VALIDATE_INT) !== false )
+    if ( isset($_GET['action']) and preg_match('#^([0-9]+)$#', $_GET['col_id']) )
     {
       switch ($_GET['action'])
       {

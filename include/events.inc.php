@@ -3,12 +3,6 @@ defined('USER_COLLEC_PATH') or die('Hacking attempt!');
 
 # this file contains all functions directly called by the triggers #
 
-/* unserialize conf and load language */
-function user_collections_init()
-{
-  load_language('plugin.lang', USER_COLLEC_PATH);
-}
-
 
 /* define page section from url */
 function user_collections_section_init()
