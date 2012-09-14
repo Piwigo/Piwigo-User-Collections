@@ -2,7 +2,7 @@
 
 $lang['Copied'] = 'Copié';
 $lang['Public collection'] = 'Publique';
-$lang['Copy to clipboard'] = 'Copier dans le press-papier';
+$lang['Copy to clipboard'] = 'Copier dans le presse-papier';
 $lang['Return to collections list'] = 'Retourner à la liste des collections';
 $lang['This collection is empty'] = 'Cette collection est vide';
 $lang['Collection name:'] = 'Nom de la collection:';

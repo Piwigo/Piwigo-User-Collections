@@ -9,9 +9,13 @@ function bindZclip() {ldelim}
     copy:$("#publicURL .url").html(),
     afterCopy: function() {ldelim}
       $('.confirm').remove();
+      $("#publicURL .url").select();
       $('<span class="confirm" style="display:none;">{'Copied'|@translate}</span>').appendTo("#publicURL")
         .fadeIn(400).delay(1000).fadeOut(400, function(){ldelim} $(this).remove(); });
     }
+  });
+  $("#publicURL .url").click(function() {ldelim}
+    $(this).select();
   });
 }
 
@@ -61,7 +65,7 @@ jQuery("#actions input").click(function() {ldelim}
   <p>
     <label><input type="radio" name="public" value="0" {if not $collection.PUBLIC}checked="checked"{/if}> {'No'|@translate}</label>
     <label><input type="radio" name="public" value="1" {if $collection.PUBLIC}checked="checked"{/if}> {'Yes'|@translate}</label>
-    <span id="publicURL" {if not $collection.PUBLIC}style="display:none;"{/if}><span class="button" title="{'Copy to clipboard'|@translate}">&nbsp;</span><span class="url">{$collection.U_PUBLIC}</span></span>
+    <span id="publicURL" {if not $collection.PUBLIC}style="display:none;"{/if}><span class="button" title="{'Copy to clipboard'|@translate}">&nbsp;</span><input type="text" class="url" value="{$collection.U_PUBLIC}" size="{$collection.U_PUBLIC|strlen}"></span>
   </p>
   <p>
     <input type="submit" name="save_col" value="{'Save'|@translate}">
