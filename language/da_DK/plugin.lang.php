@@ -26,7 +26,7 @@ $lang['You have no collection'] = 'Du har ingen samlinger';
 $lang['active'] = 'aktiv';
 $lang['by %s'] = 'til %s';
 $lang['save'] = 'gem';
-$lang['set active'] = 'set til aktiv';
+$lang['set active'] = 'gør aktiv';
 $lang['%d more...'] = '%d mere...';
 $lang['Add to collection'] = 'Tilføj til samling';
 $lang['Clear collection'] = 'Ryd';
@@ -45,5 +45,5 @@ $lang['Save'] = 'Gem';
 $lang['Saved collections'] = 'Gemte samlinger';
 $lang['See all my collections'] = 'Vis alle mine samlinger';
 $lang['This collection is empty'] = 'Denne samling er tom';
-$lang['Unsaved collections'] = 'Ikke gemte samlinger';
+$lang['Unsaved collections'] = 'Ikke-gemte samlinger';
 ?>
