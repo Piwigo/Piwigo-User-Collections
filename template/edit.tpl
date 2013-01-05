@@ -5,7 +5,7 @@
 {footer_script require='jquery'}
 function bindZclip() {ldelim}
   jQuery("#publicURL .button").zclip({ldelim}
-    path:'{$USER_COLLEC_PATH}template/ZeroClipboard.swf',
+    path:'{$ROOT_URL}{$USER_COLLEC_PATH}template/ZeroClipboard.swf',
     copy:$("#publicURL .url").html(),
     afterCopy: function() {ldelim}
       $('.confirm').remove();

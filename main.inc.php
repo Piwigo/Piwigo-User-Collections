@@ -17,7 +17,7 @@ define('COLLECTIONS_TABLE',      $prefixeTable.'collections');
 define('COLLECTION_IMAGES_TABLE',$prefixeTable.'collection_images');
 define('USER_COLLEC_ADMIN',      get_root_url() . 'admin.php?page=plugin-UserCollections');
 define('USER_COLLEC_PUBLIC',     get_absolute_root_url() . make_index_url(array('section' => 'collections')) . '/');
-define('USER_COLLEC_VERSION',    '1.0.3');
+define('USER_COLLEC_VERSION',    'auto');
 
 
 add_event_handler('init', 'user_collections_init');
@@ -46,6 +46,7 @@ function user_collections_init()
   global $pwg_loaded_plugins;
   
   if (
+    USER_COLLEC_VERSION == 'auto' or
     $pwg_loaded_plugins['UserCollections']['version'] == 'auto' or
     version_compare($pwg_loaded_plugins['UserCollections']['version'], USER_COLLEC_VERSION, '<')
   )
@@ -53,7 +54,7 @@ function user_collections_init()
     include_once(USER_COLLEC_PATH . 'include/install.inc.php');
     user_collections_install();
     
-    if ($pwg_loaded_plugins['UserCollections']['version'] != 'auto')
+    if ( $pwg_loaded_plugins['UserCollections']['version'] != 'auto' and USER_COLLEC_VERSION != 'auto' )
     {
       $query = '
 UPDATE '. PLUGINS_TABLE .'

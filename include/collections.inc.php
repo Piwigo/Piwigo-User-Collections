@@ -177,7 +177,14 @@ SELECT *
       // save properties
       if (isset($_POST['save_col']))
       {
-        $UserCollection->updateParam('name', $_POST['name']);
+        if (empty($_POST['name']))
+        {
+          array_push($page['errors'], l10n('Please give a name'));
+        }
+        else
+        {
+          $UserCollection->updateParam('name', $_POST['name']);
+        }
         $UserCollection->updateParam('public', $_POST['public']);
       }
       
