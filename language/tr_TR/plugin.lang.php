@@ -21,7 +21,7 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['Add to collection'] = 'Koleksiyona ekle';
-$lang['Clear collection'] = 'Temizle';
+$lang['Clear'] = 'Temizle';
 $lang['Collection name:'] = 'Koleksiyon adı:';
 $lang['Collections'] = 'Koleksiyon';
 $lang['Collection'] = 'Koleksiyon';

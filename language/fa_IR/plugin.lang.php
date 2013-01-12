@@ -22,7 +22,7 @@
 // +-----------------------------------------------------------------------+
 $lang['%d more...'] = '%d بیشتر ...';
 $lang['Add to collection'] = 'افزودن به مجموعه';
-$lang['Clear collection'] = 'پاک کردن';
+$lang['Clear'] = 'پاک کردن';
 $lang['Collection'] = 'مجموعه';
 $lang['Collection name:'] = 'نام مجموعه:';
 $lang['Collections'] = 'مجموعه ها';

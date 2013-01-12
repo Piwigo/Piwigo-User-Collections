@@ -21,7 +21,7 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['Add to collection'] = 'Sammlung hinzufügen';
-$lang['Clear collection'] = 'Löschen';
+$lang['Clear'] = 'Löschen';
 $lang['Collection name:'] = 'Name der Sammlung:';
 $lang['Collection'] = 'Sammlung';
 $lang['Collections'] = 'Sammlungen';

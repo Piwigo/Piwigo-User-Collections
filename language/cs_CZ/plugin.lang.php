@@ -22,7 +22,7 @@
 // +-----------------------------------------------------------------------+
 $lang['%d more...'] = '%d více...';
 $lang['Add to collection'] = 'Přidat do sbírky';
-$lang['Clear collection'] = 'Vyčistit';
+$lang['Clear'] = 'Vyčistit';
 $lang['Collection name:'] = 'Jméno sbírky';
 $lang['Collection'] = 'Sbírka';
 $lang['Collections'] = 'Sbírky';

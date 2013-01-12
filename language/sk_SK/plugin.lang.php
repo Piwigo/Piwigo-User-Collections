@@ -21,7 +21,7 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['Add to collection'] = 'Pridať do kolekcie';
-$lang['Clear collection'] = 'Vyčistiť';
+$lang['Clear'] = 'Vyčistiť';
 $lang['Collection name:'] = 'Názov kolekcie:';
 $lang['Collection'] = 'Kolekcia';
 $lang['Collections'] = 'Kolekcie';

@@ -3,6 +3,15 @@ defined('USER_COLLEC_PATH') or die('Hacking attempt!');
 
 # this file contains all functions directly called by the triggers #
 
+/* compatibility fix with Gthumb+ */
+function user_collections_save_pagination()
+{
+  global $user, $page, $uc_nb_image_page_save;
+   
+  $uc_nb_image_page_save['user'] = $user['nb_image_page'];
+  $uc_nb_image_page_save['page'] = $page['nb_image_page'];
+}
+
 
 /* define page section from url */
 function user_collections_section_init()
@@ -121,9 +130,9 @@ function user_collections_thumbnails_list_prefilter($content, &$smarty)
   $replace = $search.'
 {strip}<a class="addCollection" href="{$collection_toggle_url}{$thumbnail.id}" data-id="{$thumbnail.id}" rel="nofollow">
 {if $COL_ID or $thumbnail.COLLECTION_SELECTED}
-{\'Remove from collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/image_delete.png" title="{\'Remove from collection\'|@translate}">
+{\'Remove from collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" title="{\'Remove from collection\'|@translate}">
 {else}
-{\'Add to collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/image_add.png" title="{\'Add to collection\'|@translate}">
+{\'Add to collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" title="{\'Add to collection\'|@translate}">
 {/if}
 </a>{/strip}';
 

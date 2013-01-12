@@ -28,7 +28,7 @@
   }
   #publicURL .button {
     display:inline-block;
-    background:#e7e7e7 url('link.png') center center no-repeat;
+    background:#e7e7e7 url('resources/link.png') center center no-repeat;
     width:25px;
     height:20px;
     vertical-align:bottom;
@@ -72,6 +72,26 @@
       display:block;
     }
   
+/* SEND BY MAIL */
+#mail_form {
+  width:540px;
+  padding:10px;
+}
+  #mail_form table td {
+    padding-bottom:5px;
+    text-align:left;
+  }
+  #mail_form table td.title {
+    font-weight:bold;
+    text-align:right !important;
+    padding-top:3px;
+    vertical-align:top;
+    width:120px;
+  }
+  #mail_form input[type="text"], #mail_form textarea, #mail_form select {
+    border-radius:2px;
+    padding:3px;
+  }
   
 /* TipTip CSS - Version 1.2 */
 #tiptip_holder {

@@ -29,7 +29,7 @@ $lang['set active'] = 'Está ativo';
 $lang['%d more...'] = '
 mais %d...';
 $lang['Add to collection'] = 'Adicione a coleção';
-$lang['Clear collection'] = 'Limpar';
+$lang['Clear'] = 'Limpar';
 $lang['Collection'] = 'Coleção';
 $lang['Collection name:'] = 'Nome da coleção:';
 $lang['Collections'] = 'Coleções';

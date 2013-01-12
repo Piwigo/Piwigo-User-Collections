@@ -5,6 +5,17 @@ function user_collections_install()
 {
   global $conf, $prefixeTable;
   
+  if (empty($conf['user_collections']))
+  {
+    $default_config = serialize(array(
+      'allow_mails' => true,
+      'allow_public' => true,
+      ));
+      
+    conf_update_param('user_collections', $default_config);
+    $conf['user_collections'] = $default_config;
+  }
+  
   // create tables
   $query = '
 CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collections` (
@@ -25,10 +36,17 @@ CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collections` (
 CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collection_images` (
   `col_id` mediumint(8) NOT NULL,
   `image_id` mediumint(8) NOT NULL,
+  `add_date` DATETIME NULL,
   UNIQUE KEY `UNIQUE` (`col_id`,`image_id`)
 ) DEFAULT CHARSET=utf8
 ;';
   pwg_query($query);
+  
+  $result = pwg_query('SHOW COLUMNS FROM `'.$prefixeTable.'collection_images` LIKE "add_date";');
+  if (!pwg_db_num_rows($result))
+  {
+    pwg_query('ALTER TABLE `'.$prefixeTable.'collection_images` ADD `add_date` DATETIME NULL;');
+  }
 }
 
 ?>

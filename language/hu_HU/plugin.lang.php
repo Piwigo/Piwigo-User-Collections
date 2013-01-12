@@ -21,7 +21,7 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['Add to collection'] = 'Gyűjteménybe';
-$lang['Clear collection'] = 'Kiürítés';
+$lang['Clear'] = 'Kiürítés';
 $lang['Collection name:'] = 'Gyűjtemény neve:';
 $lang['Collection'] = 'Gyűjtemény';
 $lang['Collections'] = 'Gyűjtemények';

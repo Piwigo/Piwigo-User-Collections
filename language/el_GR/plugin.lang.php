@@ -21,7 +21,7 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['Add to collection'] = 'Προσθήκη στη συλλογή';
-$lang['Clear collection'] = 'Καθαρίζω';
+$lang['Clear'] = 'Καθαρίζω';
 $lang['Collection name:'] = 'Όνομα Συλλογής';
 $lang['Collection'] = 'Συλλογή';
 $lang['Collections'] = 'Συλλογές';

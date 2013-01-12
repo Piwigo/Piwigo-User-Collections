@@ -22,7 +22,7 @@
 // +-----------------------------------------------------------------------+
 $lang['%d more...'] = '%d di più...';
 $lang['Add to collection'] = 'Aggiungi ad una raccolta';
-$lang['Clear collection'] = 'Cancella';
+$lang['Clear'] = 'Cancella';
 $lang['Collection name:'] = 'Nome della collezione:';
 $lang['Collection'] = 'Collezione';
 $lang['Collections'] = 'collezioni';

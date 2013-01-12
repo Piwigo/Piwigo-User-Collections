@@ -21,7 +21,7 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['Add to collection'] = 'Pievienot kolekcijai';
-$lang['Clear collection'] = 'Tīrs';
+$lang['Clear'] = 'Tīrs';
 $lang['Collection name:'] = 'Kolekcijas nosaukums:';
 $lang['Collection'] = 'Kolekcija';
 $lang['Collections'] = 'Kolekcijas';

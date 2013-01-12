@@ -16,14 +16,14 @@ jQuery(".addCollection").click(function() {ldelim}
     data: {ldelim} {if $COL_ID}"col_id": "{$COL_ID}", {/if}"toggle_id": toggle_id }
   }).done(function(msg) {ldelim}
     if (msg == "true") {ldelim}
-      $trigger.html('{'Remove from collection'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/image_delete.png" title="{'Remove from collection'|@translate}">');
+      $trigger.html('{'Remove from collection'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" title="{'Remove from collection'|@translate}">');
       jQuery(".nbImagesCollec").html(parseInt(jQuery(".nbImagesCollec").html()) +1);
     } else if (msg == "false") {ldelim}
     {if $COL_ID}
       $trigger.parent(".wrap1").hide("fast", function() {ldelim} $trigger.remove() });
       if (typeof batchdown_count != 'undefined') batchdown_count-=1;
     {else}
-      $trigger.html('{'Add to collection'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/image_add.png" title="{'Add to collection'|@translate}">');
+      $trigger.html('{'Add to collection'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" title="{'Add to collection'|@translate}">');
     {/if}
       jQuery(".nbImagesCollec").html(parseInt(jQuery(".nbImagesCollec").html()) -1);
     } else {ldelim}

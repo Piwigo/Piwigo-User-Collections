@@ -158,6 +158,7 @@ SELECT *
     
     $self_url = USER_COLLEC_PUBLIC . 'edit/'.$page['col_id'];
     $template->assign(array(
+      'user_collections' => $conf['user_collections'],
       'USER_COLLEC_PATH' => USER_COLLEC_PATH,
       'F_ACTION' => $self_url,
       'collection_toggle_url' => $self_url,
@@ -183,9 +184,47 @@ SELECT *
         }
         else
         {
-          $UserCollection->updateParam('name', $_POST['name']);
+          $UserCollection->updateParam('name', stripslashes($_POST['name']));
+        }
+        if (!$conf['user_collections']['allow_public'])
+        {
+          $_POST['public'] = '0';
         }
         $UserCollection->updateParam('public', $_POST['public']);
+      }
+      
+      // send mail
+      if ( $conf['user_collections']['allow_public'] and $conf['user_collections']['allow_mails'] )
+      {
+        $contact = array(
+            'sender_name' => $user['username'],
+            'sender_email' => $user['email'],
+            'recipient_name' => null,
+            'recipient_email' => null,
+            'nb_images' => 4,
+            'message' => null,
+            );
+            
+        if ( isset($_POST['send_mail']) and (bool)$UserCollection->getParam('public') )
+        {
+          $contact = array(
+            'sender_email' => trim($_POST['sender_email']),
+            'sender_name' => trim($_POST['sender_name']),
+            'recipient_email' => trim($_POST['recipient_email']),
+            'recipient_name' => trim($_POST['recipient_name']),
+            'nb_images' => $_POST['nb_images'],
+            'message' => $_POST['message'],
+            );
+            
+          $errors = $UserCollection->sendEmail($contact, @$_POST['key']);
+          if (count($errors))
+          {
+            $template->assign('uc_mail_errors', $errors);
+          }
+        }
+        
+        $contact['KEY'] = get_ephemeral_key(3);
+        $template->assign('contact', $contact);
       }
       
       // clear
@@ -201,34 +240,40 @@ SELECT *
         unset($_GET['collection_toggle']);
       }
       
-      // special template
-      add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL+10, 2); // +10 to overload GThumb+
+      // add links for colorbox
+      add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL, 2);
+      
+      // add remove item links
       $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_prefilter');
       
       // collection content
       $col = $UserCollection->getCollectionInfo();
+      $col['DATE_CREATION'] = format_date($col['DATE_CREATION'], true);
       $col['U_CLEAR'] = $self_url.'&amp;action=clear';
       $col['U_DELETE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$page['col_id']));
       $template->assign('collection', $col);
-      
       $page['items'] = $UserCollection->getImages();
       
-      // navigation bar
-      $page['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
-      if (count($page['items']) > $page['nb_image_page'])
+      // toolbar buttons
+      $buttons = null;
+      if ($conf['user_collections']['allow_public'] and $conf['user_collections']['allow_mails'])
       {
-        $page['navigation_bar'] = create_navigation_bar(
-          $self_url,
-          count($page['items']),
-          $page['start'],
-          $page['nb_image_page'],
-          false
-          );
-        $template->assign('navbar', $page['navigation_bar']);
+        $buttons.= '<li><a class="mail_colorbox_open" href="#mail_form" title="'.l10n('Send this collection my mail').'" class="pwg-state-default pwg-button" rel="nofollow" '.(!$col['PUBLIC']?'onClick="alert(\''.l10n('The collection must be public in order to send it').'\');return false;"':null).'>
+          <span class="pwg-icon user-collections-delete-icon" style="background:url(\'' . get_root_url().USER_COLLEC_PATH . 'template/resources/mail.png\') center center no-repeat;">&nbsp;</span><span class="pwg-button-text">'.l10n('Send').'</span>
+        </a></li>';
       }
+      $buttons.= '
+        <li><a href="'. $col['U_CLEAR'] .'" title="'.l10n('Clear this collection').'" class="pwg-state-default pwg-button" rel="nofollow" onClick="return confirm(\''.l10n('Are you sure?').'\');">
+          <span class="pwg-icon user-collections-delete-icon" style="background:url(\'' . get_root_url().USER_COLLEC_PATH . 'template/resources/bin.png\') center center no-repeat;">&nbsp;</span><span class="pwg-button-text">'.l10n('Clear').'</span>
+        </a></li>
+        <li><a href="'. $col['U_DELETE'] .'" title="'.l10n('Delete this collection').'" class="pwg-state-default pwg-button" rel="nofollow" onClick="return confirm(\''.l10n('Are you sure?').'\');">
+          <span class="pwg-icon user-collections-delete-icon" style="background:url(\'' . get_root_url().USER_COLLEC_PATH . 'template/resources/delete.png\') center center no-repeat;">&nbsp;</span><span class="pwg-button-text">'.l10n('Delete').'</span>
+        </a></li>';
+      $template->concat('COLLECTION_ACTIONS', $buttons);
       
-      // display
-      include(PHPWG_ROOT_PATH . 'include/category_default.inc.php');
+      // thumbnails
+      define('USER_COLLEC_REMOVE_GTHUMB', true);
+      include(USER_COLLEC_PATH . '/include/display_thumbnails.inc.php');
       
       $template->concat('TITLE', $conf['level_separator'].$UserCollection->getParam('name'));
     }
@@ -244,7 +289,7 @@ SELECT *
   case 'view':
   {
     // security
-    if ( empty($page['col_id']) or strlen($page['col_id']) != 10 or strpos($page['col_id'], 'uc') === false )
+    if ( empty($page['col_id']) or strlen($page['col_id']) != 10 or strpos($page['col_id'], 'uc') === false or !$conf['user_collections']['allow_public'] )
     {
       $_SESSION['page_errors'][] = l10n('Invalid collection');
       redirect('index.php');
@@ -256,30 +301,12 @@ SELECT *
     
     try {
       $UserCollection = new UserCollection($page['col_id']);
-      
-      // special template
-      add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL+10, 2); // +10 to overload GThumb+
-      
-      // collection content
       $page['items'] = $UserCollection->getImages();
       
-      // navigation bar
-      $page['start'] = isset($_GET['start']) ? $_GET['start'] : 0;
-      if (count($page['items']) > $page['nb_image_page'])
-      {
-        $page['navigation_bar'] = create_navigation_bar(
-          $self_url,
-          count($page['items']),
-          $page['start'],
-          $page['nb_image_page'],
-          false
-          );
-        $template->assign('navbar', $page['navigation_bar']);
-      }
+      // thumbnails
+      include(USER_COLLEC_PATH . '/include/display_thumbnails.inc.php');
       
-      // display
-      include(PHPWG_ROOT_PATH . 'include/category_default.inc.php');
-      
+      // add username in title
       include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
       $template->concat('TITLE', 
         $conf['level_separator'].$UserCollection->getParam('name').
@@ -294,6 +321,7 @@ SELECT *
     break;
   }
 }
+
 
 $template->assign(array(
   'USER_COLLEC_PATH' => USER_COLLEC_PATH,

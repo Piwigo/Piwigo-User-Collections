@@ -43,7 +43,7 @@ $lang['Copied'] = '已复制';
 $lang['Collections'] = '精选集';
 $lang['Collection name:'] = '精选集名称：';
 $lang['Collection'] = '精选集';
-$lang['Clear collection'] = '清除';
+$lang['Clear'] = '清除';
 $lang['Add to collection'] = '添加到精选集';
 $lang['%d more...'] = '%d 更多...';
 ?>
