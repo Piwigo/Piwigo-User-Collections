@@ -181,7 +181,7 @@ function user_collections_picture_page()
   
   $button = '
 <a href="'.$url.'" title="'.($collection?l10n('Remove from collection'):l10n('Add to collection')).'" class="pwg-state-default pwg-button" rel="nofollow">
-  <span class="pwg-icon" style="background:url(\''.get_root_url().USER_COLLEC_PATH.'template/image_'.($collection?'delete':'add').'.png\') center center no-repeat;"> </span>
+  <span class="pwg-icon" style="background:url(\''.get_root_url().USER_COLLEC_PATH.'template/resources/image_'.($collection?'delete':'add').'.png\') center center no-repeat;"> </span>
   <span class="pwg-button-text">'.($collection?l10n('Remove from collection'):l10n('Add to collection')).'</span>
 </a>';
   // $template->add_picture_button($button, 50);

@@ -47,13 +47,13 @@ $("input[name='download']").click(function() {
   </ul>
   
   <p class="formButtons">
-    <input type="submit" name="generate" value="{'Generate'|@translate}">
+    <input type="submit" name="generate" value="{'Preview'|@translate}">
     <input type="submit" name="download" value="{'Download CSV file'|@translate}">
   </p>    
 </fieldset>
 
 <fieldset id="iframeWrapper" style="display:none;">
-  <legend>{'Output'|@translate}</legend>
+  <legend>{'Preview'|@translate}</legend>
   <iframe src="" id="invokeFrame" name="invokeFrame"></iframe>
 </fieldset>
 </form>

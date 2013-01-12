@@ -32,9 +32,8 @@ $lang['Allow users to send their public collections by mail'] = 'Les utilisateur
 $lang['Fields'] = 'Champs';
 $lang['Active'] = 'Actifs';
 $lang['Inactive'] = 'Inactifs';
-$lang['Generate'] = 'Générer';
 $lang['Download CSV file'] = 'Télécharger le fichier CSV';
-$lang['Output'] = 'Aperçu';
+$lang['Preview'] = 'Aperçu';
 $lang['Number of images'] = 'Nombre d\'images';
 $lang['Edit this collection'] = 'Editer celle collection';
 $lang['Export image list'] = 'Exporter la liste d\'images';
@@ -56,5 +55,7 @@ $lang['Recipient e-mail'] = 'E-mail du destinataire';
 $lang['Message (optional)'] = 'Message (optionel)';
 $lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = 'Bonjour <b>%s</b>, %s vous a envoyé une collection de photos depuis <a href="%s">%s</a>';
 $lang['Click here to view the complete collection'] = 'Cliquez ici pour voir la collection complète';
+$lang['Date added to collection, new &rarr; old'] = 'Date d\'ajout à la collection, récent &rarr; ancien';
+$lang['Date added to collection, old &rarr; new'] = 'Date d\'ajout à la collection, ancien &rarr; récent';
 
 ?>

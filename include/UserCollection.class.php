@@ -417,14 +417,8 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
       
       if ($result == false)
       {
-        $_SESSION['page_errors'][] = l10n('Error while sending e-mail');
+        array_push($errors, l10n('Error while sending e-mail'));
       }
-      else
-      {
-        $_SESSION['page_infos'][] = l10n('E-mail sent successfully');
-      }
-      
-      redirect();
     }
     
     return $errors;
@@ -508,7 +502,9 @@ SELECT
    * generate a listing of the collection
    */
   function serialize($params)
-  {      
+  {
+    $params = array_intersect($params, array('id','file','name','url','path'));
+    
     $content = null;
      
     // get images infos
@@ -531,6 +527,8 @@ SELECT
       $root_url = get_root_url();
       
       $fp = fopen('php://temp', 'r+');
+      fputcsv($fp, $params);
+        
       foreach ($pictures as $row)
       {
         $element = array();
