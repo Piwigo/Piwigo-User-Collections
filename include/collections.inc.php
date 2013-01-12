@@ -249,15 +249,10 @@ SELECT *
         unset($_GET['collection_toggle']);
       }
       
-      
-      // add links for colorbox
-      add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL, 2);
-      
       // add remove item links
       $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_prefilter');
       
       // thumbnails
-      define('USER_COLLEC_REMOVE_GTHUMB', true);
       include(USER_COLLEC_PATH . '/include/display_thumbnails.inc.php');
       
       
@@ -334,9 +329,7 @@ SELECT *
 
 function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $pictures)
 {
-  global $template, $page;
-  
-  $template->set_filename('index_thumbnails', dirname(__FILE__).'/../template/thumbnails.tpl');
+  global $template;
   
   foreach ($tpl_thumbnails_var as &$thumbnail)
   {
@@ -353,7 +346,21 @@ function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $picture
       );
   }
   
+  $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
+  
   return $tpl_thumbnails_var;
+}
+
+function user_collections_add_colorbox($content)
+{
+  // add datas
+  $search = '<a href="{$thumbnail.URL}"';
+  $replace = $search.' class="preview-box" data-src="{$thumbnail.FILE_SRC}" data-id="{$thumbnail.id}"';
+  
+  // colorbox script
+  $content.= file_get_contents(USER_COLLEC_PATH.'template/thumbnails_colorbox.tpl');
+  
+  return str_replace($search, $replace, $content);
 }
 
 ?>

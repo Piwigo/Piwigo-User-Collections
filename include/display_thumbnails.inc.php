@@ -74,17 +74,8 @@ if (count($page['items']) > $page['nb_image_page'])
   $template->assign('navbar', $page['navigation_bar']);
 }
 
-
-// display
-if (defined('USER_COLLEC_REMOVE_GTHUMB'))
-{
-  global $uc_nb_image_page_save;
-
-  $user['nb_image_page'] = $uc_nb_image_page_save['user'];
-  $page['nb_image_page'] = $uc_nb_image_page_save['page'];
-  remove_event_handler('loc_end_index_thumbnails', 'process_GThumb', 50);
-  remove_event_handler('loc_end_index', 'GThumb_remove_thumb_size');
-}
+// add links for colorbox
+add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL, 2);
 
 include(PHPWG_ROOT_PATH . 'include/category_default.inc.php');
 

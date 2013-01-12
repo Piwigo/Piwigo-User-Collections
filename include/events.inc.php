@@ -1,18 +1,9 @@
 <?php
 defined('USER_COLLEC_PATH') or die('Hacking attempt!');
 
-# this file contains all functions directly called by the triggers #
-
-/* compatibility fix with Gthumb+ */
-function user_collections_save_pagination()
-{
-  global $user, $page, $uc_nb_image_page_save;
-   
-  $uc_nb_image_page_save['user'] = $user['nb_image_page'];
-  $uc_nb_image_page_save['page'] = $page['nb_image_page'];
-}
-
-
+// +-----------------------------------------------------------------------+
+// | SECTION INIT
+// +-----------------------------------------------------------------------+
 /* define page section from url */
 function user_collections_section_init()
 {
@@ -51,7 +42,10 @@ function user_collections_page()
 }
 
 
-/* add buttons on thumbnails list */
+// +-----------------------------------------------------------------------+
+// | CATEGORY PAGE
+// +-----------------------------------------------------------------------+
+/* toggle an image, in case of no javascript or first call (must create the collection) */
 function user_collections_index_actions()
 {
   if (is_a_guest()) return;
@@ -70,14 +64,18 @@ function user_collections_index_actions()
   }
 }
 
+/* add buttons on thumbnails list */
 function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
 {
   if (is_a_guest()) return $tpl_thumbnails_var;
   
   global $page, $template, $UserCollection;
   
-  // the prefilter is different on collection page
-  if (isset($page['section']) and ($page['section'] == 'collections' or $page['section'] == 'download')) return $tpl_thumbnails_var;
+  // the content is different on collection edition page and no button on batch downloader set edition page
+  if ( (@$page['section'] == 'collections' and @$page['sub_section']=='edit') or @$page['section'] == 'download')
+  {
+    return $tpl_thumbnails_var;
+  }
   
   // get existing collections
   $col_id = get_current_collection_id(false);
@@ -95,14 +93,14 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
     $collection = array();
   }
   
-  // if the collection is created we don't use AJAX to force menu refresh
+  // if the collection doesn't exists we don't use AJAX to force menu refresh
   if ($col_id === false)
   {
     $template->assign('NO_AJAX', true);
   }
   
-  
-  $self_url = duplicate_index_url(array(), array('collection_toggle'));  
+  // template vars
+  $url = duplicate_index_url(array(), array('collection_toggle'));  
   
   foreach ($tpl_thumbnails_var as &$thumbnail)
   {
@@ -113,11 +111,12 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
   }
   unset($thumbnail);
   
-  // thumbnails buttons
   $template->assign(array(
     'USER_COLLEC_PATH' => USER_COLLEC_PATH,
-    'collection_toggle_url' =>  add_url_params($self_url, array('collection_toggle'=>'')),
+    'collection_toggle_url' =>  add_url_params($url, array('collection_toggle'=>'')),
     ));
+  
+  // thumbnails buttons
   $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_prefilter');
   
   return $tpl_thumbnails_var;
@@ -126,23 +125,27 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
 function user_collections_thumbnails_list_prefilter($content, &$smarty)
 {
   // add links
-  $search = '<span class="wrap1">';
-  $replace = $search.'
+  $search = '#(<span class="wrap1">|<li class="gthumb">)#';
+  $replace = '$1
 {strip}<a class="addCollection" href="{$collection_toggle_url}{$thumbnail.id}" data-id="{$thumbnail.id}" rel="nofollow">
-{if $COL_ID or $thumbnail.COLLECTION_SELECTED}
+<span class="uc_remove" {if not $COL_ID and not $thumbnail.COLLECTION_SELECTED}style="display:none;"{/if}>
 {\'Remove from collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" title="{\'Remove from collection\'|@translate}">
-{else}
+</span>
+<span class="uc_add" {if $COL_ID or $thumbnail.COLLECTION_SELECTED}style="display:none;"{/if}>
 {\'Add to collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" title="{\'Add to collection\'|@translate}">
-{/if}
+</span>
 </a>{/strip}';
 
   // custom CSS and AJAX request
   $content.= file_get_contents(USER_COLLEC_PATH.'template/thumbnails_css_js.tpl');
-
-  return str_replace($search, $replace, $content);
+  
+  return preg_replace($search, $replace, $content);
 }
 
 
+// +-----------------------------------------------------------------------+
+// | PICTURE PAGE
+// +-----------------------------------------------------------------------+
 /* add button on picture page */
 function user_collections_picture_page()
 {
@@ -189,7 +192,10 @@ function user_collections_picture_page()
 }
 
 
-/* menu block */
+// +-----------------------------------------------------------------------+
+// | MENU BLOCK
+// +-----------------------------------------------------------------------+
+/* register block */
 function user_collections_add_menublock($menu_ref_arr)
 {
   if (is_a_guest()) return;
@@ -200,12 +206,20 @@ function user_collections_add_menublock($menu_ref_arr)
   $menu->register_block(new RegisteredBlock('mbUserCollection', l10n('Collections'), 'UserCollection'));
 }
 
+/* fill block */
 function user_collections_applymenu($menu_ref_arr)
 {
   $max = 6;
   
-  global $template, $conf, $user, $UserCollection;
+  global $template, $page, $conf, $user, $UserCollection;
   $menu = &$menu_ref_arr[0];
+  
+  // the editable counter is for the active collection, except if we are currently editing a collection
+  $col_in_edit = 0;
+  if ( @$page['section'] == 'collections' and @$page['sub_section']=='edit' and !empty($page['col_id']) )
+  {
+    $col_in_edit = $page['col_id'];
+  }
   
   if (($block = $menu->get_block('mbUserCollection')) != null)
   {
@@ -222,6 +236,7 @@ SELECT *
     $data['collections'] = array();
     for ($i=0; $i<$max && $i<count($collections); $i++)
     {
+      $collections[$i]['count_handler'] = $col_in_edit!=0 ? $collections[$i]['id']==$col_in_edit : $collections[$i]['active'];
       $collections[$i]['U_EDIT'] = USER_COLLEC_PUBLIC.'edit/'.$collections[$i]['id'];
       array_push($data['collections'], $collections[$i]);
     }

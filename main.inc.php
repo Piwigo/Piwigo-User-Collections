@@ -31,13 +31,12 @@ if (defined('IN_ADMIN'))
 else
 {
   // collections page
-  add_event_handler('loc_begin_index', 'user_collections_save_pagination', EVENT_HANDLER_PRIORITY_NEUTRAL-10);
   add_event_handler('loc_end_section_init', 'user_collections_section_init');
   add_event_handler('loc_end_index', 'user_collections_page', EVENT_HANDLER_PRIORITY_NEUTRAL-10);
 
   // thumbnails actions
   add_event_handler('loc_end_index', 'user_collections_index_actions');
-  add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_list', EVENT_HANDLER_PRIORITY_NEUTRAL, 2);
+  add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_list', EVENT_HANDLER_PRIORITY_NEUTRAL-10, 2);
 
   // picture action
   add_event_handler('loc_end_picture', 'user_collections_picture_page');
