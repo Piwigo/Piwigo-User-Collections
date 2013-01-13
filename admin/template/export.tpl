@@ -19,9 +19,16 @@ $("input[name='generate']").click(function() {
   return false;
 });
 
+$("#invokeFrame").load(function() {
+  $(this).css('height', $(this).contents().find('body').outerHeight(true)+10);
+});
+
 $("input[name='download']").click(function() {
   $("#fields_active li").each(function() {
-    $("#export_form").append('<input type="hidden" name="content[]" value="'+ $(this).data('name') +'"/>');
+    $("#export_form").append('<input type="hidden" name="active[]" value="'+ $(this).data('name') +'"/>');
+  });
+  $("#fields_inactive li").each(function() {
+    $("#export_form").append('<input type="hidden" name="inactive[]" value="'+ $(this).data('name') +'"/>');
   });
 });
 {/literal}{/footer_script}
@@ -36,14 +43,15 @@ $("input[name='download']").click(function() {
   <legend>{'Fields'|@translate}</legend>
   <ul id="fields_active" class="connectedSortable">
     <h4>{'Active'|@translate}</h4>
-    <li data-name="id"><img src="{$themeconf.admin_icon_dir}/cat_move.png"> id</li>
-    <li data-name="name"><img src="{$themeconf.admin_icon_dir}/cat_move.png"> name</li>
-    <li data-name="path"><img src="{$themeconf.admin_icon_dir}/cat_move.png"> path</li>
+  {foreach from=$active_fields item=field}
+    <li data-name="{$field}"><img src="{$themeconf.admin_icon_dir}/cat_move.png"> {$field}</li>
+  {/foreach}
   </ul>
   <ul id="fields_inactive" class="connectedSortable">
     <h4>{'Inactive'|@translate}</h4>
-    <li data-name="file"><img src="{$themeconf.admin_icon_dir}/cat_move.png"> file</li>
-    <li data-name="url"><img src="{$themeconf.admin_icon_dir}/cat_move.png"> url</li>
+  {foreach from=$inactive_fields item=field}
+    <li data-name="{$field}"><img src="{$themeconf.admin_icon_dir}/cat_move.png"> {$field}</li>
+  {/foreach}
   </ul>
   
   <p class="formButtons">

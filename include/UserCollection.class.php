@@ -503,7 +503,7 @@ SELECT
    */
   function serialize($params)
   {
-    $params = array_intersect($params, array('id','file','name','url','path'));
+    $params = array_intersect($params, array('id','file','name','url','path','date_creation','collection_add_date','filesize','width','height'));
     
     $content = null;
      
@@ -513,9 +513,15 @@ SELECT
     id,
     file,
     name,
-    path
+    path,
+    date_creation,
+    filesize,
+    width,
+    height,
+    add_date AS collection_add_date
   FROM '.IMAGES_TABLE.'
-  WHERE id IN('.implode(',', $this->images).')
+    JOIN '.COLLECTION_IMAGES_TABLE.' ON id = image_id
+  WHERE col_id = '.$this->data['id'].'
   ORDER BY id
 ;';
     $pictures = hash_from_query($query, 'id');
@@ -536,16 +542,14 @@ SELECT
         {
           switch ($field)
           {
-          case 'id':
-            $element[] = $row['id']; break;
-          case 'file':
-            $element[] = $row['file']; break;
           case 'name':
             $element[] = render_element_name($row); break;
           case 'url':
             $element[] = make_picture_url(array('image_id'=>$row['id'], 'image_file'=>$row['file'])); break;
           case 'path':
             $element[] = $root_url.ltrim($row['path'], './'); break;
+          default:
+            $element[] = $row[$field]; break;
           }
         }
         if (!empty($element))

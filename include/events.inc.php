@@ -125,7 +125,7 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
 function user_collections_thumbnails_list_prefilter($content, &$smarty)
 {
   // add links
-  $search = '#(<span class="wrap1">|<li class="gthumb">)#';
+  $search = '#(<li>|<li class="gthumb">)#';
   $replace = '$1
 {strip}<a class="addCollection" href="{$collection_toggle_url}{$thumbnail.id}" data-id="{$thumbnail.id}" rel="nofollow">
 <span class="uc_remove" {if not $COL_ID and not $thumbnail.COLLECTION_SELECTED}style="display:none;"{/if}>
