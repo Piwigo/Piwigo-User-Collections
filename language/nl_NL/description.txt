@@ -1,1 +1,1 @@
-Aangemelde gebruikers kunnen afbeeldingen uit de galerij selecteren en ze opslaan in verzamelingen als bijzondere favorieten. 
+Aangemelde gebruikers kunnen afbeeldingen uit de galerij selecteren en ze opslaan in verzamelingen - een geavanceerde "favorieten"-functie.
