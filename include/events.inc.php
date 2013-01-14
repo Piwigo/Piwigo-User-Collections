@@ -98,9 +98,13 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
   {
     $template->assign('NO_AJAX', true);
   }
+  else
+  {
+    $template->assign('AJAX_COL_ID', $col_id );
+  }
   
   // template vars
-  $url = duplicate_index_url(array(), array('collection_toggle'));  
+  $url = duplicate_index_url(array(), array('collection_toggle'));
   
   foreach ($tpl_thumbnails_var as &$thumbnail)
   {
@@ -108,12 +112,12 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
     {
       $thumbnail['COLLECTION_SELECTED'] = true;
     }
+    $thumbnail['COLLECTION_TOGGLE_URL'] = add_url_params($url, array('collection_toggle'=>$thumbnail['id']));
   }
   unset($thumbnail);
   
   $template->assign(array(
     'USER_COLLEC_PATH' => USER_COLLEC_PATH,
-    'collection_toggle_url' =>  add_url_params($url, array('collection_toggle'=>'')),
     ));
   
   // thumbnails buttons
@@ -127,11 +131,11 @@ function user_collections_thumbnails_list_prefilter($content, &$smarty)
   // add links
   $search = '#(<li>|<li class="gthumb">)#';
   $replace = '$1
-{strip}<a class="addCollection" href="{$collection_toggle_url}{$thumbnail.id}" data-id="{$thumbnail.id}" rel="nofollow">
-<span class="uc_remove" {if not $COL_ID and not $thumbnail.COLLECTION_SELECTED}style="display:none;"{/if}>
+{strip}<a class="addCollection" href="{$thumbnail.COLLECTION_TOGGLE_URL}" data-id="{$thumbnail.id}" data-stat="{if $thumbnail.COLLECTION_SELECTED}remove{else}add{/if}" rel="nofollow">
+<span class="uc_remove" {if not $thumbnail.COLLECTION_SELECTED}style="display:none;"{/if}>
 {\'Remove from collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" title="{\'Remove from collection\'|@translate}">
 </span>
-<span class="uc_add" {if $COL_ID or $thumbnail.COLLECTION_SELECTED}style="display:none;"{/if}>
+<span class="uc_add" {if $thumbnail.COLLECTION_SELECTED}style="display:none;"{/if}>
 {\'Add to collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" title="{\'Add to collection\'|@translate}">
 </span>
 </a>{/strip}';

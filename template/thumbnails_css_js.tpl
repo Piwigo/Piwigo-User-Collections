@@ -7,29 +7,46 @@ li:hover .addCollection {ldelim} display:block !important; }
 {if not $NO_AJAX}
 {footer_script require='jquery'}
 jQuery(".addCollection").click(function() {ldelim}
-  var toggle_id = jQuery(this).data("id");
   var $trigger = jQuery(this);
+  var toggle_id = $trigger.data("id");
+  var method = $trigger.data("stat");
+  
+  if (method != "add" && method != "remove") {ldelim}
+    $trigger.html("{'Un unknown error occured'|@translate}");
+    return false;
+  }
   
   jQuery.ajax({ldelim}
-    type: "POST",
-    url: "{$ROOT_URL}{$USER_COLLEC_PATH}toggle_image.php",
-    data: {ldelim} {if $COL_ID}"col_id": "{$COL_ID}", {/if}"toggle_id": toggle_id }
-  }).done(function(msg) {ldelim}
-    if (msg == "true") {ldelim}
-      $trigger.children(".uc_remove").show();
-      $trigger.children(".uc_add").hide();
-      jQuery(".nbImagesCollec").html(parseInt(jQuery(".nbImagesCollec").html()) +1);
-    } else if (msg == "false") {ldelim}
-    {if $COL_ID}
-      $trigger.parent(".wrap1, .gthumb").hide("fast", function() {ldelim} $trigger.remove() });
-      if (typeof batchdown_count != 'undefined') batchdown_count-=1;
-    {else}
-      $trigger.children(".uc_remove").hide();
-      $trigger.children(".uc_add").show();
-    {/if}
-    jQuery(".nbImagesCollec").html(parseInt(jQuery(".nbImagesCollec").html()) -1);
-    } else {ldelim}
-      $trigger.html('{'Un unknown error occured'|@translate}');
+    type: "GET",
+    dataType: "json",
+    url: "{$ROOT_URL}ws.php",
+    data: {ldelim} "format": "json", "method": "pwg.collections."+method+"Images", "col_id": {$AJAX_COL_ID}, "image_ids": toggle_id },
+    success: function(data) {ldelim}
+      if (data['stat'] == 'ok') {ldelim}
+        if (method == "add") {ldelim}
+          $trigger.children(".uc_remove").show();
+          $trigger.children(".uc_add").hide();
+          $trigger.data("stat", "remove");
+        }
+        else if (method == "remove") {ldelim}
+        {if $UC_IN_EDIT}
+          $trigger.parent(".wrap1, .gthumb").hide("fast", function() {ldelim} $(this).remove() });
+          if (typeof batchdown_count != 'undefined') batchdown_count-=1;
+        {else}
+          $trigger.children(".uc_remove").hide();
+          $trigger.children(".uc_add").show();
+          $trigger.data("stat", "add");
+        {/if}
+        }
+        
+        jQuery(".nbImagesCollec").html(data['result']['nb_images']);
+      }
+      else {ldelim}
+        $trigger.html("{'Un unknown error occured'|@translate}");
+      }
+    },
+    error: function() {ldelim}
+      $trigger.html("{'Un unknown error occured'|@translate}");
     }
   });
   

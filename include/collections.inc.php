@@ -168,7 +168,8 @@ SELECT *
       'F_ACTION' => $self_url,
       'collection_toggle_url' => $self_url,
       'U_LIST' => USER_COLLEC_PUBLIC,
-      'COL_ID' => $page['col_id'],
+      'AJAX_COL_ID' => $page['col_id'],
+      'UC_IN_EDIT' => true,
       ));
     
     try {
@@ -329,7 +330,9 @@ SELECT *
 
 function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $pictures)
 {
-  global $template;
+  global $template, $page;
+  
+  $url = USER_COLLEC_PUBLIC . 'edit/'.$page['col_id'];
   
   foreach ($tpl_thumbnails_var as &$thumbnail)
   {
@@ -344,6 +347,9 @@ function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $picture
         ),
         array('start')
       );
+      
+    $thumbnail['COLLECTION_SELECTED'] = true;
+    $thumbnail['COLLECTION_TOGGLE_URL'] = add_url_params($url, array('collection_toggle'=>$thumbnail['id']));
   }
   
   $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
