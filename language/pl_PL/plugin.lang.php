@@ -46,4 +46,6 @@ $lang['active'] = 'Aktywna';
 $lang['by %s'] = 'po %s';
 $lang['save'] = 'zapisz';
 $lang['set active'] = 'ustaw jako aktywne';
+$lang['Active'] = 'Aktywne';
+$lang['A photo collection by %s'] = 'Kolekcja zdjęć %s';
 ?>
