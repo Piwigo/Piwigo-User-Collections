@@ -60,4 +60,9 @@ $lang['Add to collection'] = 'Добавяне към колекция';
 $lang['Active'] = 'Активно';
 $lang['A photo collection by %s'] = 'Колекция снимки от %s';
 $lang['%d more...'] = '%d още...';
+$lang['This collection is empty'] = 'Колекцията е празна';
+$lang['Remove from collection'] = 'Премахване от колекцията';
+$lang['set active'] = 'астивиране';
+$lang['save'] = 'запис';
+$lang['by %s'] = 'от %s';
 ?>
