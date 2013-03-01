@@ -74,4 +74,6 @@ $lang['Inactive'] = 'Не активно';
 $lang['Message (optional)'] = 'Сообщение (опционально)';
 $lang['Number of images'] = 'Количество изображений';
 $lang['Please enter the recipient e-mail'] = 'Пожалуйста, введите адрес (e-mail) получателя';
+$lang['Date added to collection, new &rarr; old'] = 'Дата добавления в коллекцию, новые &rarr; старые';
+$lang['Date added to collection, old &rarr; new'] = 'Дата добавления в коллекцию, старые &rarr; новые';
 ?>
