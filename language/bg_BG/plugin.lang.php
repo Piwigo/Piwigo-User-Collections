@@ -65,4 +65,15 @@ $lang['Remove from collection'] = 'Премахване от колекцият�
 $lang['set active'] = 'астивиране';
 $lang['save'] = 'запис';
 $lang['by %s'] = 'от %s';
+$lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = 'Здравейте <b>%s</b>, %s ви изпраща колекция снимки от <a href="%s">%s</a>';
+$lang['You have %d collection'] = 'Вие имате %d колекция';
+$lang['You have %d collections'] = 'Вие имате %d колекции';
+$lang['The collection must be public in order to send it'] = 'Колекцията трябва да е публична за да може да я изберете за изпращане.';
+$lang['Recipient name'] = 'Име на получателя';
+$lang['Recipient e-mail'] = 'Имейл на получателя';
+$lang['Please give a name'] = 'Задайте име';
+$lang['Please enter the recipient name'] = 'Моля въведете името на получателя';
+$lang['Please enter the recipient e-mail'] = 'Моля въведете имела на получателя';
+$lang['Please enter your name'] = 'Моля въведете вашето име';
+$lang['Please enter your e-mail'] = 'Моля въведете вашият имейл';
 ?>
