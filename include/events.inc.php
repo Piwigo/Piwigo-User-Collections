@@ -11,8 +11,11 @@ function user_collections_section_init()
 
   if ($tokens[0] == 'collections')
   {
+    add_event_handler('loc_begin_page_header', 'user_collections_page_header');
+    
     $page['section'] = 'collections';
-    $page['title'] = '<a href="'.get_absolute_root_url().'">'.l10n('Home').'</a>'.$conf['level_separator'].'<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>';
+    $page['section_title'] = '<a href="'.get_absolute_root_url().'">'.l10n('Home').'</a>'.$conf['level_separator'].'<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>';
+    $page['title'] = l10n('Collections');
     
     if (in_array(@$tokens[1], array('edit','view','list')))
     {
@@ -28,6 +31,12 @@ function user_collections_section_init()
       $page['col_id'] = $tokens[2];
     }
   }
+}
+
+function user_collections_page_header()
+{
+  global $page;
+  $page['body_id'] = 'theCollectionPage';
 }
 
 /* collections section */

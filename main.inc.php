@@ -10,6 +10,11 @@ Author URI: http://www.strangeplanet.fr
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
+if (mobile_theme())
+{
+  return;
+}
+
 global $conf, $prefixeTable;
 
 defined('USER_COLLEC_ID') or define('USER_COLLEC_ID', basename(dirname(__FILE__)));

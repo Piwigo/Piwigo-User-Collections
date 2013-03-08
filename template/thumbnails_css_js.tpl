@@ -30,7 +30,7 @@ jQuery(".addCollection").click(function() {ldelim}
         }
         else if (method == "remove") {ldelim}
         {if $UC_IN_EDIT}
-          $trigger.parent(".wrap1, .gthumb").hide("fast", function() {ldelim} $(this).remove() });
+          $trigger.parent("li").hide("fast", function() {ldelim} $(this).remove() });
           if (typeof batchdown_count != 'undefined') batchdown_count-=1;
         {else}
           $trigger.children(".uc_remove").hide();

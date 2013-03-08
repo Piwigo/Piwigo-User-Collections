@@ -2,13 +2,6 @@
 defined('USER_COLLEC_PATH') or die('Hacking attempt!');
 
 
-// caddie
-if (isset($_GET['uc_caddie']))
-{
-  fill_caddie($page['items']);
-  redirect($self_url);
-}
-
 // image order
 if (isset($_GET['uc_image_order']))
 {
@@ -36,6 +29,13 @@ SELECT i.id
   ORDER BY '.$orders[$image_order_id][1].'
 ;';
 $page['items'] = array_from_query($query, 'id');
+
+// caddie
+if (isset($_GET['uc_caddie']))
+{
+  fill_caddie($page['items']);
+  redirect($self_url);
+}
 
 // image order menu
 if ( $conf['index_sort_order_input']
@@ -77,6 +77,7 @@ if (count($page['items']) > $page['nb_image_page'])
 // add links for colorbox
 add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_in_collection', EVENT_HANDLER_PRIORITY_NEUTRAL, 2);
 
+global $selection, $pictures;
 include(PHPWG_ROOT_PATH . 'include/category_default.inc.php');
 
 

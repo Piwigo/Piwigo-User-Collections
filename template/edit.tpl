@@ -1,51 +1,45 @@
 {combine_css path=$USER_COLLEC_PATH|@cat:"template/style.css"}
-{combine_script id='jquery.zclip' path=$USER_COLLEC_PATH|@cat:"template/resources/jquery.zclip.min.js"}
-{combine_script id='jquery.tipTip' path='themes/default/js/plugins/jquery.tipTip.minified.js'}
+{combine_script id='ZeroClipboard' path=$USER_COLLEC_PATH|@cat:"template/resources/ZeroClipboard.min.js"}
 
 {combine_script id='jquery.colorbox' load='footer' require='jquery' path='themes/default/js/plugins/jquery.colorbox.min.js'}
 {combine_css path="themes/default/js/plugins/colorbox/style2/colorbox.css"}
 
 {footer_script require='jquery'}
 {if $user_collections.allow_public}
-  function bindZclip() {ldelim}
-    jQuery("#publicURL .button").zclip({ldelim}
-      path:'{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/ZeroClipboard.swf',
-      copy:$("#publicURL .url").html(),
-      afterCopy: function() {ldelim}
-        $('.confirm').remove();
-        $("#publicURL .url").select();
-        $('<span class="confirm" style="display:none;">{'Copied'|@translate}</span>').appendTo("#publicURL")
-          .fadeIn(400).delay(1000).fadeOut(400, function(){ldelim} $(this).remove(); });
-      }
-    });
-    $("#publicURL .url").click(function() {ldelim}
-      $(this).select();
-    });
-  }
+ZeroClipboard.setDefaults( {ldelim} moviePath: "{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/ZeroClipboard.swf" } );
+var clip = new ZeroClipboard();
+clip.glue(jQuery("#publicURL .button").get());
+clip.addEventListener('onMouseOver', function() {ldelim}
+  clip.setText(jQuery("#publicURL .url").val());
+});
+clip.addEventListener('complete', function() {ldelim}
+  jQuery('.confirm').remove();
+  jQuery("#publicURL .url").select();
+  jQuery('<span class="confirm" style="display:none;">{'Copied'|@translate}</span>').appendTo("#publicURL")
+    .fadeIn(400).delay(1000).fadeOut(400, function(){ldelim} jQuery(this).remove(); });
+});
 
-  jQuery("input[name='public']").change(function() {ldelim}
-    jQuery("#publicURL").fadeToggle("fast");
-    bindZclip();
-  });
-  jQuery("#publicURL .button").tipTip({ldelim}
-    delay: 0,
-    defaultPosition: 'right'
-  });
-  {if $collection.PUBLIC}bindZclip();{/if}
+jQuery("#publicURL .url").click(function() {ldelim}
+  jQuery(this).select();
+});
+
+jQuery("input[name='public']").change(function() {ldelim}
+  jQuery("#publicURL").fadeToggle("fast");
+});
 {/if}
 
 {if $collection.PUBLIC && $user_collections.allow_mails}
-  $(window).load(function(){ldelim}
-    $(".mail_colorbox_open").colorbox({ldelim}
+  jQuery(window).load(function(){ldelim}
+    jQuery(".mail_colorbox_open").colorbox({ldelim}
       {if isset($uc_mail_errors)}open: true, transition:"none",{/if}
       inline:true
     });
-    $(".mail_colorbox_close").click(function() {ldelim}
-      $(".mail_colorbox_open").colorbox.close();
+    jQuery(".mail_colorbox_close").click(function() {ldelim}
+      jQuery(".mail_colorbox_open").colorbox.close();
       return false;
     })
   });
-  $("#mail_form").css('background-color', $("#the_page #content").css('background-color'));
+  jQuery("#mail_form").css('background-color', jQuery("#the_page #content").css('background-color'));
 {/if}
 {/footer_script}
 
@@ -79,7 +73,10 @@
   <p>
     <label><input type="radio" name="public" value="0" {if not $collection.PUBLIC}checked="checked"{/if}> {'No'|@translate}</label>
     <label><input type="radio" name="public" value="1" {if $collection.PUBLIC}checked="checked"{/if}> {'Yes'|@translate}</label>
-    <span id="publicURL" {if not $collection.PUBLIC}style="display:none;"{/if}><span class="button" title="{'Copy to clipboard'|@translate}">&nbsp;</span><input type="text" class="url" value="{$collection.U_PUBLIC}" size="{$collection.U_PUBLIC|strlen}"></span>
+    <span id="publicURL" {if not $collection.PUBLIC}style="display:none;"{/if}><!--
+    --><span class="button" title="{'Copy to clipboard'|@translate}">&nbsp;</span><!--
+    --><input type="text" class="url" value="{$collection.U_PUBLIC}" size="{$collection.U_PUBLIC|strlen}"><!--
+  --></span>
   </p>
 {/if}
   <p>
