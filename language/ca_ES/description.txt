@@ -1,0 +1,1 @@
+Els usuaris registrats poden seleccionar fotografies de la galeria i desar-les en col·leccions - una funció de "favorits" avançada. Poden també establir visibilitat pública a les seves col·leccions i enviar-les per e-mail.
