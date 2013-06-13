@@ -129,7 +129,7 @@ SELECT *
       
       if (isset($pwg_loaded_plugins['BatchDownloader']))
       {
-        $col['U_DOWNLOAD'] = add_url_params(USER_COLLEC_PUBLIC.'view/'.$col['public_id'], array('action'=>'advdown_set'));
+        $col['U_DOWNLOAD'] = add_url_params(USER_COLLEC_PUBLIC.'edit/'.$col['id'], array('action'=>'advdown_set'));
       }
       
       // temporary collections are above save collections
