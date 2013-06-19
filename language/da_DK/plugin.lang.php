@@ -76,4 +76,9 @@ $lang['Date added to collection, old &rarr; new'] = 'Dato for tilføjelse til sa
 $lang['Delete this collection'] = 'Slet denne samling';
 $lang['Download CSV file'] = 'Download CSV-fil';
 $lang['E-mail sent successfully'] = 'E-mailen blev sendt';
+$lang['(remove)'] = '(fjern)';
+$lang['Name, A &rarr; Z'] = 'Navn, A &rarr; Å';
+$lang['Name, Z &rarr; A'] = 'Navn, Å &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Fotonummer, højt &rarr; lavt';
+$lang['Photos number, low &rarr; high'] = 'Fotonummer, lavt &rarr; højt';
 ?>
