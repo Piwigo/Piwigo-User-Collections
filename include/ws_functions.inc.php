@@ -11,20 +11,20 @@ function user_collections_ws_add_methods($arr)
     'ws_collections_create',
     array(
       'name' => array(),
-      'user_id' => array('default' => null),
+      'user_id' => array('default' => null, 'info'=>'Admin parameter, default is current user'),
       'active' => array('default' => 0),
       'public' => array('default' => 0),
       ),
-    'Create a new User Collection. If "user_id" is empty, the collection is created for the current user.'
+    'Create a new User Collection.'
     );
     
   $service->addMethod(
     'pwg.collections.delete',
     'ws_collections_delete',
     array(
-      'col_id' => array(),
+      'col_id' => array('info'=>'The current user must be admin or owner of the collection'),
       ),
-    'Delete a User Collection. The current user must be admin or owner of the collection.'
+    'Delete a User Collection.'
     );
     
   $service->addMethod(
@@ -32,7 +32,7 @@ function user_collections_ws_add_methods($arr)
     'ws_collections_getList',
     array(
       'col_id' => array('default' => null),
-      'user_id' => array('default' => null),
+      'user_id' => array('default' => null, 'info'=>'Admin parameter, default is current user'),
       'name' => array('default' => null),
       'public' => array('default' => null),
       'active' => array('default' => null),
@@ -44,20 +44,20 @@ function user_collections_ws_add_methods($arr)
     'pwg.collections.addImages',
     'ws_collections_addImages',
     array(
-      'col_id' => array(),
+      'col_id' => array('info'=>'The current user must be admin or owner of the collection'),
       'image_ids' => array('flags'=>WS_PARAM_FORCE_ARRAY),
       ),
-    'Add images to a collection. The current user must be admin or owner of the collection.'
+    'Add images to a collection.'
     );
     
   $service->addMethod(
     'pwg.collections.removeImages',
     'ws_collections_removeImages',
     array(
-      'col_id' => array(),
+      'col_id' => array('info'=>'The current user must be admin or owner of the collection'),
       'image_ids' => array('flags'=>WS_PARAM_FORCE_ARRAY),
       ),
-    'Remove images from a collection. The current user must be admin or owner of the collection.'
+    'Remove images from a collection.'
     );
     
   $service->addMethod(
@@ -77,9 +77,13 @@ function user_collections_ws_add_methods($arr)
     'ws_collections_getSerialized',
     array(
       'col_id' => array(),
-      'content' => array('default'=>array('id','name','url','path'), 'flags'=>WS_PARAM_FORCE_ARRAY),
+      'content' => array(
+        'default'=>array('id','name','url','path'),
+        'flags'=>WS_PARAM_FORCE_ARRAY,
+        'info'=>'Available options are: id, file, name, url, path'
+        ),
       ),
-    'Returns a serialized version of the collection in CSV.<br>Available options for "content" are : id, file, name, url, path.<br>The return type is plain/text whatever you select as response format.'
+    'Returns a serialized version of the collection in CSV.<br>The return type is plain/text whatever you select as response format.'
     );
 }
 

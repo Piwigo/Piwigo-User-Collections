@@ -41,38 +41,27 @@
     font-weight:bold;
     margin-left:5px;
   }
-  
-.collecList {
-  list-style:none;
-  padding:0;
-  margin:0;
+
+/* .thumbnailCategory.activeCollection {
+  border:1px solid #999;
+} */
+.thumbnailCategory {
+  position:relative;
 }
-  .collecList li {
-    height:35px;
-    padding:5px 10px;
-    margin:4px 0;
-    background:#444;
-    border-radius:4px;
-  }
-    .collecList li.active {
-      background:#555;
-      border:1px solid #999;
-    }
-  .collecList p {
-    margin:0;
-  }
-    .collecList .collecDate {
-      float:right;
-      font-size:0.9em;
-    }
-    .collecList .collecActions { 
-      margin-top:2px;
-      display:none;
-    }
-    .collecList li:hover .collecActions { 
-      display:block;
-    }
-  
+.thumbnailCategory .collectionActions {
+  display:none;
+  position:absolute;
+  right:5px;
+  bottom:5px;
+}
+.thumbnailCategory:hover .collectionActions {
+  display:block;
+}
+/* .thumbnailCategory .collectionActive {
+  font-weight:normal;
+  font-style:italic;
+} */
+
 /* SEND BY MAIL */
 #mail_form {
   width:540px;

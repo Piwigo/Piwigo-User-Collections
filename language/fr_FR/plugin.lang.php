@@ -18,7 +18,7 @@ $lang['by %s'] = 'par %s';
 $lang['Collections'] = 'Collections';
 $lang['Collection'] = 'Collection';
 $lang['Remove from collection'] = 'Supprimer de la collection';
-$lang['Add to collection'] = 'Ajouter à la collection';
+$lang['Add to collection'] = 'Ajouter à une collection';
 $lang['Clear'] = 'Vider';
 $lang['You have %d collection'] = 'Vous avez %d collection';
 $lang['You have no collection'] = 'Vous n\'avez aucune collection';
@@ -26,6 +26,7 @@ $lang['You have %d collections'] = 'Vous avez %d collections';
 $lang['active'] = 'active';
 $lang['Save'] = 'Sauvegarder';
 $lang['%d more...'] = 'et %d autres...';
+$lang['(remove)'] = '(retirer)';
 
 $lang['Allow users to set their collections as public'] = 'Les utilisateurs peuvent rendre leurs collections publiques';
 $lang['Allow users to send their public collections by mail'] = 'Les utilisateurs peuvent envoyer leurs collections publiques par mail';
@@ -57,5 +58,9 @@ $lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>
 $lang['Click here to view the complete collection'] = 'Cliquez ici pour voir la collection complète';
 $lang['Date added to collection, new &rarr; old'] = 'Date d\'ajout à la collection, récent &rarr; ancien';
 $lang['Date added to collection, old &rarr; new'] = 'Date d\'ajout à la collection, ancien &rarr; récent';
+$lang['Name, A &rarr; Z'] = 'Nom, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Nom, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Nombre de photos, élévé &rarr; faible';
+$lang['Photos number, low &rarr; high'] = 'Nombre de photos, faible &rarr; élévé';
 
 ?>

@@ -112,5 +112,33 @@ if (is_admin() and !empty($page['items']))
      add_url_params($self_url, array('uc_caddie'=>1) )
     );
 }
+
+
+function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $pictures)
+{
+  global $template, $page;
+  
+  $url = USER_COLLEC_PUBLIC . 'edit/'.$page['col_id'];
+  
+  foreach ($tpl_thumbnails_var as &$thumbnail)
+  {
+    $src_image = new SrcImage($thumbnail);
+    
+    $thumbnail['FILE_SRC'] = DerivativeImage::url(IMG_LARGE, $src_image);
+    $thumbnail['URL'] = duplicate_picture_url(
+        array(
+          'image_id' => $thumbnail['id'],
+          'image_file' => $thumbnail['file'],
+          'section' => 'none',
+        ),
+        array('start')
+      );
+      
+    $thumbnail['COLLECTION_SELECTED'] = true;
+    $thumbnail['COLLECTION_TOGGLE_URL'] = add_url_params($url, array('collection_toggle'=>$thumbnail['id']));
+  }
+  
+  return $tpl_thumbnails_var;
+}
   
 ?>

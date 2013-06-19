@@ -18,7 +18,7 @@ switch ($page['sub_section'])
     // security
     if (is_a_guest()) access_denied();
     
-    $template->set_filename('index', dirname(__FILE__) . '/../template/list.tpl');
+    $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/list.tpl'));
     
     // actions
     if ( isset($_GET['action']) and preg_match('#^([0-9]+)$#', $_GET['col_id']) )
@@ -28,76 +28,48 @@ switch ($page['sub_section'])
         // new
         case 'new':
         {
-          $UserCollection = new UserCollection('new', array(), empty($_GET['name']) ? 'temp' : $_GET['name'], 1);
-          
-          if (isset($_GET['redirect']))
-          {
-            $redirect = USER_COLLEC_PUBLIC.'edit/'.$UserCollection->getParam('id');
-          }
-          else
-          {
-            $redirect = USER_COLLEC_PUBLIC;
-          }
-          redirect($redirect);
-          break;
-        }
-          
-        // delete
-        case 'delete':
-        {
-          $query = '
-DELETE ci, c
-  FROM '.COLLECTION_IMAGES_TABLE.' AS ci
-    RIGHT JOIN '.COLLECTIONS_TABLE.' AS c 
-    ON ci.col_id = c.id
-  WHERE
-    c.user_id = '.$user['id'].'
-    AND c.id = '.$_GET['col_id'].'
-;';
-          pwg_query($query);
-      
-          redirect(USER_COLLEC_PUBLIC);
-          break;
-        }
-        
-        // save
-        case 'save':
-        {
           if (empty($_GET['name']))
           {
             array_push($page['errors'], l10n('Please give a name'));
           }
           else
           {
-            $query = '
-UPDATE '.COLLECTIONS_TABLE.'
-  SET
-    name = "'.pwg_db_real_escape_string($_GET['name']).'",
-    active = 0
-  WHERE
-    user_id = '.$user['id'].'
-    AND id = '.$_GET['col_id'].'
-;';
-            pwg_query($query);
+            $UserCollection = new UserCollection('new', array(), $_GET['name'], 1);
             
+            if (isset($_GET['redirect']))
+            {
+              $redirect = USER_COLLEC_PUBLIC.'edit/'.$UserCollection->getParam('id');
+            }
+            else
+            {
+              $redirect = USER_COLLEC_PUBLIC;
+            }
+            redirect($redirect);
+          }
+          break;
+        }
+          
+        // delete
+        case 'delete':
+        {
+          try {
+            $UserCollection = new UserCollection($_GET['col_id']);
+            $UserCollection->delete();
             redirect(USER_COLLEC_PUBLIC);
+          }
+          catch (Exception $e)
+          {
+            $page['errors'][] = $e->getMessage();
           }
           break;
         }
         
         // set active
-        case 'set_active':
+        case 'toggle_active':
         {
           $query = '
 UPDATE '.COLLECTIONS_TABLE.'
-  SET active = 0
-  WHERE user_id = '.$user['id'].'
-;';
-          pwg_query($query);
-          
-          $query = '
-UPDATE '.COLLECTIONS_TABLE.'
-  SET active = 1
+  SET active = IF(active=1, 0, 1)
   WHERE
     user_id = '.$user['id'].'
     AND id = '.$_GET['col_id'].'
@@ -110,42 +82,12 @@ UPDATE '.COLLECTIONS_TABLE.'
       }
     }
     
-    
-    // get collections
-    $query = '
-SELECT * 
-  FROM '.COLLECTIONS_TABLE.'
-  WHERE user_id = '.$user['id'].'
-  ORDER BY date_creation DESC
-';
-    $collections = hash_from_query($query, 'id');
-    
-    foreach ($collections as $col)
-    {
-      $col['date_creation'] = format_date($col['date_creation'], true);
-      $col['U_EDIT'] = USER_COLLEC_PUBLIC.'edit/'.$col['id'];
-      $col['U_ACTIVE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'set_active','col_id'=>$col['id']));
-      $col['U_DELETE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$col['id']));
-      
-      if (isset($pwg_loaded_plugins['BatchDownloader']))
-      {
-        $col['U_DOWNLOAD'] = add_url_params(USER_COLLEC_PUBLIC.'edit/'.$col['id'], array('action'=>'advdown_set'));
-      }
-      
-      // temporary collections are above save collections
-      if ($col['name'] == 'temp')
-      {
-        $col['name'] = 'temp #'.$col['id'];
-        $col['U_SAVE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'save','col_id'=>$col['id']));
-        $template->append('temp_col', $col);
-      }
-      else
-      {
-        $template->append('collections', $col);
-      }
-    }
-    
     $template->assign('U_CREATE', add_url_params(USER_COLLEC_PUBLIC, array('action'=>'new','col_id'=>'0')));
+    
+    $template->set_prefilter('index_category_thumbnails', 'user_collections_categories_list');
+    
+    include(USER_COLLEC_PATH . '/include/display_collections.inc.php');
+    
     break;
   }
   
@@ -159,7 +101,7 @@ SELECT *
       redirect(USER_COLLEC_PUBLIC);
     }
     
-    $template->set_filename('index', dirname(__FILE__).'/../template/edit.tpl');
+    $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/edit.tpl'));
     
     $self_url = USER_COLLEC_PUBLIC . 'edit/'.$page['col_id'];
     
@@ -168,18 +110,11 @@ SELECT *
       'F_ACTION' => $self_url,
       'collection_toggle_url' => $self_url,
       'U_LIST' => USER_COLLEC_PUBLIC,
-      'AJAX_COL_ID' => $page['col_id'],
       'UC_IN_EDIT' => true,
       ));
     
     try {
       $UserCollection = new UserCollection($page['col_id']);
-      
-      // security
-      if ( !is_admin() and $UserCollection->getParam('user_id') != $user['id'] )
-      {
-        access_denied();
-      }
       
       // save properties
       if (isset($_POST['save_col']))
@@ -243,15 +178,11 @@ SELECT *
         $UserCollection->clearImages();
       }
       
-      // remove an element
-      if ( isset($_GET['collection_toggle']) and preg_match('#^[0-9]+$#', $_GET['collection_toggle']) )
-      {
-        $UserCollection->removeImages(array($_GET['collection_toggle']));
-        unset($_GET['collection_toggle']);
-      }
       
       // add remove item links
-      $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_prefilter');
+      $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_button');
+      $template->set_prefilter('index', 'user_collections_thumbnails_list_cssjs');
+      $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
       
       // thumbnails
       include(USER_COLLEC_PATH . '/include/display_thumbnails.inc.php');
@@ -272,7 +203,7 @@ SELECT *
       $template->assign('U_DELETE',
         add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$page['col_id']))
         );
-      if ($conf['user_collections']['allow_public'] and $conf['user_collections']['allow_mails'])
+      if ($conf['user_collections']['allow_public'] and $conf['user_collections']['allow_mails'] and !empty($page['items']))
       {
         $template->assign('U_MAIL', true);
       }
@@ -308,6 +239,8 @@ SELECT *
       $UserCollection = new UserCollection($page['col_id']);
       $page['col_id'] = $UserCollection->getParam('id');
       
+      $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
+      
       // thumbnails
       include(USER_COLLEC_PATH . '/include/display_thumbnails.inc.php');
       
@@ -327,36 +260,24 @@ SELECT *
   }
 }
 
-
-function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $pictures)
+// modification on mainpage_categories.tpl
+function user_collections_categories_list($content, &$samrty)
 {
-  global $template, $page;
+  $search[0] = '<div class="thumbnailCategory">';
+  $replace[0] = '<div class="thumbnailCategory {*if $cat.active}activeCollection{/if*}">
+  <div class="collectionActions">
+    <a href="{$cat.URL}" rel="nofollow">{"Edit"|@translate}</a>
+    | <a href="{$cat.U_DELETE}" onClick="return confirm(\'{"Are you sure?"|@translate}\');" rel="nofollow">{"Delete"|@translate}</a>
+    {if $cat.U_ACTIVE}| <a href="{$cat.U_ACTIVE}" rel="nofollow">{if $cat.active}{"set inactive"|@translate}{else}{"set active"|@translate}{/if}</a>{/if}
+  </div>';
   
-  $url = USER_COLLEC_PUBLIC . 'edit/'.$page['col_id'];
+  // $search[1] = '<a href="{$cat.URL}">{$cat.NAME}</a>';
+  // $replace[1] = '<a href="{$cat.URL}">{$cat.NAME}</a> {if $cat.active}<span class="collectionActive">({"active"|@translate})</span>{/if}';
   
-  foreach ($tpl_thumbnails_var as &$thumbnail)
-  {
-    $src_image = new SrcImage($thumbnail);
-    
-    $thumbnail['FILE_SRC'] = DerivativeImage::url(IMG_LARGE, $src_image);
-    $thumbnail['URL'] = duplicate_picture_url(
-        array(
-          'image_id' => $thumbnail['id'],
-          'image_file' => $thumbnail['file'],
-          'section' => 'none',
-        ),
-        array('start')
-      );
-      
-    $thumbnail['COLLECTION_SELECTED'] = true;
-    $thumbnail['COLLECTION_TOGGLE_URL'] = add_url_params($url, array('collection_toggle'=>$thumbnail['id']));
-  }
-  
-  $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
-  
-  return $tpl_thumbnails_var;
+  return str_replace($search, $replace, $content);
 }
 
+// colorbox
 function user_collections_add_colorbox($content)
 {
   // add datas

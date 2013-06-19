@@ -26,6 +26,7 @@ $lang['You have %d collections'] = 'You have %d collections';
 $lang['active'] = 'active';
 $lang['Save'] = 'Save';
 $lang['%d more...'] = '%d more...';
+$lang['(remove)'] = '(remove)';
 
 $lang['Allow users to set their collections as public'] = 'Allow users to set their collections as public';
 $lang['Allow users to send their public collections by mail'] = 'Allow users to send their public collections by mail';
@@ -57,6 +58,9 @@ $lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>
 $lang['Click here to view the complete collection'] = 'Click here to view the complete collection';
 $lang['Date added to collection, new &rarr; old'] = 'Date added to collection, new &rarr; old';
 $lang['Date added to collection, old &rarr; new'] = 'Date added to collection, old &rarr; new';
-
+$lang['Name, A &rarr; Z'] = 'Name, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Name, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Photos number, high &rarr; low';
+$lang['Photos number, low &rarr; high'] = 'Photos number, low &rarr; high';
 
 ?>

@@ -3,7 +3,7 @@
 Plugin Name: User Collections
 Version: auto
 Description: Registered users can select pictures from the gallery and save them into collections, like advanced favorites.
-Plugin URI: http://piwigo.org/ext/extension_view.php?eid=615
+Plugin URI: auto
 Author: Mistic
 Author URI: http://www.strangeplanet.fr
 */
@@ -40,7 +40,6 @@ else
   add_event_handler('loc_end_index', 'user_collections_page', EVENT_HANDLER_PRIORITY_NEUTRAL-10);
 
   // thumbnails actions
-  add_event_handler('loc_end_index', 'user_collections_index_actions');
   add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_list', EVENT_HANDLER_PRIORITY_NEUTRAL-10, 2);
 
   // picture action

@@ -53,7 +53,7 @@ function uc_check_email_validity($mail_address)
 
 function get_collection_preferred_image_orders()
 {
-  global $conf, $page;
+  global $conf;
     
   return trigger_event('get_category_preferred_image_orders', array(
     array(l10n('Date added to collection, new &rarr; old'), 'add_date DESC', true),
@@ -69,6 +69,18 @@ function get_collection_preferred_image_orders()
     array(l10n('Visits, high &rarr; low'),        'hit DESC',             true),
     array(l10n('Visits, low &rarr; high'),        'hit ASC',              true),
     ));
+}
+
+function get_collections_preferred_orders()
+{
+  return array(
+    array(l10n('Name, A &rarr; Z'),               'name ASC',           true),
+    array(l10n('Name, Z &rarr; A'),               'name DESC',          true),
+    array(l10n('Date created, new &rarr; old'),   'date_creation DESC', true),
+    array(l10n('Date created, old &rarr; new'),   'date_creation ASC',  true), 
+    array(l10n('Photos number, high &rarr; low'), 'nb_images DESC',     true),
+    array(l10n('Photos number, low &rarr; high'), 'nb_images ASC',      true),
+    );
 }
 
 ?>

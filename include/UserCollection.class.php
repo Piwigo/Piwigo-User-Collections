@@ -25,8 +25,8 @@ class UserCollection
       'name' => null,
       'date_creation' => '0000-00-00 00:00:00',
       'nb_images' => 0,
-      'active' => false,
-      'public' => false,
+      'active' => 0,
+      'public' => 0,
       'public_id' => null,
       );
     $this->images = array();
@@ -55,15 +55,7 @@ SELECT id
     if (preg_match('#^[0-9]+$#', $col_id))
     {
       $query = '
-SELECT
-    id,
-    user_id,
-    name,
-    date_creation,
-    nb_images,
-    active,
-    public,
-    public_id
+SELECT *
   FROM '.COLLECTIONS_TABLE.'
   WHERE
     id = '.$col_id.'
@@ -106,8 +98,8 @@ SELECT image_id
     else if ($col_id == 'new')
     {
       $this->data['name'] = $name;
-      $this->data['active'] = $active;
-      $this->data['public'] = $public;
+      $this->data['active'] = (int)$active;
+      $this->data['public'] = (int)$public;
       $this->data['public_id'] = 'uc'.hash('crc32', uniqid(serialize($this->data), true));
       
       $query = '
@@ -137,19 +129,6 @@ INSERT INTO '.COLLECTIONS_TABLE.'(
       if (!empty($images))
       {
         $this->addImages($images);
-      }
-      
-      // only one active collection allowed
-      if ($this->data['active'])
-      {
-        $query = '
-UPDATE '.COLLECTIONS_TABLE.'
-  SET active = 0
-  WHERE
-    user_id = '.$this->data['user_id'].'
-    AND id != '.$this->data['id'].'
-;';
-        pwg_query($query);
       }
     }
     else
@@ -209,10 +188,7 @@ UPDATE '.COLLECTIONS_TABLE.'
   {
     if (empty($image_ids) or !is_array($image_ids)) return;
     
-    foreach ($image_ids as $image_id)
-    {
-      unset($this->images[ array_search($image_id, $this->images) ]);
-    }
+    $this->images = array_diff($this->images, $image_ids);
     
     $query = '
 DELETE FROM '.COLLECTION_IMAGES_TABLE.'
@@ -240,8 +216,11 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
     {
       if ($this->isInSet($image_id)) continue;
       
-      array_push($this->images, $image_id);
-      array_push($inserts, array('col_id'=>$this->data['id'], 'image_id'=>$image_id));
+      $this->images[] = $image_id;
+      $inserts[] = array(
+        'col_id' => $this->data['id'],
+        'image_id' => $image_id,
+        );
     }
     
     mass_inserts(
@@ -301,13 +280,13 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
   function getCollectionInfo()
   {
     $set = array(
+      'ID' => $this->data['id'],
       'NAME' => $this->data['name'],
       'NB_IMAGES' => $this->data['nb_images'],
       'ACTIVE' => (bool)$this->data['active'],
       'PUBLIC' => (bool)$this->data['public'],
       'DATE_CREATION' => $this->data['date_creation'],
       'U_PUBLIC' => USER_COLLEC_PUBLIC . 'view/'.$this->data['public_id'],
-      'IS_TEMP' =>  $this->data['name'] == 'temp',
       );
     
     return $set;
@@ -566,6 +545,15 @@ SELECT
     }
     
     return $content;
+  }
+  
+  /**
+   * delete
+   */
+  function delete()
+  {
+    $this->clearImages();
+    pwg_query('DELETE FROM '.COLLECTIONS_TABLE.' WHERE id = '.$this->data['id'].';');
   }
 }
 

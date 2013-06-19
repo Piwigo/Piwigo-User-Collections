@@ -1,0 +1,47 @@
+#thumbnails li {
+  position:relative !important;
+  display:inline-block;
+}
+#thumbnails li .addCollection {
+  width:100%;
+  height:16px;
+  display:none;
+  position:absolute;
+  top:0;
+  background:rgba(0,0,0,0.8);
+  padding:2px;
+  border-radius:2px;
+  font-size:10px;
+  z-index:100 !important;
+  color:#eee;
+  white-space:nowrap;
+}
+#thumbnails li:hover .addCollection {
+  display:block !important;
+}
+
+#collectionsDropdown {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  box-shadow:2px 2px 10px #000;
+}
+
+#collectionsDropdown .switchBoxTitle {
+  font-weight:bold;
+}
+
+#collectionsDropdown .switchBoxFooter {
+  border-top:1px solid #444;
+  padding-top:5px;
+  margin-top:5px;
+}
+
+#collectionsDropdown a, a.addCollection {
+  cursor:pointer;
+}
+
+#collectionsDropdown .remove, #collectionsDropdown input.new {
+  display:none;
+}

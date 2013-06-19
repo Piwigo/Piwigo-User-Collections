@@ -19,7 +19,11 @@ function user_collections_section_init()
     
     if (in_array(@$tokens[1], array('edit','view','list')))
     {
-       $page['sub_section'] = $tokens[1];
+      $page['sub_section'] = $tokens[1];
+      if ($tokens[1]=='edit' and isset($conf['GThumb']) && is_array($conf['GThumb']))
+      {
+        $conf['GThumb']['big_thumb'] = false; // big thumb is buggy with removes
+      }
     }
     else
     {
@@ -54,31 +58,12 @@ function user_collections_page()
 // +-----------------------------------------------------------------------+
 // | CATEGORY PAGE
 // +-----------------------------------------------------------------------+
-/* toggle an image, in case of no javascript or first call (must create the collection) */
-function user_collections_index_actions()
-{
-  if (is_a_guest()) return;
-  
-  global $page, $UserCollection;
-     
-  // add image to collection list
-  if ( isset($_GET['collection_toggle']) and  preg_match('#^[0-9]+$#', $_GET['collection_toggle']) )
-  {
-    if (empty($UserCollection))
-    {
-      $UserCollection = new UserCollection(get_current_collection_id(true));
-    }
-    $UserCollection->toggleImage($_GET['collection_toggle']);
-    redirect(duplicate_index_url(array(), array('collection_toggle')));
-  }
-}
-
 /* add buttons on thumbnails list */
 function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
 {
   if (is_a_guest()) return $tpl_thumbnails_var;
   
-  global $page, $template, $UserCollection;
+  global $page, $template, $user;
   
   // the content is different on collection edition page and no button on batch downloader set edition page
   if ( (@$page['section'] == 'collections' and @$page['sub_section']=='edit') or @$page['section'] == 'download')
@@ -86,73 +71,72 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
     return $tpl_thumbnails_var;
   }
   
-  // get existing collections
-  $col_id = get_current_collection_id(false);
-  if (empty($UserCollection) and $col_id !== false)
-  {
-    $UserCollection = new UserCollection($col_id);
-    $collection = $UserCollection->getImages();
-  }
-  else if (!empty($UserCollection))
-  {
-    $collection = $UserCollection->getImages();
-  }
-  else
-  {
-    $collection = array();
-  }
+  $image_ids = array_map(create_function('$i', 'return $i["id"];'), $pictures);
   
-  // if the collection doesn't exists we don't use AJAX to force menu refresh
-  if ($col_id === false)
-  {
-    $template->assign('NO_AJAX', true);
-  }
-  else
-  {
-    $template->assign('AJAX_COL_ID', $col_id );
-  }
-  
-  // template vars
-  $url = duplicate_index_url(array(), array('collection_toggle'));
+  // get collections for each picture
+  $query = '
+SELECT
+    image_id,
+    GROUP_CONCAT(col_id) AS col_ids
+  FROM '.COLLECTION_IMAGES_TABLE.'
+  WHERE col_id IN (
+      SELECT id
+      FROM '.COLLECTIONS_TABLE.'
+      WHERE user_id = '.$user['id'].'
+    )
+    AND image_id IN('.implode(',', $image_ids).')
+  GROUP BY image_id
+;';
+  $image_collections = simple_hash_from_query($query, 'image_id', 'col_ids');
   
   foreach ($tpl_thumbnails_var as &$thumbnail)
   {
-    if (in_array($thumbnail['id'], $collection))
-    {
-      $thumbnail['COLLECTION_SELECTED'] = true;
-    }
-    $thumbnail['COLLECTION_TOGGLE_URL'] = add_url_params($url, array('collection_toggle'=>$thumbnail['id']));
+    $thumbnail['COLLECTIONS'] = @$image_collections[ $thumbnail['id'] ];
   }
   unset($thumbnail);
   
+  // get all collections
+  $query = '
+SELECT id, name, nb_images, active
+  FROM '.COLLECTIONS_TABLE.'
+  WHERE user_id = '.$user['id'].'
+  ORDER BY name ASC
+;';
+  $collections = hash_from_query($query, 'id');
+  
   $template->assign(array(
+    'COLLECTIONS' => $collections,
     'USER_COLLEC_PATH' => USER_COLLEC_PATH,
     ));
   
   // thumbnails buttons
-  $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_prefilter');
+  $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_button');
+  $template->set_prefilter('index', 'user_collections_thumbnails_list_cssjs');
   
   return $tpl_thumbnails_var;
 }
 
-function user_collections_thumbnails_list_prefilter($content, &$smarty)
+// add links
+function user_collections_thumbnails_list_button($content, &$smarty)
 {
-  // add links
   $search = '#(<li>|<li class="gthumb">)#';
   $replace = '$1
-{strip}<a class="addCollection" href="{$thumbnail.COLLECTION_TOGGLE_URL}" data-id="{$thumbnail.id}" data-stat="{if $thumbnail.COLLECTION_SELECTED}remove{else}add{/if}" rel="nofollow">
-<span class="uc_remove" {if not $thumbnail.COLLECTION_SELECTED}style="display:none;"{/if}>
-{\'Remove from collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" title="{\'Remove from collection\'|@translate}">
-</span>
-<span class="uc_add" {if $thumbnail.COLLECTION_SELECTED}style="display:none;"{/if}>
-{\'Add to collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" title="{\'Add to collection\'|@translate}">
-</span>
+{strip}<a class="addCollection" data-id="{$thumbnail.id}" data-cols="[{$thumbnail.COLLECTIONS}]" rel="nofollow">
+{if not $UC_IN_EDIT}
+{\'Add to collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" alt="[+]">
+{else}
+{\'Remove from collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" alt="[+]">
+{/if}
 </a>{/strip}';
-
-  // custom CSS and AJAX request
-  $content.= file_get_contents(USER_COLLEC_PATH.'template/thumbnails_css_js.tpl');
   
   return preg_replace($search, $replace, $content);
+}
+
+// add css & js and menu
+function user_collections_thumbnails_list_cssjs($content, &$smarty)
+{
+  $content.= file_get_contents(USER_COLLEC_PATH.'template/thumbnails_css_js.tpl');
+  return $content;
 }
 
 
@@ -164,44 +148,43 @@ function user_collections_picture_page()
 {
   if (is_a_guest()) return;
   
-  global $template, $picture, $UserCollection;
+  global $template, $picture, $user;
   
-  // add image to collection list
-  if ( isset($_GET['action']) and $_GET['action'] == 'collection_toggle' )
-  {
-    if (empty($UserCollection))
-    {
-      $UserCollection = new UserCollection(get_current_collection_id(true));
-    }
-    
-    $UserCollection->toggleImage($picture['current']['id']);
-    redirect(duplicate_picture_url());
-  }
+  // get collections for this picture
+  $query = '
+SELECT GROUP_CONCAT(col_id)
+  FROM '.COLLECTION_IMAGES_TABLE.'
+  WHERE col_id IN (
+      SELECT id
+      FROM '.COLLECTIONS_TABLE.'
+      WHERE user_id = '.$user['id'].'
+    )
+    AND image_id = '.$picture['current']['id'].'
+  GROUP BY image_id
+;';
+  list($image_collections) = pwg_db_fetch_row(pwg_query($query));
   
-  // get existing collection
-  if (empty($UserCollection) and ($col_id = get_current_collection_id(false)) !== false)
-  {
-    $UserCollection = new UserCollection($col_id);
-    $collection = $UserCollection->isInSet($picture['current']['id']);
-  }
-  else if (!empty($UserCollection))
-  {
-    $collection = $UserCollection->isInSet($picture['current']['id']);
-  }
-  else
-  {
-    $collection = false;
-  }  
+  // get all collections
+  $query = '
+SELECT id, name, nb_images, active
+  FROM '.COLLECTIONS_TABLE.'
+  WHERE user_id = '.$user['id'].'
+  ORDER BY name ASC
+;';
+  $collections = hash_from_query($query, 'id');
   
-  $url = add_url_params(duplicate_picture_url(), array('action'=>'collection_toggle'));    
+  $template->assign(array(
+    'CURRENT_COLLECTIONS' => $image_collections,
+    'COLLECTIONS' => $collections,
+    'USER_COLLEC_PATH' => USER_COLLEC_PATH,
+    'USER_COLLEC_ABS_PATH' => realpath(USER_COLLEC_PATH).'/',
+    'IN_PICTURE' => true,
+    ));
   
-  $button = '
-<a href="'.$url.'" title="'.($collection?l10n('Remove from collection'):l10n('Add to collection')).'" class="pwg-state-default pwg-button" rel="nofollow">
-  <span class="pwg-icon" style="background:url(\''.get_root_url().USER_COLLEC_PATH.'template/resources/image_'.($collection?'delete':'add').'.png\') center center no-repeat;"> </span>
-  <span class="pwg-button-text">'.($collection?l10n('Remove from collection'):l10n('Add to collection')).'</span>
-</a>';
-  // $template->add_picture_button($button, 50);
-  $template->concat('PLUGIN_PICTURE_ACTIONS', $button);
+  // toolbar button
+  $template->set_filename('usercol_button', realpath(USER_COLLEC_PATH.'template/picture_button.tpl'));
+  $button = $template->parse('usercol_button', true);
+  $template->add_picture_button($button, 50);
 }
 
 
@@ -224,15 +207,8 @@ function user_collections_applymenu($menu_ref_arr)
 {
   $max = 6;
   
-  global $template, $page, $conf, $user, $UserCollection;
+  global $template, $page, $conf, $user;
   $menu = &$menu_ref_arr[0];
-  
-  // the editable counter is for the active collection, except if we are currently editing a collection
-  $col_in_edit = 0;
-  if ( @$page['section'] == 'collections' and @$page['sub_section']=='edit' and !empty($page['col_id']) )
-  {
-    $col_in_edit = $page['col_id'];
-  }
   
   if (($block = $menu->get_block('mbUserCollection')) != null)
   {
@@ -249,9 +225,8 @@ SELECT *
     $data['collections'] = array();
     for ($i=0; $i<$max && $i<count($collections); $i++)
     {
-      $collections[$i]['count_handler'] = $col_in_edit!=0 ? $collections[$i]['id']==$col_in_edit : $collections[$i]['active'];
       $collections[$i]['U_EDIT'] = USER_COLLEC_PUBLIC.'edit/'.$collections[$i]['id'];
-      array_push($data['collections'], $collections[$i]);
+      $data['collections'][] = $collections[$i];
     }
     
     $data['NB_COL'] = count($collections);
