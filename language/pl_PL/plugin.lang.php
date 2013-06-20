@@ -76,4 +76,9 @@ $lang['Number of images'] = 'Liczba zdjęć';
 $lang['Please enter the recipient e-mail'] = 'Proszę podać adres e-mail odbiorcy';
 $lang['Please enter the recipient name'] = 'Proszę podać nazwę odbiorcy';
 $lang['Please enter your e-mail'] = 'Proszę podać swój adres e-mail';
+$lang['Name, Z &rarr; A'] = 'Nazwa, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Ilość zdjęć, najwyższa &rarr; najniższa';
+$lang['Photos number, low &rarr; high'] = 'Ilość zdjęć, najniższa &rarr; najwyższa';
+$lang['(remove)'] = '(usuń)';
+$lang['Name, A &rarr; Z'] = 'Nazwa, A &rarr; Z';
 ?>
