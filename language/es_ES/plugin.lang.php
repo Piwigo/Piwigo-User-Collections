@@ -76,4 +76,9 @@ $lang['Inactive'] = 'Inactivos';
 $lang['Message (optional)'] = 'Mensaje (opcional)';
 $lang['Number of images'] = 'Número de imágenes';
 $lang['Please enter the recipient e-mail'] = 'Por favor, introduzca la dirección de correo electrónico del destinatario';
+$lang['(remove)'] = '(eliminar)';
+$lang['Name, A &rarr; Z'] = 'Nombre, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Nombre, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Número de foto, alto &rarr; bajo';
+$lang['Photos number, low &rarr; high'] = 'Número de foto, bajo &rarr; alto';
 ?>
