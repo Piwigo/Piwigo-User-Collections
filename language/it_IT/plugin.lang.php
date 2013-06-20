@@ -76,4 +76,9 @@ $lang['Allow users to set their collections as public'] = 'Consentire agli utent
 $lang['A photo collection by %s'] = 'Una galleria fotografica by %s';
 $lang['Allow users to send their public collections by mail'] = 'Consentire agli utenti di inviare le loro collezioni pubbliche per mail';
 $lang['Active'] = 'Attiva';
+$lang['(remove)'] = '(rimuovi)';
+$lang['Name, A &rarr; Z'] = 'Nome, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Nome, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Numero di foto, maggiore &rarr; minore';
+$lang['Photos number, low &rarr; high'] = 'Numero di foto, minore &rarr; maggiore';
 ?>
