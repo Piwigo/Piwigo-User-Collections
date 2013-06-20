@@ -76,4 +76,9 @@ $lang['Clear this collection'] = 'Bu koleksiyonu temizle';
 $lang['A photo collection by %s'] = '%s tarafından sağlanan fotoğraf koleksiyonu';
 $lang['Active'] = 'Etkin';
 $lang['Allow users to send their public collections by mail'] = 'Kullanıcıların herkese açık koleksiyonları eposta yoluyla göndermelerine olanak sağlar';
+$lang['(remove)'] = '(kaldır)';
+$lang['Name, A &rarr; Z'] = 'İsim, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'İsim, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Fotoğraf numarası, yüksek &rarr; düşük';
+$lang['Photos number, low &rarr; high'] = 'Fotoğraf numarası, düşük &rarr; yüksek';
 ?>
