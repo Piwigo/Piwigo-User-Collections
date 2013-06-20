@@ -76,4 +76,9 @@ $lang['Clear this collection'] = 'Vyčistiť túto kolekciu';
 $lang['Allow users to set their collections as public'] = 'Povoliť používateľom označiť túto kolekciu za verejnú';
 $lang['Allow users to send their public collections by mail'] = 'Povoliť používateľom poslať verejnú kolekciu mailom';
 $lang['Active'] = 'Aktívne';
+$lang['(remove)'] = '(odstrániť)';
+$lang['Name, A &rarr; Z'] = 'Meno, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Meno, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Fotky číslo, vysoké &rarr; nízke';
+$lang['Photos number, low &rarr; high'] = 'Fotky číslo, nízke &rarr; vysoké';
 ?>
