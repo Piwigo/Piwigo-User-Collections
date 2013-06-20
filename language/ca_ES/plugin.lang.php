@@ -76,4 +76,9 @@ $lang['Allow users to send their public collections by mail'] = 'Els usuaris pod
 $lang['Allow users to set their collections as public'] = 'El susuaris poden fer les seves col·leccións públiques';
 $lang['Active'] = 'Actius';
 $lang['A photo collection by %s'] = 'Una col·lecció de fotos de &s';
+$lang['(remove)'] = '(eliminar)';
+$lang['Name, A &rarr; Z'] = 'Nom, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Nom, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Nombre de fotos, alt &rarr; baix';
+$lang['Photos number, low &rarr; high'] = 'Nombre de fotos, baix &rarr; alt';
 ?>
