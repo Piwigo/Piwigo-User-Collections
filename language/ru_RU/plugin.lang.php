@@ -76,4 +76,9 @@ $lang['Number of images'] = 'Количество изображений';
 $lang['Please enter the recipient e-mail'] = 'Пожалуйста, введите адрес (e-mail) получателя';
 $lang['Date added to collection, new &rarr; old'] = 'Дата добавления в коллекцию, новые &rarr; старые';
 $lang['Date added to collection, old &rarr; new'] = 'Дата добавления в коллекцию, старые &rarr; новые';
+$lang['(remove)'] = '(удаление)';
+$lang['Name, A &rarr; Z'] = 'Имя, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Имя, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Количество изображений, много &rarr; мало';
+$lang['Photos number, low &rarr; high'] = 'Количество изображений, мало &rarr; много';
 ?>
