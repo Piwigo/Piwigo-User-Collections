@@ -76,4 +76,9 @@ $lang['Allow users to set their collections as public'] = 'Επιτρέπει σ
 $lang['Allow users to send their public collections by mail'] = 'Επιτρέπει στους χρήστες να στείλουν δημόσιες συλλογές τους με e-mail';
 $lang['Active'] = 'Ενεργός';
 $lang['A photo collection by %s'] = 'Μια συλλογή φωτογραφιών από τον/την  %s';
+$lang['Photos number, low &rarr; high'] = 'Αριθμός Φωτογραφιών, χαμηλή &rarr; υψηλή';
+$lang['Photos number, high &rarr; low'] = 'Αριθμός Φωτογραφιών, υψηλή &rarr; χαμηλή';
+$lang['Name, Z &rarr; A'] = 'Όνομα, Z &rarr; A';
+$lang['Name, A &rarr; Z'] = 'Όνομα, A &rarr; Z';
+$lang['(remove)'] = '(αφαίρεση)';
 ?>
