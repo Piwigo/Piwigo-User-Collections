@@ -76,4 +76,9 @@ $lang['Date added to collection, old &rarr; new'] = 'Lisamiskuupäev, vanad &rar
 $lang['Delete this collection'] = 'Eemalda fotoseeria';
 $lang['Download CSV file'] = 'Laadi alla CSV-loendina';
 $lang['E-mail sent successfully'] = 'Epost saadetud';
+$lang['(remove)'] = '(eemalda)';
+$lang['Name, A &rarr; Z'] = 'Nimi,A &rarr;Z';
+$lang['Name, Z &rarr; A'] = 'Nimi,Z &rarr;A';
+$lang['Photos number, high &rarr; low'] = 'Piltide numbrid, suur &rarr; väike';
+$lang['Photos number, low &rarr; high'] = 'Piltide numbrid, väike &rarr; suur';
 ?>
