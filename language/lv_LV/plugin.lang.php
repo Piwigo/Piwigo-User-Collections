@@ -76,4 +76,9 @@ $lang['Allow users to set their collections as public'] = 'Atļaut lietotājiem 
 $lang['Click here to view the complete collection'] = 'Uzklikšķināt šeit, lai redzētu visu kolekciju';
 $lang['Clear this collection'] = 'Dzēst šo kolekciju';
 $lang['Active'] = 'Aktīvs';
+$lang['Photos number, low &rarr; high'] = 'Foto numuri, mazākais &rarr; lielākais';
+$lang['Photos number, high &rarr; low'] = 'Foto numuri, lielākais &rarr; mazākais';
+$lang['Name, Z &rarr; A'] = 'Nosaukums, Z &rarr; A';
+$lang['Name, A &rarr; Z'] = 'Nosaukums, A &rarr; Z';
+$lang['(remove)'] = '(izņemt)';
 ?>
