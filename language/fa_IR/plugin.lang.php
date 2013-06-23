@@ -76,4 +76,9 @@ $lang['Allow users to set their collections as public'] = 'کاربران بتو
 $lang['A photo collection by %s'] = 'یک کلکسیونِ عکس از %s';
 $lang['Active'] = 'فعال';
 $lang['Allow users to send their public collections by mail'] = 'کاربران بتوانند کلکسیون‌های همگانیشان را با ایمیل بفرستند';
+$lang['Photos number, high &rarr; low'] = 'شماره تلفن، بزرگ &rarr; کوچک';
+$lang['Photos number, low &rarr; high'] = 'شماره تلفن، کوچک &rarr; بزرگ';
+$lang['(remove)'] = '(پاک کردن)';
+$lang['Name, A &rarr; Z'] = 'نام، A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'نام، Z &rarr; A';
 ?>
