@@ -1,13 +1,12 @@
-{combine_css path=$USER_COLLEC_PATH|@cat:"template/style.css"}
-{combine_script id='ZeroClipboard' path=$USER_COLLEC_PATH|@cat:"template/resources/ZeroClipboard.min.js"}
-
-{combine_script id='jquery.colorbox' load='footer' require='jquery' path='themes/default/js/plugins/jquery.colorbox.min.js'}
-{combine_css path="themes/default/js/plugins/colorbox/style2/colorbox.css"}
+{combine_css path=$USER_COLLEC_PATH|cat:'template/style_collections.css'}
+{combine_script id='ZeroClipboard' path=$USER_COLLEC_PATH|cat:'template/resources/ZeroClipboard.min.js'}
+{include file=$USER_COLLEC_ABS_PATH|cat:'template/thumbnails_colorbox.tpl'}
 
 {footer_script require='jquery'}
 {if $user_collections.allow_public}
 ZeroClipboard.setDefaults( {ldelim} moviePath: "{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/ZeroClipboard.swf" } );
 var clip = new ZeroClipboard();
+
 clip.glue(jQuery("#publicURL .button").get());
 clip.addEventListener('onMouseOver', function() {ldelim}
   clip.setText(jQuery("#publicURL .url").val());
@@ -41,6 +40,17 @@ jQuery("input[name='public']").change(function() {ldelim}
   });
   jQuery("#mail_form").css('background-color', jQuery("#the_page #content").css('background-color'));
 {/if}
+
+jQuery("#edit_form_show").click(function() {ldelim}
+  jQuery("#edit_form_show").hide();
+  jQuery(".additional_info").hide();
+  jQuery("#edit_form").show();
+});
+jQuery("#edit_form_hide").click(function() {ldelim}
+  jQuery("#edit_form_show").show();
+  jQuery(".additional_info").show();
+  jQuery("#edit_form").hide();
+});
 {/footer_script}
 
 
@@ -60,14 +70,25 @@ jQuery("input[name='public']").change(function() {ldelim}
 {/if}
 
 
-{if $collection}
+{if !empty($CONTENT_DESCRIPTION)}
+<div class="additional_info">
+	{$CONTENT_DESCRIPTION}
+</div>
+{/if}
+
+<p style="text-align:center;"><input type="submit" id="edit_form_show" value="{'Edit'|@translate}"></p>
+
 {* <!-- edit collection -->*}
-<form action="{$F_ACTION}" method="post">
+<form action="{$F_ACTION}" method="post" id="edit_form" style="display:none;">
 <fieldset id="colProperties">
   <legend>{'Properties'|@translate}</legend>
   
   <p class="title"><label for="name">{'Name'|@translate}</label></p>
   <p><input type="text" name="name" id="name" value="{$collection.NAME|escape:html}" size="60"></p>
+  
+  <p class="title"><label for="comment">{'Description'|@translate}</label></p>
+  <p><textarea name="comment" id="comment" style="width:400px;height:100px;">{$collection.COMMENT}</textarea></p>
+  
 {if $user_collections.allow_public}
   <p class="title">{'Public collection'|@translate}</p>
   <p>
@@ -79,12 +100,14 @@ jQuery("input[name='public']").change(function() {ldelim}
   --></span>
   </p>
 {/if}
+
   <p>
     <input type="submit" name="save_col" value="{'Save'|@translate}">
-    <a href="{$U_LIST}" rel="nofollow">{'Return to collections list'|@translate}</a>
+    <a id="edit_form_hide">{'Cancel'|@translate}</a>
   </p>
 </fieldset>
 </form>
+
 
 {* <!-- send collection by mail -->*}
 {if $user_collections.allow_public && $user_collections.allow_mails}
@@ -147,6 +170,7 @@ jQuery("input[name='public']").change(function() {ldelim}
 </div>
 {/if}
 
+
 {* <!-- collection content -->*}
 {if $collection.NB_IMAGES > 0}
 <ul class="thumbnails" id="thumbnails">
@@ -157,8 +181,8 @@ jQuery("input[name='public']").change(function() {ldelim}
 {/if}
 
 {if !empty($navbar)}{include file='navigation_bar.tpl'|@get_extent:'navbar'}{/if}
-{/if}
 
-{if $clear}<div style="clear: both;"></div>
+
+{if isset($clear)}<div style="clear: both;"></div>
 </div>{/if}
 </div>{* <!-- content --> *}

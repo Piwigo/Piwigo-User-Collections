@@ -11,8 +11,8 @@ function user_collections_ws_add_methods($arr)
     'ws_collections_create',
     array(
       'name' => array(),
+      'comment' => array('default' => null),
       'user_id' => array('default' => null, 'info'=>'Admin parameter, default is current user'),
-      'active' => array('default' => 0),
       'public' => array('default' => 0),
       ),
     'Create a new User Collection.'
@@ -31,13 +31,14 @@ function user_collections_ws_add_methods($arr)
     'pwg.collections.getList',
     'ws_collections_getList',
     array(
-      'col_id' => array('default' => null),
       'user_id' => array('default' => null, 'info'=>'Admin parameter, default is current user'),
       'name' => array('default' => null),
       'public' => array('default' => null),
-      'active' => array('default' => null),
+      'per_page' => array('default'=>100, 'maxValue'=>ceil($conf['ws_max_images_per_page']/10)),
+      'page' => array('default'=>0),
+      'order' => array('default'=>'username ASC, name ASC'),
       ),
-    'Retrive a list of collections.'
+    'Returns a list of collections.'
     );
     
   $service->addMethod(
@@ -80,10 +81,19 @@ function user_collections_ws_add_methods($arr)
       'content' => array(
         'default'=>array('id','name','url','path'),
         'flags'=>WS_PARAM_FORCE_ARRAY,
-        'info'=>'Available options are: id, file, name, url, path'
+        'info'=>'Available options are: id,file,name,url,path,date_creation,collection_add_date,filesize,width,height'
         ),
       ),
     'Returns a serialized version of the collection in CSV.<br>The return type is plain/text whatever you select as response format.'
+    );
+    
+  $service->addMethod(
+    'pwg.collections.getInfo',
+    'ws_collections_getInfo',
+    array(
+      'col_id' => array('info'=>'The current user must be admin or owner of the collection'),
+      ),
+    'Returns basic info about a collection.'
     );
 }
 
@@ -134,17 +144,9 @@ function ws_collections_create($params, &$service)
     $params['public'] = 0;
   }
   
-  // check active
-  if ($params['active'] != 0 and $params['active'] != 1)
-  {
-    return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid "active" value, 0 or 1.');
-  }
+  $UserCollection = new UserCollection('new', $params['name'], $params['comment'], $params['public'], $params['user_id']);
   
-  $UserCollection = new UserCollection('new', array(), $params['name'], $params['active'], $params['public'], $params['user_id']);
-  
-  $infos = array_change_key_case($UserCollection->getCollectionInfo(), CASE_LOWER);
-  
-  return $infos;
+  return array_change_key_case($UserCollection->getCollectionInfo(), CASE_LOWER);
 }
 
 /**
@@ -232,30 +234,14 @@ function ws_collections_getList($params, &$service)
     $params['user_id'] = $user['id'];
   }
   
-  // check collection id
-  if ( !empty($params['col_id']) and !preg_match('#^[0-9]+$#', $params['col_id']) )
-  {
-    return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid collection id');
-  }
-  
   // check public
   if ( !empty($params['public']) and $params['public'] != 0 and $params['public'] != 1 )
   {
     return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid "public" value, 0 or 1.');
   }
   
-  // check active
-  if ( !empty($params['active']) and $params['active'] != 0 and $params['active'] != 1 )
-  {
-    return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid "active" value, 0 or 1.');
-  }
-  
   // search
   $where_clauses = array('1=1');
-  if (!empty($params['col_id']))
-  {
-    $where_clauses[] = 'c.id = '.$params['col_id'];
-  }
   if (!empty($params['user_id']))
   {
     $where_clauses[] = 'user_id = '.$params['user_id'];
@@ -264,14 +250,12 @@ function ws_collections_getList($params, &$service)
   {
     $where_clauses[] = 'public = '.$params['public'];
   }
-  if (!empty($params['active']))
-  {
-    $where_clauses[] = 'active = '.$params['active'];
-  }
   if (!empty($params['name']))
   {
     $where_clauses[] = 'name LIKE("%'.pwg_db_real_escape_string($params['name']).'%")';
   }
+  
+  $order_by = !empty($params['order']) ? $params['order'] : 'username ASC, name ASC';
   
   $query = '
 SELECT 
@@ -282,18 +266,19 @@ SELECT
     ON c.user_id = u.'.$conf['user_fields']['id'].'
   WHERE
     '.implode("\n    AND ", $where_clauses).'
-  ORDER BY username ASC, name ASC
+  ORDER BY '.$order_by.'
+  LIMIT '.(int)$params['per_page'].' OFFSET '.(int)($params['per_page']*$params['page']).'
 ;';
   $sets = hash_from_query($query, 'id');
   
-  $ret = array();
+  $data = array();
   foreach ($sets as $row)
   {
-    $ret[] = array(
+    $data[] = array(
       'id' => $row['id'],
       'name' => $row['name'],
+      'comment' => $row['comment'],
       'nb_images' => $row['nb_images'],
-      'active' => (bool)$row['active'],
       'public' => (bool)$row['public'],
       'date_creation' => $row['date_creation'],
       'is_temp' => $row['name'] == 'temp',
@@ -302,6 +287,18 @@ SELECT
       'username' => $row['username'],
       );
   }
+  
+  return array(
+    'paging' => new PwgNamedStruct(array(
+        'page' => $params['page'],
+        'per_page' => $params['per_page'],
+        'count' => count($data)
+        )),
+    'collections' => new PwgNamedArray(
+      $data,
+      'collection'
+      )
+    );
   
   return $ret;
 }
@@ -412,43 +409,44 @@ SELECT i.*
   FROM '.IMAGES_TABLE.' i
   WHERE 
     '. implode("\n AND ", $where_clauses).'
-GROUP BY i.id
-'.$order_by.'
-LIMIT '.(int)$params['per_page'].' OFFSET '.(int)($params['per_page']*$params['page']);
+  GROUP BY i.id
+  '.$order_by.'
+  LIMIT '.(int)$params['per_page'].' OFFSET '.(int)($params['per_page']*$params['page']).'
+;';
 
-    $result = pwg_query($query);
-    while ($row = pwg_db_fetch_assoc($result))
-    {
-      $image = array();
-      foreach (array('id', 'width', 'height', 'hit') as $k)
+      $result = pwg_query($query);
+      while ($row = pwg_db_fetch_assoc($result))
       {
-        if (isset($row[$k]))
+        $image = array();
+        foreach (array('id', 'width', 'height', 'hit') as $k)
         {
-          $image[$k] = (int)$row[$k];
+          if (isset($row[$k]))
+          {
+            $image[$k] = (int)$row[$k];
+          }
         }
+        foreach (array('file', 'name', 'comment', 'date_creation', 'date_available') as $k)
+        {
+          $image[$k] = $row[$k];
+        }
+        $image = array_merge($image, ws_std_get_urls($row));
+        
+        array_push($images, $image);
       }
-      foreach (array('file', 'name', 'comment', 'date_creation', 'date_available') as $k)
-      {
-        $image[$k] = $row[$k];
-      }
-      $image = array_merge($image, ws_std_get_urls($row));
-      
-      array_push($images, $image);
     }
-  }
-
-  return array('images' => array(
-    WS_XML_ATTRIBUTES => array(
-      'page' => $params['page'],
-      'per_page' => $params['per_page'],
-      'count' => count($images)
-      ),
-    WS_XML_CONTENT => new PwgNamedArray(
-      $images, 
-      'image', 
-      ws_std_get_image_xml_attributes()
-      ),
-    ));
+    
+    return array(
+      'paging' => new PwgNamedStruct(array(
+          'page' => $params['page'],
+          'per_page' => $params['per_page'],
+          'count' => count($images)
+          )),
+      'images' => new PwgNamedArray(
+        $images,
+        'image',
+        ws_std_get_image_xml_attributes()
+        )
+      );
   }
   catch (Exception $e)
   {
@@ -490,4 +488,35 @@ function ws_collections_getSerialized($params, &$service)
     return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid collection id');
   }
 }
+
+/**
+ * get info about a collection
+ */
+function ws_collections_getInfo($params, &$service)
+{
+  global $conf, $user;
+  
+  // check status
+  if (is_a_guest())
+  {
+    return new PwgError(403, 'Forbidden');
+  }
+  
+  // check collection id
+  if (!preg_match('#^[0-9]+$#', $params['col_id']))
+  {
+    return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid collection id');
+  }
+
+  try {
+    $UserCollection = new UserCollection($params['col_id']);
+  
+    return array_change_key_case($UserCollection->getCollectionInfo(), CASE_LOWER);
+  }
+  catch (Exception $e)
+  {
+    return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid collection id');
+  }
+}
+
 ?>

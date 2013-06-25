@@ -8,10 +8,10 @@ class UserCollection
   
   /**
    * __construct
-   * @param: mixed col id (##|'new'|'active')
+   * @param: mixed col id (##|'new')
    * @param: array images
    */
-  function __construct($col_id, $images=array(), $name=null, $active=false, $public=false, $user_id=null)
+  function __construct($col_id, $name=null, $comment=null, $public=false, $user_id=null)
   {
     global $user;
     
@@ -24,8 +24,8 @@ class UserCollection
       'user_id' => $user_id,
       'name' => null,
       'date_creation' => '0000-00-00 00:00:00',
+      'domment' => null,
       'nb_images' => 0,
-      'active' => 0,
       'public' => 0,
       'public_id' => null,
       );
@@ -70,7 +70,7 @@ SELECT *
           pwg_db_fetch_assoc($result)
           );
         
-        // make sur all pictures of the collection exist
+        // make sure all pictures of the collection exist
         $query = '
 DELETE FROM '.COLLECTION_IMAGES_TABLE.'
   WHERE image_id NOT IN (
@@ -98,7 +98,7 @@ SELECT image_id
     else if ($col_id == 'new')
     {
       $this->data['name'] = $name;
-      $this->data['active'] = (int)$active;
+      $this->data['comment'] = $comment;
       $this->data['public'] = (int)$public;
       $this->data['public_id'] = 'uc'.hash('crc32', uniqid(serialize($this->data), true));
       
@@ -107,7 +107,7 @@ INSERT INTO '.COLLECTIONS_TABLE.'(
     user_id,
     name,
     date_creation,
-    active,
+    comment,
     public,
     public_id
   ) 
@@ -115,7 +115,7 @@ INSERT INTO '.COLLECTIONS_TABLE.'(
     '.$this->data['user_id'].',
     "'.$this->data['name'].'",
     NOW(),
-    '.(int)$this->data['active'].',
+    "'.$this->data['comment'].'",
     '.(int)$this->data['public'].',
     "'.$this->data['public_id'].'"
   )
@@ -125,11 +125,6 @@ INSERT INTO '.COLLECTIONS_TABLE.'(
       
       $date = pwg_query('SELECT NOW();');
       list($this->data['date_creation']) = pwg_db_fetch_row($date);
-      
-      if (!empty($images))
-      {
-        $this->addImages($images);
-      }
     }
     else
     {
@@ -282,8 +277,8 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
     $set = array(
       'ID' => $this->data['id'],
       'NAME' => $this->data['name'],
+      'COMMENT' => $this->data['comment'],
       'NB_IMAGES' => $this->data['nb_images'],
-      'ACTIVE' => (bool)$this->data['active'],
       'PUBLIC' => (bool)$this->data['public'],
       'DATE_CREATION' => $this->data['date_creation'],
       'U_PUBLIC' => USER_COLLEC_PUBLIC . 'view/'.$this->data['public_id'],
@@ -316,7 +311,7 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
     // check key
     if (!verify_ephemeral_key(@$key))
     {
-      array_push($errors, l10n('Invalid or expired security key'));
+      array_push($errors, l10n('Invalid key'));
       $comment_action='reject';
     }
 

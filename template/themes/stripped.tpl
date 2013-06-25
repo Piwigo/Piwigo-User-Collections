@@ -7,7 +7,7 @@
   <div class="categoryActionsContainer">
     <ul class="categoryActions group1">
     {if isset($U_CADDIE) }
-      <li class="mainAction"><a href="{$U_CADDIE}" title="{'add to caddie'|@translate}">{'caddie'|@translate}</a></li>
+      <li class="mainAction"><a href="{$U_CADDIE}" title="{'Add to caddie'|@translate}">{'Caddie'|@translate}</a></li>
     {/if}
         
     {if $U_MAIL}

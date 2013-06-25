@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collections` (
   `user_id` smallint(5) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `date_creation` datetime NOT NULL,
+  `comment` text NULL,
   `nb_images` mediumint(8) NOT NULL DEFAULT 0,
-  `active` tinyint(1) DEFAULT 0,
   `public` tinyint(1) DEFAULT 0,
   `public_id` varchar(10) NULL,
   PRIMARY KEY (`id`)
@@ -46,6 +46,13 @@ CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collection_images` (
   if (!pwg_db_num_rows($result))
   {
     pwg_query('ALTER TABLE `'.$prefixeTable.'collection_images` ADD `add_date` DATETIME NULL;');
+  }
+  
+  $result = pwg_query('SHOW COLUMNS FROM `'.$prefixeTable.'collections` LIKE "comment";');
+  if (!pwg_db_num_rows($result))
+  {
+    pwg_query('ALTER TABLE `'.$prefixeTable.'collections` ADD `comment` TEXT NULL;');
+    pwg_query('ALTER TABLE `'.$prefixeTable.'collections` DROP `active`;');
   }
 }
 

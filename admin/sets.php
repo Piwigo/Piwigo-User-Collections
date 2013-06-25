@@ -45,7 +45,7 @@ $sets = hash_from_query($query, 'id');
 foreach ($sets as $row)
 {
   $template->append('sets', array(
-    'NAME' => $row['name'],
+    'NAME' => trigger_event('render_category_name', $row['name']),
     'NB_IMAGES' => $row['nb_images'],
     'DATE_CREATION' => format_date($row['date_creation'], true),
     'USERNAME' => $row['username'],
@@ -69,22 +69,19 @@ $page['direction_items'] = array(
   'ASC' => l10n('ascending'),
   );
 
-$template->assign('order_options', $page['order_by_items']);
-$template->assign('order_selected',
-    isset($_POST['order_by']) ? $_POST['order_by'] : '');
-
-$template->assign('direction_options', $page['direction_items']);
-$template->assign('direction_selected',
-    isset($_POST['direction']) ? $_POST['direction'] : '');
-
 
 $template->assign(array(
+  'order_options' => $page['order_by_items'],
+  'order_selected' => isset($_POST['order_by']) ? $_POST['order_by'] : '',
+  'direction_options' => $page['direction_items'],
+  'direction_selected' => isset($_POST['direction']) ? $_POST['direction'] : '',
+  
   'F_USERNAME' => @htmlentities($_POST['username'], ENT_COMPAT, 'UTF-8'),
   'F_NAME' => @htmlentities($_POST['name'], ENT_COMPAT, 'UTF-8'),
   'F_FILTER_ACTION' => USER_COLLEC_ADMIN . '-sets',
   ));
 
 
-$template->set_filename('user_collections', dirname(__FILE__) . '/template/sets.tpl');
+$template->set_filename('user_collections', realpath(USER_COLLEC_PATH . 'admin/template/sets.tpl'));
 
 ?>

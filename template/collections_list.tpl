@@ -1,4 +1,4 @@
-{combine_css path=$USER_COLLEC_PATH|@cat:"template/style.css"}
+{combine_css path=$USER_COLLEC_PATH|cat:'template/style_collections.css'}
 
 {footer_script require='jquery'}
 jQuery(".new_col").click(function() {ldelim}
@@ -38,6 +38,6 @@ jQuery(".titrePage h2").append(" [{$COLLECTIONS_COUNT}]");
 {'You have no collection'|@translate}
 {/if}
 
-{if $clear}<div style="clear: both;"></div>
+{if isset($clear)}<div style="clear: both;"></div>
 </div>{/if}
 </div>{* <!-- content --> *}

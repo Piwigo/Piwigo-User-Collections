@@ -18,7 +18,7 @@ switch ($page['sub_section'])
     // security
     if (is_a_guest()) access_denied();
     
-    $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/list.tpl'));
+    $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/collections_list.tpl'));
     
     // actions
     if ( isset($_GET['action']) and preg_match('#^([0-9]+)$#', $_GET['col_id']) )
@@ -34,7 +34,7 @@ switch ($page['sub_section'])
           }
           else
           {
-            $UserCollection = new UserCollection('new', array(), $_GET['name'], 1);
+            $UserCollection = new UserCollection('new', $_GET['name']);
             
             if (isset($_GET['redirect']))
             {
@@ -63,22 +63,6 @@ switch ($page['sub_section'])
           }
           break;
         }
-        
-        // set active
-        case 'toggle_active':
-        {
-          $query = '
-UPDATE '.COLLECTIONS_TABLE.'
-  SET active = IF(active=1, 0, 1)
-  WHERE
-    user_id = '.$user['id'].'
-    AND id = '.$_GET['col_id'].'
-;';
-          pwg_query($query);
-          
-          redirect(USER_COLLEC_PUBLIC);
-          break;
-        }
       }
     }
     
@@ -101,14 +85,13 @@ UPDATE '.COLLECTIONS_TABLE.'
       redirect(USER_COLLEC_PUBLIC);
     }
     
-    $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/edit.tpl'));
+    $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/collection_edit.tpl'));
     
     $self_url = USER_COLLEC_PUBLIC . 'edit/'.$page['col_id'];
     
     $template->assign(array(
       'user_collections' => $conf['user_collections'],
       'F_ACTION' => $self_url,
-      'collection_toggle_url' => $self_url,
       'U_LIST' => USER_COLLEC_PUBLIC,
       'UC_IN_EDIT' => true,
       ));
@@ -132,6 +115,7 @@ UPDATE '.COLLECTIONS_TABLE.'
           $_POST['public'] = '0';
         }
         $UserCollection->updateParam('public', $_POST['public']);
+        $UserCollection->updateParam('comment', stripslashes($_POST['comment']));
       }
       
       // send mail
@@ -181,7 +165,6 @@ UPDATE '.COLLECTIONS_TABLE.'
       
       // add remove item links
       $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_button');
-      $template->set_prefilter('index', 'user_collections_thumbnails_list_cssjs');
       $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
       
       // thumbnails
@@ -210,8 +193,10 @@ UPDATE '.COLLECTIONS_TABLE.'
       
       
       $template->concat('TITLE', 
-        $conf['level_separator'].$UserCollection->getParam('name')
+        $conf['level_separator'].trigger_event('render_category_name', $col['NAME'])
         );
+        
+      $template->assign('CONTENT_DESCRIPTION', trigger_event('render_category_description', nl2br($col['COMMENT'])));
     }
     catch (Exception $e)
     {
@@ -231,13 +216,14 @@ UPDATE '.COLLECTIONS_TABLE.'
       redirect('index.php');
     }
     
-    $template->set_filename('index', dirname(__FILE__).'/../template/view.tpl');
+    $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/collection_view.tpl'));
     
     $self_url = USER_COLLEC_PUBLIC . 'view/'.$page['col_id'];
     
     try {
-      $UserCollection = new UserCollection($page['col_id']);
-      $page['col_id'] = $UserCollection->getParam('id');
+      $UserCollection = new UserCollection($page['col_id']); // public id
+      $page['col_id'] = $UserCollection->getParam('id'); // private id
+      $col = $UserCollection->getCollectionInfo();
       
       $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
       
@@ -247,9 +233,11 @@ UPDATE '.COLLECTIONS_TABLE.'
       // add username in title
       include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
       $template->concat('TITLE', 
-        $conf['level_separator'].$UserCollection->getParam('name').
-        ' ('.sprintf(l10n('by %s'), get_username($UserCollection->getParam('user_id'))).')'
+        $conf['level_separator'] . trigger_event('render_category_name', $col['NAME']) .
+        ' (' . sprintf(l10n('by %s'), get_username($UserCollection->getParam('user_id'))) . ')'
         );
+        
+      $template->assign('CONTENT_DESCRIPTION', trigger_event('render_category_description', nl2br($col['COMMENT'])));
     }
     catch (Exception $e)
     {
@@ -263,16 +251,12 @@ UPDATE '.COLLECTIONS_TABLE.'
 // modification on mainpage_categories.tpl
 function user_collections_categories_list($content, &$samrty)
 {
-  $search[0] = '<div class="thumbnailCategory">';
-  $replace[0] = '<div class="thumbnailCategory {*if $cat.active}activeCollection{/if*}">
+  $search = '<div class="thumbnailCategory">';
+  $replace = '<div class="thumbnailCategory">
   <div class="collectionActions">
     <a href="{$cat.URL}" rel="nofollow">{"Edit"|@translate}</a>
     | <a href="{$cat.U_DELETE}" onClick="return confirm(\'{"Are you sure?"|@translate}\');" rel="nofollow">{"Delete"|@translate}</a>
-    {if $cat.U_ACTIVE}| <a href="{$cat.U_ACTIVE}" rel="nofollow">{if $cat.active}{"set inactive"|@translate}{else}{"set active"|@translate}{/if}</a>{/if}
   </div>';
-  
-  // $search[1] = '<a href="{$cat.URL}">{$cat.NAME}</a>';
-  // $replace[1] = '<a href="{$cat.URL}">{$cat.NAME}</a> {if $cat.active}<span class="collectionActive">({"active"|@translate})</span>{/if}';
   
   return str_replace($search, $replace, $content);
 }
@@ -280,12 +264,8 @@ function user_collections_categories_list($content, &$samrty)
 // colorbox
 function user_collections_add_colorbox($content)
 {
-  // add datas
   $search = '<a href="{$thumbnail.URL}"';
   $replace = $search.' class="preview-box" data-src="{$thumbnail.FILE_SRC}" data-id="{$thumbnail.id}"';
-  
-  // colorbox script
-  $content.= file_get_contents(USER_COLLEC_PATH.'template/thumbnails_colorbox.tpl');
   
   return str_replace($search, $replace, $content);
 }

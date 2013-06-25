@@ -14,7 +14,7 @@ if ($page['tab'] == 'export')
 {
   if (isset($_GET['col_id']))
   {
-    $tabsheet->add('export', l10n('Export'), USER_COLLEC_ADMIN . '-export&amp;col_id='.$_GET['col_id']);
+    $tabsheet->add('export', l10n('Export image list'), USER_COLLEC_ADMIN . '-export&amp;col_id='.$_GET['col_id']);
   }
   else
   {

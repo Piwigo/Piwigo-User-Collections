@@ -96,10 +96,9 @@ SELECT * FROM (
       'TN_ALT'   => strip_tags($category['name']),
       'URL'   => USER_COLLEC_PUBLIC.'edit/'.$category['id'],
       'CAPTION_NB_IMAGES' => empty($counter) ? sprintf(l10n('%d photo'), 0) : $counter,
-      'NAME'  => $category['name'],
+      'NAME'  => trigger_event('render_category_name', $category['name']),
+      'DESCRIPTION'  => trigger_event('render_category_description', $category['comment'], 'subcatify_category_description'),
       'INFO_DATES' => format_date($category['date_creation'], true),
-      
-      // 'U_ACTIVE' => add_url_params(USER_COLLEC_PUBLIC, array('action'=>'toggle_active','col_id'=>$category['id'])),
       'U_DELETE' => add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$category['id'])),
       ));
 

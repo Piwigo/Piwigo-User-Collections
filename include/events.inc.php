@@ -46,11 +46,17 @@ function user_collections_page_header()
 /* collections section */
 function user_collections_page()
 {
-  global $page;
+  global $page, $template;
 
   if (isset($page['section']) and $page['section'] == 'collections')
   {
     include(USER_COLLEC_PATH . '/include/collections.inc.php');
+  }
+  
+  if (!is_a_guest() && count($page['items']))
+  {
+    $template->set_filename('uc_tumbnails_cssjs', realpath(USER_COLLEC_PATH . 'template/thumbnails_css_js.tpl'));
+    $template->parse('uc_tumbnails_cssjs');
   }
 }
 
@@ -97,12 +103,18 @@ SELECT
   
   // get all collections
   $query = '
-SELECT id, name, nb_images, active
+SELECT id, name, nb_images
   FROM '.COLLECTIONS_TABLE.'
   WHERE user_id = '.$user['id'].'
   ORDER BY name ASC
 ;';
   $collections = hash_from_query($query, 'id');
+  
+  foreach ($collections as &$col)
+  {
+    $col["name"] = trigger_event("render_category_name", $col["name"]);
+  }
+  unset($col);
   
   $template->assign(array(
     'COLLECTIONS' => $collections,
@@ -111,7 +123,6 @@ SELECT id, name, nb_images, active
   
   // thumbnails buttons
   $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_button');
-  $template->set_prefilter('index', 'user_collections_thumbnails_list_cssjs');
   
   return $tpl_thumbnails_var;
 }
@@ -130,13 +141,6 @@ function user_collections_thumbnails_list_button($content, &$smarty)
 </a>{/strip}';
   
   return preg_replace($search, $replace, $content);
-}
-
-// add css & js and menu
-function user_collections_thumbnails_list_cssjs($content, &$smarty)
-{
-  $content.= file_get_contents(USER_COLLEC_PATH.'template/thumbnails_css_js.tpl');
-  return $content;
 }
 
 
@@ -166,12 +170,18 @@ SELECT GROUP_CONCAT(col_id)
   
   // get all collections
   $query = '
-SELECT id, name, nb_images, active
+SELECT id, name, nb_images
   FROM '.COLLECTIONS_TABLE.'
   WHERE user_id = '.$user['id'].'
   ORDER BY name ASC
 ;';
   $collections = hash_from_query($query, 'id');
+  
+  foreach ($collections as &$col)
+  {
+    $col["name"] = trigger_event("render_category_name", $col["name"]);
+  }
+  unset($col);
   
   $template->assign(array(
     'CURRENT_COLLECTIONS' => $image_collections,
@@ -213,19 +223,18 @@ function user_collections_applymenu($menu_ref_arr)
   if (($block = $menu->get_block('mbUserCollection')) != null)
   {
     $query = '
-SELECT *
+SELECT id, name, nb_images
   FROM '.COLLECTIONS_TABLE.'
   WHERE user_id = '.$user['id'].'
-  ORDER BY
-    active DESC,
-    date_creation DESC
+  ORDER BY date_creation DESC
 ;';
     $collections = array_values(hash_from_query($query, 'id'));
     
     $data['collections'] = array();
     for ($i=0; $i<$max && $i<count($collections); $i++)
     {
-      $collections[$i]['U_EDIT'] = USER_COLLEC_PUBLIC.'edit/'.$collections[$i]['id'];
+      $collections[$i]['name'] = trigger_event('render_category_name', $collections[$i]['name']);
+      $collections[$i]['u_edit'] = USER_COLLEC_PUBLIC.'edit/'.$collections[$i]['id'];
       $data['collections'][] = $collections[$i];
     }
     
@@ -238,9 +247,8 @@ SELECT *
     $data['U_LIST'] = USER_COLLEC_PUBLIC;
     $data['U_CREATE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'new','col_id'=>'0','redirect'=>'true'));
     
-    $template->set_template_dir(USER_COLLEC_PATH . 'template/');
     $block->set_title('<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>');
-    $block->template = 'menublock_user_collec.tpl';
+    $block->template = realpath(USER_COLLEC_PATH . 'template/menublock.tpl');
     $block->data = $data;
   }
 }

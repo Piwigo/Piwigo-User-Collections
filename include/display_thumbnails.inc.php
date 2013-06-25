@@ -133,9 +133,6 @@ function user_collections_thumbnails_in_collection($tpl_thumbnails_var, $picture
         ),
         array('start')
       );
-      
-    $thumbnail['COLLECTION_SELECTED'] = true;
-    $thumbnail['COLLECTION_TOGGLE_URL'] = add_url_params($url, array('collection_toggle'=>$thumbnail['id']));
   }
   
   return $tpl_thumbnails_var;

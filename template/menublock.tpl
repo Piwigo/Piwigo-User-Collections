@@ -10,12 +10,11 @@
   <ul>{strip}
 		{foreach from=$block->data.collections item=col}
 		<li>
-      <a href="{$col.U_EDIT}" {*if $col.active}style="font-weight:bold;"{/if*} rel="nofollow">{$col.name}</a>&nbsp; 
-      {*if $col.active}<i class="menuInfoCat">({'active'|@translate})</i>&nbsp;{/if*} 
+      <a href="{$col.u_edit}" rel="nofollow">{$col.name}</a>&nbsp; 
       <span class="menuInfoCat">[<span class="nbImagesCollec-{$col.id}">{$col.nb_images}</span>]</span>
     </li>
 		{/foreach}
-    {if $block->data.MORE}<li class="menuInfoCat"><a href="{$block->data.U_LIST}">{'%d more...'|@translate|sprintf:$block->data.MORE}</a></li>{/if}
+    {if isset($block->data.MORE)}<li class="menuInfoCat"><a href="{$block->data.U_LIST}">{'%d more...'|@translate|sprintf:$block->data.MORE}</a></li>{/if}
 	{/strip}</ul>
   {/if}
   <p><a href="{$block->data.U_CREATE}" rel="nofollow">{'Create a new collection'|@translate}</a></p>

@@ -18,11 +18,11 @@ if (mobile_theme())
 global $conf, $prefixeTable;
 
 defined('USER_COLLEC_ID') or define('USER_COLLEC_ID', basename(dirname(__FILE__)));
-define('USER_COLLEC_PATH',       PHPWG_PLUGINS_PATH . USER_COLLEC_ID . '/');
-define('COLLECTIONS_TABLE',      $prefixeTable.'collections');
-define('COLLECTION_IMAGES_TABLE',$prefixeTable.'collection_images');
-define('USER_COLLEC_ADMIN',      get_root_url() . 'admin.php?page=plugin-' . USER_COLLEC_ID);
-define('USER_COLLEC_PUBLIC',     get_absolute_root_url() . make_index_url(array('section' => 'collections')) . '/');
+define('USER_COLLEC_PATH',        PHPWG_PLUGINS_PATH . USER_COLLEC_ID . '/');
+define('COLLECTIONS_TABLE',       $prefixeTable.'collections');
+define('COLLECTION_IMAGES_TABLE', $prefixeTable.'collection_images');
+define('USER_COLLEC_ADMIN',       get_root_url() . 'admin.php?page=plugin-' . USER_COLLEC_ID);
+define('USER_COLLEC_PUBLIC',      get_absolute_root_url() . make_index_url(array('section' => 'collections')) . '/');
 define('USER_COLLEC_VERSION',    'auto');
 
 add_event_handler('init', 'user_collections_init');

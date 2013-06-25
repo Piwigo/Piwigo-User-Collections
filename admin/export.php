@@ -54,6 +54,6 @@ $default_inactive_fields = array(
 $template->assign('active_fields', pwg_get_session_var('uc_export_active_fields', $default_active_fields));
 $template->assign('inactive_fields', pwg_get_session_var('uc_export_inactive_fields', $default_inactive_fields));
 
-$template->set_filename('user_collections', dirname(__FILE__) . '/template/export.tpl');
+$template->set_filename('user_collections', realpath(USER_COLLEC_PATH . 'admin/template/export.tpl'));
 
 ?>

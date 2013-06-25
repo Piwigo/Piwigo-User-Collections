@@ -23,6 +23,7 @@ function plugin_uninstall()
 {
   global $prefixeTable;
   
+  pwg_query('DELETE FROM `'. CONFIG_TABLE .'` WHERE param = "user_collections" LIMIT 1;');
   pwg_query('DROP TABLE IF EXISTS `'.$prefixeTable.'collections`;');
   pwg_query('DROP TABLE IF EXISTS `'.$prefixeTable.'collection_images`;');
 }

@@ -1,4 +1,4 @@
-{combine_css path=$USER_COLLEC_PATH|@cat:"template/style_thumbnails.css"}
+{combine_css path=$USER_COLLEC_PATH|cat:'template/style_thumbnails.css'}
 
 {* <!-- all pages but collection edit page --> *}
 {if not $UC_IN_EDIT}
@@ -28,7 +28,7 @@ $cdm.find("input.new").on({ldelim}
     var name = jQuery(this).val();
     jQuery(this).val("{'Name'|@translate}");
     
-    if (name == "") return;
+    if (name == "" || name == null) return;
     
     jQuery.ajax({ldelim}
       type: "GET",
@@ -38,7 +38,6 @@ $cdm.find("input.new").on({ldelim}
         format: "json",
         method: "pwg.collections.create",
         name: name,
-        active: 1,
       },
       success: function(data) {ldelim}
         if (data.stat == 'ok') {ldelim}
@@ -102,7 +101,7 @@ $cdm.on("click", ".add, .remove", function() {ldelim}
         var col_ids = $target.data("cols");
         if (method == "pwg.collections.addImages" && col_ids.indexOf(col_id) == -1)
           col_ids[ col_ids.length ] = col_id;
-        else
+        else if (method == "pwg.collections.removeImages")
           col_ids.splice(col_ids.indexOf(col_id), 1);
         $target.data("col", col_ids);
       }
@@ -205,7 +204,6 @@ jQuery(".addCollection").on("click", function(event) {ldelim}
     }
   });
   
-  // not working, the event is fired twice
   event.stopPropagation();
   event.preventDefault();
   return false;

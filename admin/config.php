@@ -16,6 +16,6 @@ $template->assign(array(
   ));
 
 
-$template->set_filename('user_collections', dirname(__FILE__) . '/template/config.tpl');
+$template->set_filename('user_collections', realpath(USER_COLLEC_PATH . 'admin/template/config.tpl'));
 
 ?>

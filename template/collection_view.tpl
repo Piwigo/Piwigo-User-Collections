@@ -1,4 +1,5 @@
-{combine_css path=$USER_COLLEC_PATH|@cat:"template/style.css"}
+{combine_css path=$USER_COLLEC_PATH|cat:'template/style_collections.css'}
+{include file=$USER_COLLEC_ABS_PATH|cat:'template/thumbnails_colorbox.tpl'}
 
 
 {* <!-- Menubar & titrePage --> *}
@@ -16,6 +17,11 @@
 {include file='infos_errors.tpl'}
 {/if}
 
+{if !empty($CONTENT_DESCRIPTION)}
+<div class="additional_info">
+	{$CONTENT_DESCRIPTION}
+</div>
+{/if}
 
 {if !empty($THUMBNAILS)}
 <ul class="thumbnails" id="thumbnails">
@@ -25,6 +31,6 @@
 
 {if !empty($navbar)}{include file='navigation_bar.tpl'|@get_extent:'navbar'}{/if}
 
-{if $clear}<div style="clear: both;"></div>
+{if isset($clear)}<div style="clear: both;"></div>
 </div>{/if}
 </div>{* <!-- content --> *}
