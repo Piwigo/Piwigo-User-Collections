@@ -24,7 +24,7 @@ class UserCollection
       'user_id' => $user_id,
       'name' => null,
       'date_creation' => '0000-00-00 00:00:00',
-      'domment' => null,
+      'comment' => null,
       'nb_images' => 0,
       'public' => 0,
       'public_id' => null,
