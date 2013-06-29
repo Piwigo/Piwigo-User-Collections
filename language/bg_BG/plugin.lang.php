@@ -76,4 +76,9 @@ $lang['Please enter the recipient name'] = 'Моля въведете името
 $lang['Please enter the recipient e-mail'] = 'Моля въведете имела на получателя';
 $lang['Please enter your name'] = 'Моля въведете вашето име';
 $lang['Please enter your e-mail'] = 'Моля въведете вашият имейл';
+$lang['(remove)'] = '(примахване)';
+$lang['Name, A &rarr; Z'] = 'Име, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Име, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Номер снимка, голям &rarr; малък';
+$lang['Photos number, low &rarr; high'] = 'Номер снимка, малък &rarr; голям';
 ?>
