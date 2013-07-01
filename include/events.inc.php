@@ -72,7 +72,7 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
   global $page, $template, $user;
   
   // the content is different on collection edition page and no button on batch downloader set edition page
-  if ( (@$page['section'] == 'collections' and @$page['sub_section']=='edit') or @$page['section'] == 'download')
+  if ( empty($pictures) or (@$page['section'] == 'collections' and @$page['sub_section']=='edit') or @$page['section'] == 'download')
   {
     return $tpl_thumbnails_var;
   }
@@ -245,7 +245,6 @@ SELECT id, name, nb_images
     }
     
     $data['U_LIST'] = USER_COLLEC_PUBLIC;
-    $data['U_CREATE'] = add_url_params(USER_COLLEC_PUBLIC, array('action'=>'new','col_id'=>'0','redirect'=>'true'));
     
     $block->set_title('<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>');
     $block->template = realpath(USER_COLLEC_PATH . 'template/menublock.tpl');

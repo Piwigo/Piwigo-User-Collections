@@ -81,7 +81,7 @@ function user_collections_ws_add_methods($arr)
       'content' => array(
         'default'=>array('id','name','url','path'),
         'flags'=>WS_PARAM_FORCE_ARRAY,
-        'info'=>'Available options are: id, file, name, url, path, ate_creation, collection_add_date, filesize, width, height'
+        'info'=>'Available options are: id, file, name, url, path, date_creation, collection_add_date, filesize, width, height'
         ),
       ),
     'Returns a serialized version of the collection in CSV.<br>The return type is plain/text whatever you select as response format.'
