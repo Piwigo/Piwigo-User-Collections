@@ -76,4 +76,9 @@ $lang['active'] = '活躍';
 $lang['by %s'] = '由 %s';
 $lang['save'] = '儲存';
 $lang['set active'] = '設定動作';
+$lang['(remove)'] = '(移除)';
+$lang['Name, A &rarr; Z'] = '名稱 A &rarr; Z';
+$lang['Name, Z &rarr; A'] = '名稱 Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = '相片數量 高 &rarr; 低';
+$lang['Photos number, low &rarr; high'] = '相片數量 低 &rarr; 高';
 ?>
