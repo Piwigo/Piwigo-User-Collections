@@ -76,4 +76,9 @@ $lang['A photo collection by %s'] = 'Колекція зображень %s';
 $lang['Active'] = 'Активний';
 $lang['Allow users to send their public collections by mail'] = 'Дозволити користувачам надсилати їх публічні колекції поштою';
 $lang['Allow users to set their collections as public'] = 'Дозволити користувачам встановлювати свої колекції, як публічні';
+$lang['(remove)'] = '(видалити)';
+$lang['Name, A &rarr; Z'] = 'Ім\'я, А &rarr; Я';
+$lang['Name, Z &rarr; A'] = 'Ім\'я, Я &rarr; А';
+$lang['Photos number, high &rarr; low'] = 'Кількість фото, більше &rarr; менше';
+$lang['Photos number, low &rarr; high'] = 'Кількість фото, менше  &rarr; більше';
 ?>
