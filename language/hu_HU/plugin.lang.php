@@ -76,4 +76,9 @@ $lang['Edit this collection'] = 'Gyűjtemény szerkesztése';
 $lang['Export image list'] = 'Kép sista exportálása';
 $lang['Inactive'] = 'Inaktív';
 $lang['Message (optional)'] = 'Üzenet (választható)';
+$lang['(remove)'] = '(eltávolít)';
+$lang['Name, A &rarr; Z'] = 'Név, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Név, Z &rarr; A';
+$lang['Photos number, high &rarr; low'] = 'Kép sorszáma, magasabb &rarr; alacsonyabb';
+$lang['Photos number, low &rarr; high'] = 'Kép sorszáma, alacsonyabb &rarr; magasabb';
 ?>
