@@ -81,4 +81,15 @@ $lang['Name, A &rarr; Z'] = 'Имя, A &rarr; Z';
 $lang['Name, Z &rarr; A'] = 'Имя, Z &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Количество изображений, много &rarr; мало';
 $lang['Photos number, low &rarr; high'] = 'Количество изображений, мало &rarr; много';
+$lang['New share added: <a href="%s">%s</a>'] = 'В общий доступ добавлено: <a href="%s">%s</a>';
+$lang['Share'] = 'Доступ';
+$lang['Share deleted'] = 'Доступ удален';
+$lang['Share key'] = 'Ключ для доступа';
+$lang['Share this collection'] = 'Доступ для этой коллекции';
+$lang['Restricted access'] = 'Ограниченный доступ';
+$lang['Expiration date'] = 'Окончание срока действия';
+$lang['Collection not found'] = 'Коллекция не обнаружена';
+$lang['The key must be at least 8 characters long'] = 'Длина ключа должна быть не менее 8 символов';
+$lang['This key is already used'] = 'Этот ключ ужЕ использован';
+$lang['This link expired'] = 'Эта ссылка устарела';
 ?>
