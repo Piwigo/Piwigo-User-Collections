@@ -1,57 +1,143 @@
 {combine_css path=$USER_COLLEC_PATH|cat:'template/style_collections.css'}
-{combine_script id='ZeroClipboard' path=$USER_COLLEC_PATH|cat:'template/resources/ZeroClipboard.min.js'}
+
 {include file=$USER_COLLEC_ABS_PATH|cat:'template/thumbnails_colorbox.tpl'}
 
-{footer_script require='jquery'}
-{if $user_collections.allow_public}
-ZeroClipboard.setDefaults( {ldelim} moviePath: "{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/ZeroClipboard.swf" } );
-var clip = new ZeroClipboard();
+{*<!-- datepicker and timepicker -->*}
+{include file='include/datepicker.inc.tpl'}
+{combine_script id='jquery.ui.timepicker' load='footer' require='jquery.ui.datepicker,jquery.ui.slider' path=$USER_COLLEC_PATH|cat:'template/resources/jquery-timepicker/jquery-ui-timepicker-addon.js'}
 
-clip.glue(jQuery("#publicURL .button").get());
-clip.addEventListener('onMouseOver', function() {ldelim}
-  clip.setText(jQuery("#publicURL .url").val());
-});
-clip.addEventListener('complete', function() {ldelim}
-  jQuery('.confirm').remove();
-  jQuery("#publicURL .url").select();
-  jQuery('<span class="confirm" style="display:none;">{'Copied'|@translate}</span>').appendTo("#publicURL")
-    .fadeIn(400).delay(1000).fadeOut(400, function(){ldelim} jQuery(this).remove(); });
-});
-
-jQuery("#publicURL .url").click(function() {ldelim}
-  jQuery(this).select();
-});
-
-jQuery("input[name='public']").change(function() {ldelim}
-  jQuery("#publicURL").fadeToggle("fast");
-});
+{assign var="timepicker_language" value=$USER_COLLEC_PATH|cat:'template/resources/jquery-timepicker/i18n/jquery-ui-timepicker-'|cat:$lang_info.code|cat:'.js'}
+{if "PHPWG_ROOT_PATH"|@constant|@cat:$timepicker_language|@file_exists}
+{combine_script id="jquery.ui.timepicker-$lang_info.code" load='footer' require='jquery.ui.timepicker' path=$timepicker_language}
 {/if}
 
-{if $collection.PUBLIC && $user_collections.allow_mails}
-  jQuery(window).load(function(){ldelim}
-    jQuery(".mail_colorbox_open").colorbox({ldelim}
-      {if isset($uc_mail_errors)}open: true, transition:"none",{/if}
-      inline:true
-    });
-    jQuery(".mail_colorbox_close").click(function() {ldelim}
-      jQuery(".mail_colorbox_open").colorbox.close();
+{combine_css path='themes/default/js/ui/theme/jquery.ui.core.css'}
+{combine_css path='themes/default/js/ui/theme/jquery.ui.theme.css'}
+{combine_css path='themes/default/js/ui/theme/jquery.ui.slider.css'}
+{combine_css path=$USER_COLLEC_PATH|cat:'template/resources/jquery-timepicker/jquery-ui-timepicker-addon.css'}
+
+
+<script>
+{footer_script require='jquery,jquery.ui.timepicker'}
+{if isset($U_SHARE)}
+{literal}
+  var $share_form = jQuery('#share_form');
+  
+  // functions
+  jQuery.fn.extend({
+      hideVis: function() {
+          $(this).css('visibility', 'hidden');
+          return this;
+      },
+      showVis: function() {
+          $(this).css('visibility', 'visible');
+          return this;
+      },
+      toggleVis: function(toggle) {
+          if ($(this).css('visibility')=='hidden' || toggle === true){
+              return $(this).showVis();
+          } else {
+              return $(this).hideVis();
+          }
+      }
+  });
+  
+  function enterShareKeyEdit() {
+      $share_form.find('.url-edit').show();
+      $share_form.find('.url-normal').hide();
+      jQuery(".share_colorbox_open").colorbox.resize({speed:0});
+  }
+  function exitShareKeyEdit() {
+      $share_form.find('.url-edit').hide();
+      $share_form.find('.url-normal').show();
+      jQuery(".share_colorbox_open").colorbox.resize({speed:0});
+  }
+  
+  // hide some inputs
+  exitShareKeyEdit();
+  
+  // display key
+  $share_form.find('.url-more').text($share_form.find('input[name="share_key"]').val());
+  
+  // url edition
+  $share_form.find('.edit_share_key').on('click', function() {
+      enterShareKeyEdit();
       return false;
-    })
+  });
+  $share_form.find('.set_share_key').on('click', function() {
+      if ($share_form.find('input[name="share_key"]').val().length < 8) {
+          alert("{/literal}{'The key must be at least 8 characters long'|@translate}{literal}");
+      }
+      else {
+          $share_form.find('.url-more').text($share_form.find('input[name="share_key"]').val());
+          exitShareKeyEdit();
+      }
+      return false;
+  });
+  $share_form.find('.cancel_share_key').on('click', function() {
+      $share_form.find('input[name="share_key"]').val($share_form.find('.url-more').text());
+      exitShareKeyEdit();
+      return false;
+  });
+  $share_form.find('.url-more').on('dblclick', function() {
+      enterShareKeyEdit();
+  });
+  
+  // optional inputs
+  $share_form.find('.share-option').each(function() {
+      $share_form.find('input[name="'+ $(this).data('for') +'"]').hideVis();
+  }).on('change', function() {
+      $share_form.find('input[name="'+ $(this).data('for') +'"]').toggleVis($(this).is(':checked'));
+  });
+  
+  // datetime picker
+  $share_form.find('input[name="share_deadline"]').datetimepicker({
+      dateFormat: 'yy-mm-dd',
+      minDate: new Date()
+  });
+  
+  
+  // popup
+  jQuery(".share_colorbox_open").colorbox({
+    {/literal}{if isset($share.open)}open: true, transition:"none",{/if}{literal}
+    inline:true
+  });
+  jQuery(".share_colorbox_close").click(function() {
+    jQuery(".share_colorbox_open").colorbox.close();
+    return false;
+  });
+  jQuery("#share_form").css('background-color', jQuery("#the_page #content").css('background-color'));
+{/literal}
+{/if}
+
+{if isset($U_MAIL)}
+{literal}
+  jQuery(".mail_colorbox_open").colorbox({
+    {/literal}{if isset($contact.open)}open: true, transition:"none",{/if}{literal}
+    inline:true
+  });
+  jQuery(".mail_colorbox_close").click(function() {
+    jQuery(".mail_colorbox_open").colorbox.close();
+    return false;
   });
   jQuery("#mail_form").css('background-color', jQuery("#the_page #content").css('background-color'));
+{/literal}
 {/if}
 
-jQuery("#edit_form_show").click(function() {ldelim}
+{literal}
+jQuery("#edit_form_show").click(function() {
   jQuery("#edit_form_show").hide();
   jQuery(".additional_info").hide();
   jQuery("#edit_form").show();
 });
-jQuery("#edit_form_hide").click(function() {ldelim}
+jQuery("#edit_form_hide").click(function() {
   jQuery("#edit_form_show").show();
   jQuery(".additional_info").show();
   jQuery("#edit_form").hide();
 });
+{/literal}
 {/footer_script}
+</script>
 
 
 {* <!-- Menubar & titrePage --> *}
@@ -69,6 +155,8 @@ jQuery("#edit_form_hide").click(function() {ldelim}
 {include file='infos_errors.tpl'}
 {/if}
 
+
+{if isset($collection)}
 
 {if !empty($CONTENT_DESCRIPTION)}
 <div class="additional_info">
@@ -88,18 +176,6 @@ jQuery("#edit_form_hide").click(function() {ldelim}
   
   <p class="title"><label for="comment">{'Description'|@translate}</label></p>
   <p><textarea name="comment" id="comment" style="width:400px;height:100px;">{$collection.COMMENT}</textarea></p>
-  
-{if $user_collections.allow_public}
-  <p class="title">{'Public collection'|@translate}</p>
-  <p>
-    <label><input type="radio" name="public" value="0" {if not $collection.PUBLIC}checked="checked"{/if}> {'No'|@translate}</label>
-    <label><input type="radio" name="public" value="1" {if $collection.PUBLIC}checked="checked"{/if}> {'Yes'|@translate}</label>
-    <span id="publicURL" {if not $collection.PUBLIC}style="display:none;"{/if}><!--
-    --><span class="button" title="{'Copy to clipboard'|@translate}">&nbsp;</span><!--
-    --><input type="text" class="url" value="{$collection.U_PUBLIC}" size="{$collection.U_PUBLIC|strlen}"><!--
-  --></span>
-  </p>
-{/if}
 
   <p>
     <input type="submit" name="save_col" value="{'Save'|@translate}">
@@ -108,15 +184,81 @@ jQuery("#edit_form_hide").click(function() {ldelim}
 </fieldset>
 </form>
 
-
-{* <!-- send collection by mail -->*}
-{if $user_collections.allow_public && $user_collections.allow_mails}
+{*<!-- create share links -->*}
+{if isset($U_SHARE)}
 <div style="display:none;">
-  <form id="mail_form" action="{$F_ACTION}" method="post">
-  {if isset($uc_mail_errors)}
-    {assign var=errors value=$uc_mail_errors}
-    {include file='infos_errors.tpl'}
+  <form id="share_form" class="uc_form" action="{$F_ACTION}" method="post">
+    {include file='infos_errors.tpl' errors=$share.errors infos=$share.infos}
+    
+    <table>
+      <tr>
+        <td colspan="2" class="url-preview" style="white-space:nowrap;">
+          <span class="url-base">{$U_SHARE}</span><span class="url-more url-normal"></span>
+          <input type="text" name="share_key" class="url-edit" size="20" value="{$share.share_key}">
+          <button class="url-normal edit_share_key">{'Edit'|@translate}</button>
+          <button class="url-edit set_share_key">{'OK'|@translate}</button>
+          <a href="#" class="url-edit cancel_share_key">{'Cancel'|@translate}</button>
+        </td>
+      </tr>
+      <tr>
+        <td class="title"><label>
+          {'Password'|@translate}
+          <input type="checkbox" name="use_share_password" data-for="share_password" class="share-option">
+        </label></td>
+        <td>
+          <input type="text" name="share_password" size="25" maxlength="25" value="{$share.password}" placeholder="{'Password'|@translate}">
+        </td>
+      </tr>
+      <tr>
+        <td class="title"><label>
+          {'Expiration date'|@translate}
+          <input type="checkbox" name="use_share_deadline" data-for="share_deadline" class="share-option">
+        </label></td>
+        <td>
+          <input type="text" name="share_deadline" size="25" value="{$share.deadline}" placeholder="{'Date'|@translate}">
+        </td>
+      </tr>
+      <tr>
+        <td class="title">&nbsp;</td>
+        <td>
+          <input class="submit" type="submit" name="add_share" value="{'Add'|@translate}">
+          <a class="share_colorbox_close" href="#">{'Cancel'|@translate}</a>
+          <input type="hidden" name="key" value="{$UC_TKEY}">
+        </td>
+      </tr>
+    </table>
+    
+  {if not empty($collection.SHARES)}
+    <table class="shares_list">
+      <tr class="header">
+        <th>{'Share key'|@translate}</th>
+        <th>{'Creation date'|@translate}</th>
+        <th>{'Password'|@translate}</th>
+        <th>{'Expiration date'|@translate}</th>
+        <th></th>
+      </tr>
+    {foreach from=$collection.SHARES item=share}
+      <tr class="{cycle values='row2,row1'} {if $share.expired}expired{/if}">
+        <td><a href="{$share.url}">{$share.share_key}</a></td>
+        <td>{$share.add_date_readable}</td>
+        <td>{if $share.params.password}{'Yes'|@translate}{else}{'No'|@translate}{/if}</td>
+        <td>{if $share.params.deadline}{$share.params.deadline_readable}{else}{'No'|@translate}{/if}</td>
+        <td><a href="{$share.u_delete}" onClick="return confirm('{'Are you sure?'|@translate}');">
+          <img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/delete.png" width=16 height=16></a>
+        </td>
+      </tr>
+    {/foreach}
+    </table>
   {/if}
+  </form>
+</div>
+{/if}
+
+{*<!-- send collection by mail -->*}
+{if isset($U_MAIL)}
+<div style="display:none;">
+  <form id="mail_form" class="uc_form" action="{$F_ACTION}" method="post">
+    {include file='infos_errors.tpl' errors=$contact.errors}
 
     <table>
       <tr>
@@ -162,7 +304,7 @@ jQuery("#edit_form_hide").click(function() {ldelim}
         <td>
           <input class="submit" type="submit" name="send_mail" value="{'Send'|@translate}">
           <a class="mail_colorbox_close" href="#">{'Cancel'|@translate}</a>
-          <input type="hidden" name="key" value="{$contact.KEY}" />
+          <input type="hidden" name="key" value="{$UC_TKEY}">
         </td>
       </tr>
     </table>
@@ -182,6 +324,7 @@ jQuery("#edit_form_hide").click(function() {ldelim}
 
 {if !empty($navbar)}{include file='navigation_bar.tpl'|@get_extent:'navbar'}{/if}
 
+{/if}
 
 {if isset($clear)}<div style="clear: both;"></div>
 </div>{/if}

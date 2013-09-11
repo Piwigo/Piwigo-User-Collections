@@ -49,8 +49,6 @@ foreach ($sets as $row)
     'NB_IMAGES' => $row['nb_images'],
     'DATE_CREATION' => format_date($row['date_creation'], true),
     'USERNAME' => $row['username'],
-    'IS_PUBLIC' => (bool)$row['public'],
-    'U_PUBLIC' => USER_COLLEC_PUBLIC . 'view/'.$row['public_id'],
     'U_EDIT' => USER_COLLEC_PUBLIC . 'edit/'.$row['id'],
     'U_EXPORT' => USER_COLLEC_ADMIN . '-export&amp;col_id='.$row['id'],
     'U_DELETE' => USER_COLLEC_ADMIN . '-sets&amp;delete='.$row['id'],

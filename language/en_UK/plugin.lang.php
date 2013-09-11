@@ -1,13 +1,8 @@
 <?php
 
-$lang['Copied'] = 'Copied';
-$lang['Public collection'] = 'Public';
-$lang['Copy to clipboard'] = 'Copy to clipboard';
-$lang['Return to collections list'] = 'Return to list';
 $lang['This collection is empty'] = 'This collection is empty';
 $lang['Collection name:'] = 'Collection name:';
 $lang['Create a new collection'] = 'Create a new collection';
-$lang['See all my collections'] = 'See all my collections';
 $lang['Please give a name'] = 'Please give a name';
 $lang['Invalid collection'] = 'Invalid collection';
 $lang['by %s'] = 'by %s';
@@ -22,7 +17,17 @@ $lang['You have %d collections'] = 'You have %d collections';
 $lang['Save'] = 'Save';
 $lang['%d more...'] = '%d more...';
 $lang['(remove)'] = '(remove)';
-
+$lang['Collection not found'] = 'Collection not found';
+$lang['Expiration date'] = 'Expiration date';
+$lang['New share added: <a href="%s">%s</a>'] = 'New share added: <a href="%s">%s</a>';
+$lang['Restricted access'] = 'Restricted access';
+$lang['Share'] = 'Share';
+$lang['Share deleted'] = 'Share deleted';
+$lang['Share key'] = 'Share key';
+$lang['Share this collection'] = 'Share this collection';
+$lang['The key must be at least 8 characters long'] = 'The key must be at least 8 characters long';
+$lang['This key is already used'] = 'This key is already used';
+$lang['This link expired'] = 'This link expired';
 $lang['Allow users to set their collections as public'] = 'Allow users to set their collections as public';
 $lang['Allow users to send their public collections by mail'] = 'Allow users to send their public collections by mail';
 $lang['Fields'] = 'Fields';
@@ -43,7 +48,6 @@ $lang['Please enter the recipient e-mail'] = 'Please enter the recipient e-mail'
 $lang['A photo collection by %s'] = 'A photo collection by %s';
 $lang['Error while sending e-mail'] = 'Error while sending e-mail';
 $lang['E-mail sent successfully'] = 'E-mail sent successfully';
-$lang['The collection must be public in order to send it'] = 'The collection must be public in order to send it';
 $lang['Your name'] = 'Your name';
 $lang['Your e-mail'] = 'Your e-mail';
 $lang['Recipient name'] = 'Recipient name';

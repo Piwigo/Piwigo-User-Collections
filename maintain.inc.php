@@ -21,11 +21,14 @@ function plugin_activate()
 
 function plugin_uninstall() 
 {
-  global $prefixeTable;
+  global $prefixeTable, $conf;
   
-  pwg_query('DELETE FROM `'. CONFIG_TABLE .'` WHERE param = "user_collections" LIMIT 1;');
+  pwg_query('DELETE FROM `'. CONFIG_TABLE .'` WHERE param = "user_collections";');
   pwg_query('DROP TABLE IF EXISTS `'.$prefixeTable.'collections`;');
   pwg_query('DROP TABLE IF EXISTS `'.$prefixeTable.'collection_images`;');
+  pwg_query('DROP TABLE IF EXISTS `'.$prefixeTable.'collection_shares`;');
+  
+  unset($conf['user_collections']);
 }
 
 ?>

@@ -14,13 +14,16 @@ function user_collections_section_init()
     add_event_handler('loc_begin_page_header', 'user_collections_page_header');
     
     $page['section'] = 'collections';
-    $page['section_title'] = '<a href="'.get_absolute_root_url().'">'.l10n('Home').'</a>'.$conf['level_separator'].'<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>';
     $page['title'] = l10n('Collections');
+    
+    $page['section_title'] = '<a href="'.get_absolute_root_url().'">'.l10n('Home').'</a>'.$conf['level_separator'];
+    if (is_a_guest()) $page['section_title'].= l10n('Collections');
+    else $page['section_title'].= '<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>';
     
     if (in_array(@$tokens[1], array('edit','view','list')))
     {
       $page['sub_section'] = $tokens[1];
-      if ($tokens[1]=='edit' and isset($conf['GThumb']) && is_array($conf['GThumb']))
+      if ($tokens[1]=='edit' && isset($conf['GThumb']) && is_array($conf['GThumb']))
       {
         $conf['GThumb']['big_thumb'] = false; // big thumb is buggy with removes
       }
@@ -41,6 +44,25 @@ function user_collections_page_header()
 {
   global $page;
   $page['body_id'] = 'theCollectionPage';
+}
+
+function uc_anti_lightbox($tpl_thumbnails_var)
+{
+  global $template, $page;
+  
+  if ($page['section'] == 'collections' && !empty($template->css_by_priority[0]))
+  {
+    foreach ($template->css_by_priority[0] as $file)
+    {
+      if (strpos($file[0], 'colorbox.css') !== false)
+      {
+        $template->assign('UC_NO_LIGHTBOX', true);
+        break;
+      }
+    }
+  }
+  
+  return $tpl_thumbnails_var;
 }
 
 /* collections section */

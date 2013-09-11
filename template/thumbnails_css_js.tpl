@@ -20,13 +20,18 @@ $cdm.find("a.new").on("click", function(event) {ldelim}
 
 // events on "new collection" input
 $cdm.find("input.new").on({ldelim}
-  // ENTER pressed
+  // ENTER or ESC pressed
   "keyup": function(event) {ldelim}
+    if (event.which == 27) {
+      jQuery(this).val('').hide().prev().show();
+      return;
+    }
+    
     if (event.which != 13) return;
     
     jQuery(this).hide().prev().show();
     var name = jQuery(this).val();
-    jQuery(this).val("{'Name'|@translate}");
+    jQuery(this).val('');
     
     if (name == "" || name == null) return;
     
@@ -55,7 +60,7 @@ $cdm.find("input.new").on({ldelim}
         }
       },
       error: function() {ldelim}
-        alert("{'Un unknown error occured'|@translate}");
+        alert("{'An unknown error occured'|@translate}");
       }
     });
     
@@ -64,14 +69,6 @@ $cdm.find("input.new").on({ldelim}
   // prevent click propagation
   "click": function(event) {ldelim}
     event.stopPropagation();
-  },
-  // remove help on focus
-  "focus": function() {ldelim}
-    if (jQuery(this).val() == "{'Name'|@translate}") jQuery(this).val("");
-  },
-  // restore help on blur
-  "blur" : function() {ldelim}
-    if (jQuery(this).val() == "") jQuery(this).val("{'Name'|@translate}");
   }
 });
 
@@ -110,7 +107,7 @@ $cdm.on("click", ".add, .remove", function() {ldelim}
       }
     },
     error: function() {ldelim}
-      alert("{'Un unknown error occured'|@translate}");
+      alert("{'An unknown error occured'|@translate}");
     }
   });
   
@@ -163,7 +160,7 @@ $cdm.children(".switchBoxFooter").css("border-top-color", $cdm.children(".switch
   
   <div class="switchBoxFooter">
   <span>&#10010;</span> <a class="new">{'Create a new collection'|@translate}</a>
-  <input class="new" value="{'Name'|@translate}" size="25"/>
+  <input class="new" placeholder="{'Name'|@translate}" size="25"/>
   </div>
 </div>
 
@@ -200,7 +197,7 @@ jQuery(".addCollection").on("click", function(event) {ldelim}
       }
     },
     error: function() {ldelim}
-      alert("{'Un unknown error occured'|@translate}");
+      alert("{'An unknown error occured'|@translate}");
     }
   });
   

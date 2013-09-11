@@ -37,7 +37,6 @@
     <tr class="throw">
       <td class="name">{'Name'|@translate}</td>
       <td class="user">{'Username'|@translate}</td>
-      <td class="status">{'Public'|@translate}</td>
       <td class="date">{'Creation date'|@translate}</td>
       <td class="images">{'Number of images'|@translate}</td>
       <td class="action">{'Actions'|@translate}</td>
@@ -47,10 +46,9 @@
   {foreach from=$sets item=set name=sets_loop}
   <tr class="{if $smarty.foreach.sets_loop.index is odd}row1{else}row2{/if}">
     <td>
-      <a href="{$set.U_PUBLIC}">{$set.NAME}</a>
+      <a href="{$set.U_EDIT}">{$set.NAME}</a>
     </td>
     <td>{$set.USERNAME}</td>
-    <td style="text-align:center;">{if $set.IS_PUBLIC}{'Yes'|@translate}{else}{'No'|@translate}{/if}</td>
     <td style="text-align:center;">{$set.DATE_CREATION}</td>
     <td>{$set.NB_IMAGES}</td>
     <td style="padding-left:25px;">

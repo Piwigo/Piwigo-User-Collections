@@ -9,10 +9,14 @@
     {if isset($U_CADDIE) }
       <li class="mainAction"><a href="{$U_CADDIE}" title="{'Add to caddie'|@translate}">{'Caddie'|@translate}</a></li>
     {/if}
-        
+    
+    {if $U_SHARE}
+      <li><a href="#share_form" title="{'Share this collection'|@translate}" class="share_colorbox_open pwg-state-default pwg-button" rel="nofollow">
+            <span class="pwg-icon user-collections-share-icon" style="background:url('{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/share.png') center center no-repeat;">&nbsp;</span><span class="pwg-button-text">{'Share'|@translate}</span>
+      </a></li>
+    {/if}
     {if $U_MAIL}
-      <li><a href="#mail_form" title="{'Send this collection my mail'|@translate}" class="mail_colorbox_open pwg-state-default pwg-button" rel="nofollow" 
-          {if not $collection.PUBLIC}onClick="alert('{'The collection must be public in order to send it'|@translate|escape:javascript}');return false;"{/if}>
+      <li><a href="#mail_form" title="{'Send this collection my mail'|@translate}" class="mail_colorbox_open pwg-state-default pwg-button" rel="nofollow">
             <span class="pwg-icon user-collections-mail-icon" style="background:url('{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/mail.png') center center no-repeat;">&nbsp;</span><span class="pwg-button-text">{'Send'|@translate}</span>
       </a></li>
     {/if}

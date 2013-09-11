@@ -21,6 +21,16 @@ function uc_check_email_validity($mail_address)
   }
 }
 
+function get_random_key($length=32)
+{
+  $chars = '0123456789abcdefabcdef';
+  for ($s=''; strlen($s)<$length; )
+  {
+    $s.= $chars[rand(0, strlen($chars) - 1)];
+  }
+  return $s;
+}
+
 function get_collection_preferred_image_orders()
 {
   global $conf;

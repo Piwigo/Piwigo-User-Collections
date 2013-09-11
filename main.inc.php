@@ -21,6 +21,7 @@ defined('USER_COLLEC_ID') or define('USER_COLLEC_ID', basename(dirname(__FILE__)
 define('USER_COLLEC_PATH',        PHPWG_PLUGINS_PATH . USER_COLLEC_ID . '/');
 define('COLLECTIONS_TABLE',       $prefixeTable.'collections');
 define('COLLECTION_IMAGES_TABLE', $prefixeTable.'collection_images');
+define('COLLECTION_SHARES_TABLE', $prefixeTable.'collection_shares');
 define('USER_COLLEC_ADMIN',       get_root_url() . 'admin.php?page=plugin-' . USER_COLLEC_ID);
 define('USER_COLLEC_PUBLIC',      get_absolute_root_url() . make_index_url(array('section' => 'collections')) . '/');
 define('USER_COLLEC_VERSION',    'auto');
@@ -41,19 +42,20 @@ else
 
   // thumbnails actions
   add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_list', EVENT_HANDLER_PRIORITY_NEUTRAL-10, 2);
+  add_event_handler('loc_end_index_thumbnails', 'uc_anti_lightbox', 41);
 
   // picture action
   add_event_handler('loc_end_picture', 'user_collections_picture_page');
-
-  // menu
-  add_event_handler('blockmanager_register_blocks', 'user_collections_add_menublock');
-  add_event_handler('blockmanager_apply', 'user_collections_applymenu');
 }
 
-require(USER_COLLEC_PATH . 'include/ws_functions.inc.php');
-require(USER_COLLEC_PATH . 'include/functions.inc.php');
-require(USER_COLLEC_PATH . 'include/UserCollection.class.php');
-require(USER_COLLEC_PATH . 'include/events.inc.php');
+// menu
+add_event_handler('blockmanager_register_blocks', 'user_collections_add_menublock');
+add_event_handler('blockmanager_apply', 'user_collections_applymenu');
+
+require_once(USER_COLLEC_PATH . 'include/ws_functions.inc.php');
+require_once(USER_COLLEC_PATH . 'include/functions.inc.php');
+require_once(USER_COLLEC_PATH . 'include/UserCollection.class.php');
+require_once(USER_COLLEC_PATH . 'include/events.inc.php');
 
 
 /**

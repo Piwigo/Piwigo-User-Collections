@@ -17,6 +17,31 @@
 {include file='infos_errors.tpl'}
 {/if}
 
+{if $UC_MODE == 'password'}
+<form action="{$F_LOGIN_ACTION}" method="post" name="login_form" class="properties">
+  <fieldset>
+    <legend>{'Restricted access'|@translate}</legend>
+
+    <ul>
+      <li>
+        <span class="property">
+          <label for="uc_password">{'Password'|@translate}</label>
+        </span>
+        <input tabindex="1" class="login" type="password" name="uc_password" id="uc_password" size="25" maxlength="25">
+      </li>
+    </ul>
+  </fieldset>
+
+  <p>
+    <input tabindex="2" type="submit" value="{'Submit'|@translate}">
+  </p>
+</form>
+
+<script type="text/javascript"><!--
+document.login_form.username.focus();
+//--></script>
+
+{else}
 {if !empty($CONTENT_DESCRIPTION)}
 <div class="additional_info">
 	{$CONTENT_DESCRIPTION}
@@ -30,6 +55,7 @@
 {/if}
 
 {if !empty($navbar)}{include file='navigation_bar.tpl'|@get_extent:'navbar'}{/if}
+{/if}
 
 {if isset($clear)}<div style="clear: both;"></div>
 </div>{/if}

@@ -2,7 +2,7 @@
 if (!defined('USER_COLLEC_PATH')) die('Hacking attempt!');
 
 try {
-  $UserCollection = new UserCollection($_GET['col_id']);
+  $collection = new UserCollection($_GET['col_id']);
   
   $template->assign('COL_ID', $_GET['col_id']);
 }
@@ -19,7 +19,7 @@ if (isset($_POST['download']))
   pwg_set_session_var('uc_export_active_fields', $_POST['active']);
   pwg_set_session_var('uc_export_inactive_fields', $_POST['inactive']);
   
-  $content = $UserCollection->serialize($_POST['active']);
+  $content = $collection->serialize($_POST['active']);
   $filename = 'collection_'.$_GET['col_id'].'_'.date('Ymd-Hi').'.csv';
   
   header('Content-Type: application/force-download; name="'.$filename.'"');

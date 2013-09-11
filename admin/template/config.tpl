@@ -1,5 +1,11 @@
 {combine_css path=$USER_COLLEC_PATH|@cat:"admin/template/style.css"}
 
+{footer_script}{literal}
+$("input[name='allow_public']").on("change", function() {
+    $("#allow_mails").toggle($(this).is(":checked"));
+});
+{/literal}{/footer_script}
+
 <div class="titrePage">
 	<h2>User Collections</h2>
 </div>
@@ -13,7 +19,7 @@
         <b>{'Allow users to set their collections as public'|@translate}</b>
       </label>
     </li>
-    <li>
+    <li id="allow_mails" {if not $user_collections.allow_public}style="display:none;"{/if}>
       <label>
         <input type="checkbox" name="allow_mails" {if $user_collections.allow_mails}checked="checked"{/if}>
         <b>{'Allow users to send their public collections by mail'|@translate}</b>

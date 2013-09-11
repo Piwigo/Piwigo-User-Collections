@@ -11,11 +11,12 @@ class UserCollection
    * @param: mixed col id (##|'new')
    * @param: array images
    */
-  function __construct($col_id, $name=null, $comment=null, $public=false, $user_id=null)
+  function __construct($col_id, $name=null, $comment=null, $user_id=null)
   {
     global $user;
     
-    if (empty($user_id)) {
+    if (empty($user_id))
+    {
       $user_id = $user['id'];
     }
     
@@ -26,30 +27,8 @@ class UserCollection
       'date_creation' => '0000-00-00 00:00:00',
       'comment' => null,
       'nb_images' => 0,
-      'public' => 0,
-      'public_id' => null,
       );
     $this->images = array();
-    
-    // access from public id (access permission is checked line 66)
-    if ( strlen($col_id) == 10 and strpos($col_id, 'uc') === 0 )
-    {
-      $query = '
-SELECT id
-  FROM '.COLLECTIONS_TABLE.'
-  WHERE public_id = "'.$col_id.'"
-;';
-      $result = pwg_query($query);
-      
-      if (!pwg_db_num_rows($result))
-      {
-        $col_id = 0;
-      }
-      else
-      {
-        list($col_id) = pwg_db_fetch_row($result);
-      }
-    }
     
     // load specific collection
     if (preg_match('#^[0-9]+$#', $col_id))
@@ -57,9 +36,7 @@ SELECT id
       $query = '
 SELECT *
   FROM '.COLLECTIONS_TABLE.'
-  WHERE
-    id = '.$col_id.'
-    '.(!is_admin() ? 'AND (user_id = '.$this->data['user_id'].' OR public = 1)' : null).'
+  WHERE id = '.$col_id.'
 ;';
       $result = pwg_query($query);
       
@@ -91,7 +68,7 @@ SELECT image_id
       }
       else
       {
-        throw new Exception(l10n('Invalid collection'));
+        throw new Exception(l10n('Invalid collection'), WS_ERR_INVALID_PARAM);
       }
     }
     // create a new collection
@@ -99,25 +76,19 @@ SELECT image_id
     {
       $this->data['name'] = $name;
       $this->data['comment'] = $comment;
-      $this->data['public'] = (int)$public;
-      $this->data['public_id'] = 'uc'.hash('crc32', uniqid(serialize($this->data), true));
       
       $query = '
 INSERT INTO '.COLLECTIONS_TABLE.'(
     user_id,
     name,
     date_creation,
-    comment,
-    public,
-    public_id
+    comment
   ) 
   VALUES(
     '.$this->data['user_id'].',
     "'.$this->data['name'].'",
     NOW(),
-    "'.$this->data['comment'].'",
-    '.(int)$this->data['public'].',
-    "'.$this->data['public_id'].'"
+    "'.$this->data['comment'].'"
   )
 ;';
       pwg_query($query);
@@ -129,6 +100,19 @@ INSERT INTO '.COLLECTIONS_TABLE.'(
     else
     {
       trigger_error('UserCollection::__construct, invalid input parameter', E_USER_ERROR);
+    }
+  }
+  
+  /**
+   * check if current user is owner of the collection or admin
+   */
+  function checkUser()
+  {
+    global $user;
+    
+    if (!is_admin() && $user['id'] != $this->data['user_id'])
+    {
+      throw new Exception('Forbidden', 403);
     }
   }
   
@@ -279,12 +263,145 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
       'NAME' => $this->data['name'],
       'COMMENT' => $this->data['comment'],
       'NB_IMAGES' => $this->data['nb_images'],
-      'PUBLIC' => (bool)$this->data['public'],
       'DATE_CREATION' => $this->data['date_creation'],
-      'U_PUBLIC' => USER_COLLEC_PUBLIC . 'view/'.$this->data['public_id'],
       );
     
     return $set;
+  }
+  
+  /**
+   * get share links
+   */
+  function getShares()
+  {
+    $query = '
+SELECT * FROM '.COLLECTION_SHARES_TABLE.'
+  WHERE col_id = '.$this->data['id'].'
+  ORDER BY add_date DESC
+;';
+    $result = pwg_query($query);
+    
+    $shares = array();
+    while ($row = pwg_db_fetch_assoc($result))
+    {
+      $row['expired'] = false;
+      
+      $row['params'] = unserialize($row['params']);
+      if (!empty($row['params']['deadline']))
+      {
+        $row['expired'] = strtotime($row['params']['deadline']) < time();
+        $row['params']['deadline_readable'] = format_date($row['params']['deadline'], true, false);
+      }
+      
+      $row['url'] = USER_COLLEC_PUBLIC . 'view/' . $row['share_key'];
+      $row['u_delete'] = USER_COLLEC_PUBLIC . 'edit/' . $this->data['id'] . '&amp;delete_share=' . $row['id'];
+      $row['add_date_readable'] = format_date($row['add_date'], true, false);
+      
+      $shares[] = $row;
+    }
+    
+    return $shares;
+  }
+  
+  /**
+   * delete a share
+   */
+  function deleteShare($id)
+  {
+    $query = '
+DELETE FROM '.COLLECTION_SHARES_TABLE.'
+  WHERE id = "'.pwg_db_real_escape_string($id).'"
+  AND col_id = '.$this->data['id'].'
+;';
+    pwg_query($query);
+    
+    return pwg_db_changes() != 0;
+  }
+  
+  /**
+   * Add a share URL
+   * @param: array
+   *          - share_key
+   *          - password
+   *          - deadline
+   * @return: array errors
+   */
+  function addShare($share, $abord_on_duplicate=true)
+  {
+    global $conf, $page;
+    
+    $errors = array();
+    
+    $share = array_map('stripslashes', $share);
+    
+    // check key
+    if (empty($share['share_key']) || strlen($share['share_key']) < 8)
+    {
+      $errors[] = l10n('The key must be at least 8 characters long');
+    }
+    else
+    {
+      $share['share_key'] = $this->data['id'].'-'.str2url($share['share_key']);
+      
+      $query = '
+SELECT id FROM '.COLLECTION_SHARES_TABLE.'
+  WHERE col_id = '.$this->data['id'].'
+  AND share_key = "'.$share['share_key'].'"
+;';
+      $result = pwg_query($query);
+      if (pwg_db_num_rows($result))
+      {
+        if ($abord_on_duplicate)
+        {
+          $errors[] = l10n('This key is already used');
+        }
+        else
+        {
+          return USER_COLLEC_PUBLIC . 'view/' . $share['share_key'];
+        }
+      }
+    }
+    
+    // filter date
+    if (!empty($share['deadline']))
+    {
+      $date = DateTime::createFromFormat('Y-m-d H:i', $share['deadline']);
+      $share['deadline'] = $date->format('Y-m-d H:i');
+    }
+    
+    // hash password
+    if (!empty($share['password']))
+    {
+      $share['password'] = sha1($conf['secret_key'].$share['password'].$share['share_key']);
+    }
+    
+    if (empty($errors))
+    {
+      $params = serialize(array(
+        'password' => @$share['password'],
+        'deadline' => @$share['deadline'],
+        ));
+      
+      $query = '
+INSERT INTO '.COLLECTION_SHARES_TABLE.'(
+    col_id,
+    share_key,
+    params,
+    add_date
+  )
+  VALUES(
+    '.$this->data['id'].',
+    "'.$share['share_key'].'",
+    "'.pwg_db_real_escape_string($params).'",
+    "'.date('Y-m-d H:i:s').'"
+  )
+;';
+      pwg_query($query);
+      
+      return USER_COLLEC_PUBLIC . 'view/' . $share['share_key'];
+    }
+    
+    return $errors;
   }
   
   /**
@@ -298,22 +415,15 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
    *          - message
    * @return: array errors
    */
-  function sendEmail($comm, $key)
+  function sendEmail($comm)
   {
-    global $conf, $page, $template;
+    global $conf;
     
     $errors = array();
     
     $comm = array_map('stripslashes', $comm);
 
     $comment_action='validate';
-    
-    // check key
-    if (!verify_ephemeral_key(@$key))
-    {
-      array_push($errors, l10n('Invalid key'));
-      $comment_action='reject';
-    }
 
     // check author
     if (empty($comm['sender_name']))
@@ -393,6 +503,10 @@ DELETE FROM '.COLLECTION_IMAGES_TABLE.'
       {
         array_push($errors, l10n('Error while sending e-mail'));
       }
+      else
+      {
+        return true;
+      }
     }
     
     return $errors;
@@ -453,12 +567,14 @@ SELECT
     // template
     $mail_css = file_get_contents(dirname(__FILE__).'/../template/mail.css');
     
+    $share_key = 'mail-' . substr(sha1($this->data['id'].$conf['secret_key']), 0, 11);
+    
     $template->assign(array(
       'GALLERY_URL' => get_gallery_home_url(),
       'PHPWG_URL' => PHPWG_URL,
       'UC_MAIL_CSS' => str_replace("\n", null, $mail_css),
       'MAIL_TITLE' => $this->getParam('name').' ('.sprintf(l10n('by %s'), $params['sender_name']).')',
-      'COL_URL' => USER_COLLEC_PUBLIC . 'view/'.$this->data['public_id'],
+      'COL_URL' => $this->addShare(array('share_key'=>$share_key), false),
       'PARAMS' => $params,
       'derivative_params' => ImageStdParams::get_by_type(IMG_SQUARE),
       'thumbnails' => $tpl_vars,
@@ -517,13 +633,17 @@ SELECT
           switch ($field)
           {
           case 'name':
-            $element[] = render_element_name($row); break;
+            $element[] = render_element_name($row);
+            break;
           case 'url':
-            $element[] = make_picture_url(array('image_id'=>$row['id'], 'image_file'=>$row['file'])); break;
+            $element[] = make_picture_url(array('image_id'=>$row['id'], 'image_file'=>$row['file']));
+            break;
           case 'path':
-            $element[] = $root_url.ltrim($row['path'], './'); break;
+            $element[] = $root_url.ltrim($row['path'], './');
+            break;
           default:
-            $element[] = $row[$field]; break;
+            $element[] = $row[$field];
+            break;
           }
         }
         if (!empty($element))

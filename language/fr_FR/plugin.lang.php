@@ -1,13 +1,8 @@
 <?php
 
-$lang['Copied'] = 'Copié';
-$lang['Public collection'] = 'Publique';
-$lang['Copy to clipboard'] = 'Copier dans le presse-papier';
-$lang['Return to collections list'] = 'Retourner à la liste des collections';
 $lang['This collection is empty'] = 'Cette collection est vide';
-$lang['Collection name:'] = 'Nom de la collection:';
+$lang['Collection name:'] = 'Nom de la collection :';
 $lang['Create a new collection'] = 'Créer une nouvelle collection';
-$lang['See all my collections'] = 'Voir toutes mes collections';
 $lang['Please give a name'] = 'Veuillez donner un nom';
 $lang['Invalid collection'] = 'Collection invalide';
 $lang['by %s'] = 'par %s';
@@ -22,7 +17,17 @@ $lang['You have %d collections'] = 'Vous avez %d collections';
 $lang['Save'] = 'Sauvegarder';
 $lang['%d more...'] = 'et %d autres...';
 $lang['(remove)'] = '(retirer)';
-
+$lang['Collection not found'] = 'collection non trouvée';
+$lang['Expiration date'] = 'Date d\'expiration';
+$lang['New share added: <a href="%s">%s</a>'] = 'Nouveau partage ajouté : <a href="%s">%s</a>';
+$lang['Restricted access'] = 'Accès restreint';
+$lang['Share'] = 'Partager';
+$lang['Share deleted'] = 'Partage supprimé';
+$lang['Share key'] = 'Clé de partage';
+$lang['Share this collection'] = 'Partager cette collection';
+$lang['The key must be at least 8 characters long'] = 'La clé doit faire au moins 8 caractères';
+$lang['This key is already used'] = 'Cette clé est déjà utilisée';
+$lang['This link expired'] = 'Ce lien a expiré';
 $lang['Allow users to set their collections as public'] = 'Les utilisateurs peuvent rendre leurs collections publiques';
 $lang['Allow users to send their public collections by mail'] = 'Les utilisateurs peuvent envoyer leurs collections publiques par mail';
 $lang['Fields'] = 'Champs';
@@ -43,7 +48,6 @@ $lang['Please enter the recipient e-mail'] = 'Veuillez entrer l\'e-mail du desti
 $lang['A photo collection by %s'] = 'Une collection photo de %s';
 $lang['Error while sending e-mail'] = 'Erreur lors de l\'envoi de l\'e-mail';
 $lang['E-mail sent successfully'] = 'E-mail envoyé avec succès';
-$lang['The collection must be public in order to send it'] = 'La collection doit être publique pour l\'envoyer';
 $lang['Your name'] = 'Votre nom';
 $lang['Your e-mail'] = 'Votre e-mail';
 $lang['Recipient name'] = 'Nom du destinataire';
