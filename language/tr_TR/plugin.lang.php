@@ -81,4 +81,15 @@ $lang['Name, A &rarr; Z'] = 'İsim, A &rarr; Z';
 $lang['Name, Z &rarr; A'] = 'İsim, Z &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Fotoğraf numarası, yüksek &rarr; düşük';
 $lang['Photos number, low &rarr; high'] = 'Fotoğraf numarası, düşük &rarr; yüksek';
+$lang['Collection not found'] = 'Koleksiyon bulunamadı';
+$lang['Expiration date'] = 'Geçerlilik bitiş tarihi';
+$lang['New share added: <a href="%s">%s</a>'] = 'Yeni paylaşım eklendi: <a href="%s">%s</a>';
+$lang['Restricted access'] = 'Kısıtlı erişim';
+$lang['Share'] = 'Paylaş';
+$lang['Share deleted'] = 'Paylaşım silindi';
+$lang['Share key'] = 'Paylaşım anahtarı';
+$lang['Share this collection'] = 'Bu koleksiyonu paylaş';
+$lang['The key must be at least 8 characters long'] = 'Anahtar en az 8 karakterden oluşmalı';
+$lang['This key is already used'] = 'Bu anahtar zaten kullanımda';
+$lang['This link expired'] = 'Bu bağlantı zaman aşımına uğramış';
 ?>
