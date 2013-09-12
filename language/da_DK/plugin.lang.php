@@ -81,4 +81,15 @@ $lang['Name, A &rarr; Z'] = 'Navn, A &rarr; Å';
 $lang['Name, Z &rarr; A'] = 'Navn, Å &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Fotonummer, højt &rarr; lavt';
 $lang['Photos number, low &rarr; high'] = 'Fotonummer, lavt &rarr; højt';
+$lang['New share added: <a href="%s">%s</a>'] = 'Ny deling tilføjet: <a href="%s">%s</a>';
+$lang['Restricted access'] = 'Begrænset adgang';
+$lang['Share'] = 'Del';
+$lang['Share deleted'] = 'Deling slettet';
+$lang['Share key'] = 'Delingsnøgle';
+$lang['Share this collection'] = 'Del denne samling';
+$lang['The key must be at least 8 characters long'] = 'Nøglen skal bestå at mindst 8 tegn';
+$lang['This key is already used'] = 'Nøglen anvendes allerede';
+$lang['This link expired'] = 'Linket er udløbet';
+$lang['Expiration date'] = 'Udløbsdato';
+$lang['Collection not found'] = 'Samling ikke fundet';
 ?>
