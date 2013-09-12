@@ -81,4 +81,15 @@ $lang['Name, A &rarr; Z'] = 'Meno, A &rarr; Z';
 $lang['Name, Z &rarr; A'] = 'Meno, Z &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Fotky číslo, vysoké &rarr; nízke';
 $lang['Photos number, low &rarr; high'] = 'Fotky číslo, nízke &rarr; vysoké';
+$lang['This link expired'] = 'Tento link už expiroval';
+$lang['This key is already used'] = 'Tento kľúč sa už používa';
+$lang['The key must be at least 8 characters long'] = 'Kľúč musí mať viac ako 8 znakov';
+$lang['Share this collection'] = 'Zdieľať túto zbierku';
+$lang['Share key'] = 'Zdieľaný kľúč';
+$lang['Share deleted'] = 'Zdieľanie vymazané';
+$lang['Share'] = 'Zdieľanie';
+$lang['Restricted access'] = 'Obmedzený prístup';
+$lang['New share added: <a href="%s">%s</a>'] = 'Nové zdieľanie pridané: <a href="%s">%s</a>';
+$lang['Expiration date'] = 'Dátum expirácie';
+$lang['Collection not found'] = 'Zbierka nebola nájdená';
 ?>
