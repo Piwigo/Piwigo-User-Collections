@@ -81,4 +81,15 @@ $lang['Photos number, high &rarr; low'] = 'Foto numuri, lielākais &rarr; mazāk
 $lang['Name, Z &rarr; A'] = 'Nosaukums, Z &rarr; A';
 $lang['Name, A &rarr; Z'] = 'Nosaukums, A &rarr; Z';
 $lang['(remove)'] = '(izņemt)';
+$lang['The key must be at least 8 characters long'] = 'Atslēgai jāsatur vismaz 8 zīmes';
+$lang['New share added: <a href="%s">%s</a>'] = 'Pievienots jans koplietojums <a href="%s">%s</a>';
+$lang['Expiration date'] = 'Izbeigšanās datums';
+$lang['Share deleted'] = 'Koplietojums dzēsts';
+$lang['Share'] = 'Koplietojums';
+$lang['Share key'] = 'Koplietošanas atslēga';
+$lang['This link expired'] = 'Šīs saites darbība beigusies';
+$lang['This key is already used'] = 'Šo atslēgu jau izmanto';
+$lang['Share this collection'] = 'Dalīties ar šo kolekciju';
+$lang['Restricted access'] = 'Ierobežota pieeja';
+$lang['Collection not found'] = 'Kolekcija nav atrodama';
 ?>
