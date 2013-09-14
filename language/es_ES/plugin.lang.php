@@ -81,4 +81,5 @@ $lang['Name, A &rarr; Z'] = 'Nombre, A &rarr; Z';
 $lang['Name, Z &rarr; A'] = 'Nombre, Z &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Número de foto, alto &rarr; bajo';
 $lang['Photos number, low &rarr; high'] = 'Número de foto, bajo &rarr; alto';
+$lang['Collection not found'] = 'No se encuentra la colección';
 ?>
