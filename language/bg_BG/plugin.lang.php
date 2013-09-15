@@ -81,4 +81,15 @@ $lang['Name, A &rarr; Z'] = 'Име, A &rarr; Z';
 $lang['Name, Z &rarr; A'] = 'Име, Z &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Номер снимка, голям &rarr; малък';
 $lang['Photos number, low &rarr; high'] = 'Номер снимка, малък &rarr; голям';
+$lang['This link expired'] = 'Този линк е изтекъл';
+$lang['This key is already used'] = 'Този код вече е използван';
+$lang['The key must be at least 8 characters long'] = 'Кода трябва де е не помалко от 8 знака';
+$lang['Share this collection'] = 'Сподели тази колекция';
+$lang['Share key'] = 'Код за споделяне';
+$lang['Share deleted'] = 'Споделянето изтрито';
+$lang['Share'] = 'Споделяне';
+$lang['Restricted access'] = 'Ограничен достъп';
+$lang['New share added: <a href="%s">%s</a>'] = 'Ново споделяне е добавено: <a href="%s">%s</a>';
+$lang['Expiration date'] = 'Дата на валидност';
+$lang['Collection not found'] = 'Колекцията не е намерена';
 ?>
