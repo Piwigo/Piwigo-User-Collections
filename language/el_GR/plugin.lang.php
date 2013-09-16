@@ -81,4 +81,15 @@ $lang['Photos number, high &rarr; low'] = 'Αριθμός Φωτογραφιών
 $lang['Name, Z &rarr; A'] = 'Όνομα, Z &rarr; A';
 $lang['Name, A &rarr; Z'] = 'Όνομα, A &rarr; Z';
 $lang['(remove)'] = '(αφαίρεση)';
+$lang['This link expired'] = 'Ο Σύνδεσμος αυτός έληξε';
+$lang['This key is already used'] = 'Αυτό το κλειδί έχει χρησιμοποιειθεί  ήδη';
+$lang['The key must be at least 8 characters long'] = 'Το κλειδί πρέπει να είναι τουλάχιστον 8 χαρακτήρες';
+$lang['Share this collection'] = 'Κοινή χρήση αυτής της συλλογής';
+$lang['Share key'] = 'Κλειδί κοινόχρηστο';
+$lang['Share deleted'] = 'Το κοινόχρηστο διαγραφτηκε';
+$lang['Share'] = 'Μοιράσου';
+$lang['Restricted access'] = 'Περιορισμένη πρόσβαση';
+$lang['New share added: <a href="%s">%s</a>'] = 'Νέο κοινόχρηστο προστέθηκε: <a href="%s">%s</a>';
+$lang['Expiration date'] = 'Ημερομηνία Λήξης';
+$lang['Collection not found'] = 'Η Συλλογή δεν βρέθηκε';
 ?>
