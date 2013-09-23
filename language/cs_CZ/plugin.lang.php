@@ -76,4 +76,14 @@ $lang['Send this collection my mail'] = 'Poslat tuto kolekci na můj email';
 $lang['The collection must be public in order to send it'] = 'Na to, aby se daka kolekce poslat, musí být veřejná';
 $lang['Your e-mail'] = 'Váš email';
 $lang['Your name'] = 'Vaše jméno';
+$lang['The key must be at least 8 characters long'] = 'Klíč musí mít délku alespoň 8 znaků';
+$lang['(remove)'] = '(odstranit)';
+$lang['Collection not found'] = 'Kolekce nenalezena';
+$lang['Expiration date'] = 'Expirační datum';
+$lang['Restricted access'] = 'Omezený přístup';
+$lang['Share'] = 'Sdílet';
+$lang['Share deleted'] = 'Sdílení smazáno';
+$lang['Share key'] = 'Sdílet klíč';
+$lang['Share this collection'] = 'Sdílet tuto kolekci';
+$lang['This key is already used'] = 'Tento klíč je již použit';
 ?>
