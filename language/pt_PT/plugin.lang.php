@@ -81,4 +81,15 @@ $lang['Photos number, high &rarr; low'] = 'Número das fotos, &rarr; mais elevad
 $lang['Name, A &rarr; Z'] = 'Nome, de A a Z';
 $lang['Name, Z &rarr; A'] = 'Nome, de Z a A';
 $lang['(remove)'] = '(remover)';
+$lang['Collection not found'] = 'Coleção não encontrada';
+$lang['Expiration date'] = 'Data de expiração';
+$lang['New share added: <a href="%s">%s</a>'] = 'Nova partilha adicionada:  <a href="%s">%s</a>';
+$lang['Restricted access'] = 'Acesso restrito';
+$lang['Share'] = 'Partilhar';
+$lang['Share deleted'] = 'Partilha apagada';
+$lang['Share key'] = 'Chave da partilha';
+$lang['Share this collection'] = 'Partilhar esta coleção';
+$lang['The key must be at least 8 characters long'] = 'A chave deve ter pelo menos 8 carateres';
+$lang['This key is already used'] = 'Esta chave já está em uso';
+$lang['This link expired'] = 'Este link expirou';
 ?>
