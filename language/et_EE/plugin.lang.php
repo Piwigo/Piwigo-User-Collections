@@ -81,4 +81,15 @@ $lang['Name, A &rarr; Z'] = 'Nimi,A &rarr;Z';
 $lang['Name, Z &rarr; A'] = 'Nimi,Z &rarr;A';
 $lang['Photos number, high &rarr; low'] = 'Piltide numbrid, suur &rarr; väike';
 $lang['Photos number, low &rarr; high'] = 'Piltide numbrid, väike &rarr; suur';
+$lang['Collection not found'] = 'Kogumit ei leitud';
+$lang['Expiration date'] = 'Aegumise tähtaeg';
+$lang['New share added: <a href="%s">%s</a>'] = 'Uus jagatav lisatud:  <a href="%s">%s</a>';
+$lang['Restricted access'] = 'Keelatud juurdepääs';
+$lang['Share'] = 'Jagatud';
+$lang['Share deleted'] = 'Jagamine kustutatud';
+$lang['Share key'] = 'Jagamise võti';
+$lang['Share this collection'] = 'Jaga antud kogumit';
+$lang['The key must be at least 8 characters long'] = 'Võti peab olema vähemalt 8 märgi pikkune';
+$lang['This key is already used'] = 'See võti on juba kasutuses';
+$lang['This link expired'] = 'Antud link on aegunud';
 ?>
