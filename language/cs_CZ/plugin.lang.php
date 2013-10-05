@@ -86,4 +86,10 @@ $lang['Share deleted'] = 'Sdílení smazáno';
 $lang['Share key'] = 'Sdílet klíč';
 $lang['Share this collection'] = 'Sdílet tuto kolekci';
 $lang['This key is already used'] = 'Tento klíč je již použit';
+$lang['Name, A &rarr; Z'] = 'Jméno, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = 'Jméno, Z &rarr; A';
+$lang['New share added: <a href="%s">%s</a>'] = 'Nová sdílená složka přidána: <a href="%s">%s</a>';
+$lang['Photos number, high &rarr; low'] = 'Číslo fotky, high &rarr; low';
+$lang['Photos number, low &rarr; high'] = 'Číslo fotky, low &rarr; high';
+$lang['This link expired'] = 'Tento link vypršel.';
 ?>
