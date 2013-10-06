@@ -81,4 +81,15 @@ $lang['Name, A &rarr; Z'] = 'Namn, A &rarr; Z ';
 $lang['Name, Z &rarr; A'] = 'Namn, Z &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Bilder nummer, hög &rarr; låg';
 $lang['Photos number, low &rarr; high'] = 'Bilder nummer, låg &rarr; hög';
+$lang['New share added: <a href="%s">%s</a>'] = 'Ny delning tillagd: <a href="%s">%s</a>';
+$lang['Share deleted'] = 'Delning borttagen';
+$lang['Share key'] = 'Delningsnyckel';
+$lang['Collection not found'] = 'Samlingen kunde inte hittas';
+$lang['Expiration date'] = 'Utgångsdatum';
+$lang['Restricted access'] = 'Begränsad tillgång';
+$lang['Share'] = 'Dela';
+$lang['Share this collection'] = 'Dela denna samling';
+$lang['The key must be at least 8 characters long'] = 'Nyckeln måste vara minst 8 tecken lång';
+$lang['This key is already used'] = 'Nyckeln används redan';
+$lang['This link expired'] = 'Länken är inte längre giltig';
 ?>
