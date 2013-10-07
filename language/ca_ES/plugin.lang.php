@@ -81,4 +81,15 @@ $lang['Name, A &rarr; Z'] = 'Nom, A &rarr; Z';
 $lang['Name, Z &rarr; A'] = 'Nom, Z &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Nombre de fotos, alt &rarr; baix';
 $lang['Photos number, low &rarr; high'] = 'Nombre de fotos, baix &rarr; alt';
+$lang['New share added: <a href="%s">%s</a>'] = 'Nou compartit afegit: <a href="%s">%s</a>';
+$lang['Share key'] = 'Compartiu la clau';
+$lang['The key must be at least 8 characters long'] = 'La clau ha de tenir almenys 8 caràcters de longitud';
+$lang['This key is already used'] = 'Aquesta clau ja està en ús';
+$lang['Share this collection'] = 'Compartiu aquesta col·lecció';
+$lang['This link expired'] = 'L\'enllaç ha caducat';
+$lang['Restricted access'] = 'Accés restringit';
+$lang['Share'] = 'Compartir';
+$lang['Share deleted'] = 'Compartiu aquesta col·lecció';
+$lang['Collection not found'] = 'No es troba la col·lecció';
+$lang['Expiration date'] = 'Data d\'expiració';
 ?>
