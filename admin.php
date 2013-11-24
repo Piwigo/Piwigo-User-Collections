@@ -7,7 +7,7 @@ global $template, $page, $conf;
 // tabsheet
 include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
 $page['tab'] = (isset($_GET['tab'])) ? $_GET['tab'] : 'sets';
-  
+
 $tabsheet = new tabsheet();
 $tabsheet->add('sets', l10n('Collections'), USER_COLLEC_ADMIN . '-sets');
 if ($page['tab'] == 'export')
@@ -33,7 +33,5 @@ $template->assign(array(
   'USER_COLLEC_PATH' => USER_COLLEC_PATH,
   'USER_COLLEC_ADMIN' => USER_COLLEC_ADMIN,
   ));
-  
-$template->assign_var_from_handle('ADMIN_CONTENT', 'user_collections');
 
-?>
+$template->assign_var_from_handle('ADMIN_CONTENT', 'user_collections');

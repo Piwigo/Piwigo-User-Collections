@@ -39,5 +39,3 @@ class PwgPlainEncoder extends PwgResponseEncoder
     return 'text/plain';
   }
 }
-
-?>

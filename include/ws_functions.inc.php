@@ -5,7 +5,7 @@ function user_collections_ws_add_methods($arr)
 {
   $service = &$arr[0];
   global $conf;
-  
+
   $service->addMethod(
     'pwg.collections.create',
     'ws_collections_create',
@@ -16,7 +16,7 @@ function user_collections_ws_add_methods($arr)
       ),
     'Create a new User Collection.'
     );
-    
+
   $service->addMethod(
     'pwg.collections.delete',
     'ws_collections_delete',
@@ -25,7 +25,7 @@ function user_collections_ws_add_methods($arr)
       ),
     'Delete a User Collection.'
     );
-    
+
   $service->addMethod(
     'pwg.collections.getList',
     'ws_collections_getList',
@@ -41,7 +41,7 @@ function user_collections_ws_add_methods($arr)
       ),
     'Returns a list of collections.'
     );
-    
+
   $service->addMethod(
     'pwg.collections.addImages',
     'ws_collections_addImages',
@@ -51,7 +51,7 @@ function user_collections_ws_add_methods($arr)
       ),
     'Add images to a collection.'
     );
-    
+
   $service->addMethod(
     'pwg.collections.removeImages',
     'ws_collections_removeImages',
@@ -61,7 +61,7 @@ function user_collections_ws_add_methods($arr)
       ),
     'Remove images from a collection.'
     );
-    
+
   $service->addMethod(
     'pwg.collections.getImages',
     'ws_collections_getImages',
@@ -73,7 +73,7 @@ function user_collections_ws_add_methods($arr)
       ),
     'Returns elements for the corresponding  collection.'
     );
-    
+
   $service->addMethod(
     'pwg.collections.getSerialized',
     'ws_collections_getSerialized',
@@ -87,7 +87,7 @@ function user_collections_ws_add_methods($arr)
       ),
     'Returns a serialized version of the collection in CSV.<br>The return type is plain/text whatever you select as response format.'
     );
-    
+
   $service->addMethod(
     'pwg.collections.getInfo',
     'ws_collections_getInfo',
@@ -104,19 +104,19 @@ function user_collections_ws_add_methods($arr)
 function ws_collections_create($params, &$service)
 {
   global $conf, $user;
-  
+
   // check status
   if (is_a_guest())
   {
     return new PwgError(403, 'Forbidden');
   }
-  
+
   // check name
   if (empty($params['name']))
   {
     return new PwgError(WS_ERR_MISSING_PARAM, 'Empty collection name');
   }
-  
+
   // check user id
   if (!empty($params['user_id']))
   {
@@ -134,9 +134,9 @@ function ws_collections_create($params, &$service)
   {
     $params['user_id'] = $user['id'];
   }
-  
+
   $collection = new UserCollection('new', $params['name'], $params['comment'], $params['user_id']);
-  
+
   return array_change_key_case($collection->getCollectionInfo(), CASE_LOWER);
 }
 
@@ -146,17 +146,17 @@ function ws_collections_create($params, &$service)
 function ws_collections_delete($params, &$service)
 {
   global $user;
-  
+
   // check status
   if (is_a_guest())
   {
     return new PwgError(403, 'Forbidden');
   }
-  
+
   try {
     $collection = new UserCollection($params['col_id']);
     $collection->checkUser();
-    
+
     $collection->delete();
   }
   catch (Exception $e)
@@ -171,13 +171,13 @@ function ws_collections_delete($params, &$service)
 function ws_collections_getList($params, &$service)
 {
   global $user, $conf;
-  
+
   // check status
   if (is_a_guest())
   {
     return new PwgError(403, 'Forbidden');
   }
-  
+
   // check user_id
   if (!empty($params['user_id']))
   {
@@ -195,7 +195,7 @@ function ws_collections_getList($params, &$service)
   {
     $params['user_id'] = $user['id'];
   }
-  
+
   // search
   $where_clauses = array('1=1');
   if (!empty($params['user_id']))
@@ -206,11 +206,11 @@ function ws_collections_getList($params, &$service)
   {
     $where_clauses[] = 'name LIKE("%'.pwg_db_real_escape_string($params['name']).'%")';
   }
-  
+
   $order_by = !empty($params['order']) ? $params['order'] : 'username ASC, name ASC';
-  
+
   $query = '
-SELECT 
+SELECT
     c.*,
     u.'.$conf['user_fields']['username'].' AS username
   FROM '.COLLECTIONS_TABLE.' AS c
@@ -222,7 +222,7 @@ SELECT
   LIMIT '.(int)$params['per_page'].' OFFSET '.(int)($params['per_page']*$params['page']).'
 ;';
   $sets = hash_from_query($query, 'id');
-  
+
   $data = array();
   foreach ($sets as $row)
   {
@@ -237,7 +237,7 @@ SELECT
       'username' => $row['username'],
       );
   }
-  
+
   return array(
     'paging' => new PwgNamedStruct(array(
         'page' => $params['page'],
@@ -249,7 +249,7 @@ SELECT
       'collection'
       )
     );
-  
+
   return $ret;
 }
 
@@ -259,7 +259,7 @@ SELECT
 function ws_collections_addImages($params, &$service)
 {
   global $conf, $user;
-  
+
   // check status
   if (is_a_guest())
   {
@@ -269,9 +269,9 @@ function ws_collections_addImages($params, &$service)
   try {
     $collection = new UserCollection($params['col_id']);
     $collection->checkUser();
-    
+
     $collection->addImages($params['image_ids']);
-    
+
     return array('nb_images' => $collection->getParam('nb_images'));
   }
   catch (Exception $e)
@@ -286,19 +286,19 @@ function ws_collections_addImages($params, &$service)
 function ws_collections_removeImages($params, &$service)
 {
   global $conf, $user;
-  
+
   // check status
   if (is_a_guest())
   {
     return new PwgError(403, 'Forbidden');
   }
-  
+
   try {
     $collection = new UserCollection($params['col_id']);
     $collection->checkUser();
-    
+
     $collection->removeImages($params['image_ids']);
-    
+
     return array('nb_images' => $collection->getParam('nb_images'));
   }
   catch (Exception $e)
@@ -313,7 +313,7 @@ function ws_collections_removeImages($params, &$service)
 function ws_collections_getImages($params, &$service)
 {
   global $conf, $user;
-  
+
   // check status
   if (is_a_guest())
   {
@@ -323,10 +323,10 @@ function ws_collections_getImages($params, &$service)
   try {
     $collection = new UserCollection($params['col_id']);
     $collection->checkUser();
-    
+
     $image_ids = $collection->getImages();
     $images = array();
-    
+
     if (!empty($image_ids))
     {
       $where_clauses = array();
@@ -342,7 +342,7 @@ function ws_collections_getImages($params, &$service)
       $query = '
 SELECT i.*
   FROM '.IMAGES_TABLE.' i
-  WHERE 
+  WHERE
     '. implode("\n AND ", $where_clauses).'
   GROUP BY i.id
   '.$order_by.'
@@ -365,11 +365,11 @@ SELECT i.*
           $image[$k] = $row[$k];
         }
         $image = array_merge($image, ws_std_get_urls($row));
-        
+
         array_push($images, $image);
       }
     }
-    
+
     return array(
       'paging' => new PwgNamedStruct(array(
           'page' => $params['page'],
@@ -395,7 +395,7 @@ SELECT i.*
 function ws_collections_getSerialized($params, &$service)
 {
   global $conf, $user;
-  
+
   // check status
   if (is_a_guest())
   {
@@ -405,12 +405,12 @@ function ws_collections_getSerialized($params, &$service)
   try {
     $collection = new UserCollection($params['col_id']);
     $collection->checkUser();
-    
+
     // change encoder to plain text
     include_once(USER_COLLEC_PATH.'include/plain_encoder.php');
     $encoder = new PwgPlainEncoder();
     $service->setEncoder('plain', $encoder);
-  
+
     return $collection->serialize($params['content']);
   }
   catch (Exception $e)
@@ -425,7 +425,7 @@ function ws_collections_getSerialized($params, &$service)
 function ws_collections_getInfo($params, &$service)
 {
   global $conf, $user;
-  
+
   // check status
   if (is_a_guest())
   {
@@ -435,7 +435,7 @@ function ws_collections_getInfo($params, &$service)
   try {
     $collection = new UserCollection($params['col_id']);
     $collection->checkUser();
-  
+
     return array_change_key_case($collection->getCollectionInfo(), CASE_LOWER);
   }
   catch (Exception $e)
@@ -443,5 +443,3 @@ function ws_collections_getInfo($params, &$service)
     return new PwgError($e->getCode(), $e->getMessage());
   }
 }
-
-?>

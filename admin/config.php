@@ -7,7 +7,7 @@ if (isset($_POST['save_config']))
     'allow_public'    => isset($_POST['allow_public']),
     'allow_mails'     => isset($_POST['allow_mails']) && isset($_POST['allow_public']),
     );
-  
+
   conf_update_param('user_collections', serialize($conf['user_collections']));
 }
 
@@ -17,5 +17,3 @@ $template->assign(array(
 
 
 $template->set_filename('user_collections', realpath(USER_COLLEC_PATH . 'admin/template/config.tpl'));
-
-?>

@@ -18,19 +18,19 @@ if (isset($_POST['filter']))
   {
     array_push($where_clauses, 'username LIKE "%'.$_POST['username'].'%"');
   }
-  
+
   if (!empty($_POST['name']))
   {
     array_push($where_clauses, 'name LIKE "%'.$_POST['name'].'%"');
   }
-  
+
   $order_by = $_POST['order_by'].' '.$_POST['direction'];
 }
 
 
 // get sets
 $query = '
-SELECT 
+SELECT
     c.*,
     u.'.$conf['user_fields']['username'].' AS username
   FROM '.COLLECTIONS_TABLE.' AS c
@@ -45,7 +45,7 @@ $sets = hash_from_query($query, 'id');
 foreach ($sets as $row)
 {
   $template->append('sets', array(
-    'NAME' => trigger_event('render_category_name', $row['name']),
+    'NAME' => trigger_change('render_category_name', $row['name']),
     'NB_IMAGES' => $row['nb_images'],
     'DATE_CREATION' => format_date($row['date_creation'], true),
     'USERNAME' => $row['username'],
@@ -73,7 +73,7 @@ $template->assign(array(
   'order_selected' => isset($_POST['order_by']) ? $_POST['order_by'] : '',
   'direction_options' => $page['direction_items'],
   'direction_selected' => isset($_POST['direction']) ? $_POST['direction'] : '',
-  
+
   'F_USERNAME' => @htmlentities($_POST['username'], ENT_COMPAT, 'UTF-8'),
   'F_NAME' => @htmlentities($_POST['name'], ENT_COMPAT, 'UTF-8'),
   'F_FILTER_ACTION' => USER_COLLEC_ADMIN . '-sets',
@@ -81,5 +81,3 @@ $template->assign(array(
 
 
 $template->set_filename('user_collections', realpath(USER_COLLEC_PATH . 'admin/template/sets.tpl'));
-
-?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 Plugin Name: User Collections
 Version: auto
@@ -17,7 +17,7 @@ if (mobile_theme())
 
 global $conf, $prefixeTable;
 
-defined('USER_COLLEC_ID') or define('USER_COLLEC_ID', basename(dirname(__FILE__)));
+define('USER_COLLEC_ID',          basename(dirname(__FILE__)));
 define('USER_COLLEC_PATH',        PHPWG_PLUGINS_PATH . USER_COLLEC_ID . '/');
 define('COLLECTIONS_TABLE',       $prefixeTable.'collections');
 define('COLLECTION_IMAGES_TABLE', $prefixeTable.'collection_images');
@@ -42,7 +42,6 @@ else
 
   // thumbnails actions
   add_event_handler('loc_end_index_thumbnails', 'user_collections_thumbnails_list', EVENT_HANDLER_PRIORITY_NEUTRAL-10, 2);
-  add_event_handler('loc_end_index_thumbnails', 'uc_anti_lightbox', 41);
 
   // picture action
   add_event_handler('loc_end_picture', 'user_collections_picture_page');
@@ -63,49 +62,26 @@ require_once(USER_COLLEC_PATH . 'include/events.inc.php');
  */
 function user_collections_init()
 {
-  global $pwg_loaded_plugins, $conf;
-  
-  if (
-    USER_COLLEC_VERSION == 'auto' or
-    $pwg_loaded_plugins[USER_COLLEC_ID]['version'] == 'auto' or
-    version_compare($pwg_loaded_plugins[USER_COLLEC_ID]['version'], USER_COLLEC_VERSION, '<')
-  )
-  {
-    include_once(USER_COLLEC_PATH . 'include/install.inc.php');
-    user_collections_install();
-    
-    if ( $pwg_loaded_plugins[USER_COLLEC_ID]['version'] != 'auto' and USER_COLLEC_VERSION != 'auto' )
-    {
-      $query = '
-UPDATE '. PLUGINS_TABLE .'
-SET version = "'. USER_COLLEC_VERSION .'"
-WHERE id = "'. USER_COLLEC_ID .'"';
-      pwg_query($query);
-      
-      $pwg_loaded_plugins[USER_COLLEC_ID]['version'] = USER_COLLEC_VERSION;
-      
-      if (defined('IN_ADMIN'))
-      {
-        $_SESSION['page_infos'][] = 'UserCollections updated to version '. USER_COLLEC_VERSION;
-      }
-    }
-  }
-  
+  global $conf;
+
+  include_once(USER_COLLEC_PATH . 'maintain.inc.php');
+  $maintain = new UserCollections_maintain(USER_COLLEC_ID);
+  $maintain->autoUpdate(USER_COLLEC_VERSION, 'install');
+
   load_language('plugin.lang', USER_COLLEC_PATH);
-  
+
   $conf['user_collections'] = unserialize($conf['user_collections']);
 }
 
 /**
  * admin plugins menu
  */
-function user_collections_admin_menu($menu) 
+function user_collections_admin_menu($menu)
 {
-  array_push($menu, array(
+  $menu[] = array(
     'NAME' => 'User Collections',
     'URL' => USER_COLLEC_ADMIN,
-  ));
+    );
+
   return $menu;
 }
-
-?>

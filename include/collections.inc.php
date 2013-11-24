@@ -20,11 +20,11 @@ case 'list':
   {
     access_denied();
   }
-  
-  $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/collections_list.tpl'));
-  
+
+  $template->set_filename('uc_page', realpath(USER_COLLEC_PATH.'template/collections_list.tpl'));
+
   // actions
-  if ( isset($_GET['action']) and preg_match('#^([0-9]+)$#', $_GET['col_id']) )
+  if (isset($_GET['action']) and preg_match('#^([0-9]+)$#', $_GET['col_id']))
   {
     switch ($_GET['action'])
     {
@@ -38,7 +38,7 @@ case 'list':
         else
         {
           $collection = new UserCollection('new', $_GET['name']);
-          
+
           if (isset($_GET['redirect']))
           {
             $redirect = USER_COLLEC_PUBLIC . 'edit/' . $collection->getParam('id');
@@ -51,7 +51,7 @@ case 'list':
         }
         break;
       }
-        
+
       ## delete collection ##
       case 'delete':
       {
@@ -68,15 +68,15 @@ case 'list':
       }
     }
   }
-  
+
   $template->assign('U_CREATE',
     add_url_params(USER_COLLEC_PUBLIC, array('action'=>'new','col_id'=>'0'))
     );
-  
+
   $template->set_prefilter('index_category_thumbnails', 'user_collections_categories_list');
-  
+
   include(USER_COLLEC_PATH . '/include/display_collections.inc.php');
-  
+
   break;
 }
 
@@ -91,21 +91,21 @@ case 'edit':
     $_SESSION['page_errors'][] = l10n('Invalid collection');
     redirect(USER_COLLEC_PUBLIC);
   }
-  
-  $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/collection_edit.tpl'));
-  
+
+  $template->set_filename('uc_page', realpath(USER_COLLEC_PATH.'template/collection_edit.tpl'));
+
   $self_url = USER_COLLEC_PUBLIC . 'edit/' . $page['col_id'];
-  
+
   $template->assign(array(
     'F_ACTION' => $self_url,
     'U_LIST' => USER_COLLEC_PUBLIC,
     'UC_IN_EDIT' => true,
     ));
-  
+
   try {
     $collection = new UserCollection($page['col_id']);
     $collection->checkUser();
-    
+
     // save properties
     if (isset($_POST['save_col']))
     {
@@ -117,20 +117,20 @@ case 'edit':
       {
         $collection->updateParam('name', stripslashes($_POST['name']));
       }
-      $collection->updateParam('comment', stripslashes($_POST['comment']));
+      $collection->updateParam('comment', stripslashes(@$_POST['comment']));
     }
-    
+
     // add key
     if ($conf['user_collections']['allow_public'])
     {
       if (isset($_POST['add_share']))
       {
         $share = array(
-          'share_key' =>  trim($_POST['share_key']),
-          'password' =>   isset($_POST['use_share_password']) ? trim($_POST['share_password']) : '',
-          'deadline' =>   isset($_POST['use_share_deadline']) ? trim($_POST['share_deadline']) : '',
+          'share_key' => trim($_POST['share_key']),
+          'password' =>  isset($_POST['use_share_password']) ? trim($_POST['share_password']) : '',
+          'deadline' =>  isset($_POST['use_share_deadline']) ? trim($_POST['share_deadline']) : '',
           );
-          
+
         if (!verify_ephemeral_key(@$_POST['key']))
         {
           $result = array(l10n('Invalid key'));
@@ -146,7 +146,7 @@ case 'edit':
         else
         {
           $share = array();
-          $share['infos'][] = sprintf(l10n('New share added: <a href="%s">%s</a>'), $result, $result);
+          $share['infos'][] = l10n('New share added: <a href="%s">%s</a>', $result, $result);
         }
         $share['open'] = true;
       }
@@ -162,25 +162,16 @@ case 'edit':
       if (!isset($share['share_key']))
       {
         $share['share_key'] = get_random_key(16);
-        $share['password'] = null;
-        $share['deadline'] = null;
+        $share['password'] =  null;
+        $share['deadline'] =  null;
       }
 
       $template->assign('share', $share);
     }
-    
+
     // send mail
-    if ( $conf['user_collections']['allow_mails'] && $conf['user_collections']['allow_public'] )
+    if ($conf['user_collections']['allow_mails'] && $conf['user_collections']['allow_public'])
     {
-      $contact = array(
-        'sender_name' =>      $user['username'],
-        'sender_email' =>     $user['email'],
-        'recipient_name' =>   null,
-        'recipient_email' =>  null,
-        'nb_images' =>        4,
-        'message' =>          null,
-        );
-          
       if (isset($_POST['send_mail']))
       {
         $contact = array(
@@ -191,7 +182,7 @@ case 'edit':
           'nb_images' =>        $_POST['nb_images'],
           'message' =>          $_POST['message'],
           );
-        
+
         if (!verify_ephemeral_key(@$_POST['key']))
         {
           $result = array(l10n('Invalid key'));
@@ -211,67 +202,83 @@ case 'edit':
           $page['infos'] = l10n('E-mail sent successfully');
         }
       }
-      
+
+      if (!isset($contact['sender_email']))
+      {
+        $contact['sender_name'] =     $user['username'];
+        $contact['sender_email'] =    $user['email'];
+        $contact['recipient_name'] =  null;
+        $contact['recipient_email'] = null;
+        $contact['nb_images'] =       4;
+        $contact['message'] =         null;
+      }
+
       $template->assign('contact', $contact);
     }
-    
+
     // clear
-    if ( isset($_GET['action']) and $_GET['action'] == 'clear' )
+    if (isset($_GET['action']) && $_GET['action'] == 'clear')
     {
       $collection->clearImages();
     }
-    
-    
+
+
     // add remove item links
     $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_button');
     $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
-    
+
     // thumbnails
     include(USER_COLLEC_PATH . '/include/display_thumbnails.inc.php');
-    
-    
+
+
     // collection properties
     $infos = $collection->getCollectionInfo();
     $infos['DATE_CREATION'] = format_date($infos['DATE_CREATION'], true);
     $infos['SHARES'] = $collection->getShares();
-    $template->assign('collection', $infos); 
-    
+    $template->assign('collection', $infos);
+
+
     // toolbar buttons
     if (!empty($page['items']))
     {
-      $template->assign('U_CLEAR',
+      if ($conf['user_collections']['allow_public'])
+      {
+        user_collections_add_button('share', 'U_SHARE',
+          USER_COLLEC_PUBLIC . 'view/' . $page['col_id'] .'-'
+          );
+
+        if ($conf['user_collections']['allow_mails'])
+        {
+          user_collections_add_button('mail', 'U_MAIL', true);
+        }
+      }
+
+      user_collections_add_button('clear', 'U_CLEAR',
         add_url_params($self_url, array('action'=>'clear'))
         );
     }
-    $template->assign('U_DELETE',
+
+    user_collections_add_button('delete', 'U_DELETE',
       add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$page['col_id']))
       );
-      
-    if ( $conf['user_collections']['allow_public'] && !empty($page['items']) )
-    {
-      $template->assign('U_SHARE', USER_COLLEC_PUBLIC . 'view/' . $page['col_id'] .'-');
-    }
-    if ( $conf['user_collections']['allow_mails'] && $conf['user_collections']['allow_public'] && !empty($page['items']) )
-    {
-      $template->assign('U_MAIL', true);
-    }
+
     $template->assign('UC_TKEY', get_ephemeral_key(3));
-    
+
     // modify page title
-    $template->concat('TITLE', 
-      $conf['level_separator'] . trigger_event('render_category_name', $infos['NAME'])
+    $template->concat('TITLE',
+      $conf['level_separator'] . trigger_change('render_category_name', $infos['NAME'])
       );
-    
+
     // render description
     $template->assign('CONTENT_DESCRIPTION',
-      trigger_event('render_category_description', nl2br($infos['COMMENT']))
+      trigger_change('render_category_description', nl2br($infos['COMMENT']))
       );
   }
   catch (Exception $e)
   {
     $page['errors'][] = $e->getMessage();
   }
-  
+
   break;
 }
 
@@ -281,7 +288,7 @@ case 'edit':
 case 'view':
 {
   $page['col_key'] = $page['col_id'];
-  
+
   if (!$conf['user_collections']['allow_public'])
   {
     page_forbidden('');
@@ -290,37 +297,38 @@ case 'view':
   {
     bad_request('');
   }
-  
+
   $query = '
 SELECT col_id, params
   FROM '.COLLECTION_SHARES_TABLE.'
   WHERE share_key = "'.$page['col_key'].'"
 ;';
   $result = pwg_query($query);
+
   if (!pwg_db_num_rows($result))
   {
     page_not_found(l10n('Collection not found'));
   }
-  
+
   list($page['col_id'], $share_params) = pwg_db_fetch_row($result);
   $share_params = unserialize($share_params);
-  
+
   // deadline check
-  if ( !empty($share_params['deadline']) && strtotime($share_params['deadline'])<time() )
+  if (!empty($share_params['deadline']) && strtotime($share_params['deadline'])<time())
   {
     page_not_found(l10n('This link expired'));
   }
-  
+
   $self_url = USER_COLLEC_PUBLIC . 'view/' . $page['col_key'];
-  
-  $template->set_filename('index', realpath(USER_COLLEC_PATH.'template/collection_view.tpl'));
-  
+
+  $template->set_filename('uc_page', realpath(USER_COLLEC_PATH.'template/collection_view.tpl'));
+
   try {
     $collection = new UserCollection($page['col_id']);
     $col = $collection->getCollectionInfo();
-    
+
     $mode = 'view';
-    
+
     // password check
     if (!empty($share_params['password']))
     {
@@ -350,37 +358,40 @@ SELECT col_id, params
         $mode = 'password';
       }
     }
-    
+
     if ($mode == 'view')
     {
       $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
-      
+
       // thumbnails
       include(USER_COLLEC_PATH . '/include/display_thumbnails.inc.php');
-      
+
       // render description
       $template->assign('CONTENT_DESCRIPTION',
-        trigger_event('render_category_description', nl2br($col['COMMENT']))
+        trigger_change('render_category_description', nl2br($col['COMMENT']))
         );
     }
-    
+
     // add username in title
     include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
-    $template->concat('TITLE', 
-      $conf['level_separator'] . trigger_event('render_category_name', $col['NAME']) .
-      ' (' . sprintf(l10n('by %s'), get_username($collection->getParam('user_id'))) . ')'
+
+    $template->concat('TITLE',
+      $conf['level_separator'] . trigger_change('render_category_name', $col['NAME']) .
+      ' (' . l10n('by %s', get_username($collection->getParam('user_id'))) . ')'
       );
-      
+
     $template->assign('UC_MODE', $mode);
   }
   catch (Exception $e)
   {
     access_denied();
   }
-  
+
   break;
 }
 }
+
+$template->assign_var_from_handle('CONTENT', 'uc_page');
 
 
 // modification on mainpage_categories.tpl
@@ -392,7 +403,7 @@ function user_collections_categories_list($content, &$samrty)
     <a href="{$cat.URL}" rel="nofollow">{"Edit"|@translate}</a>
     | <a href="{$cat.U_DELETE}" onClick="return confirm(\'{"Are you sure?"|@translate}\');" rel="nofollow">{"Delete"|@translate}</a>
   </div>';
-  
+
   return str_replace($search, $replace, $content);
 }
 
@@ -401,8 +412,16 @@ function user_collections_add_colorbox($content)
 {
   $search = '<a href="{$thumbnail.URL}"';
   $replace = $search.' class="preview-box" data-src="{$thumbnail.FILE_SRC}" data-id="{$thumbnail.id}"';
-  
+
   return str_replace($search, $replace, $content);
 }
 
-?>
+// add special buttons
+function user_collections_add_button($tpl_file, $tpl_var, $value)
+{
+  global $template;
+
+  $template->assign($tpl_var, $value);
+  $template->set_filename('uc_button_'.$tpl_file, realpath(USER_COLLEC_PATH.'template/buttons/'. $tpl_file .'.tpl'));
+  $template->add_index_button($template->parse('uc_button_'.$tpl_file, true));
+}

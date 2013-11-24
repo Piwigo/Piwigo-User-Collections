@@ -54,6 +54,7 @@ $lang['Recipient name'] = 'Recipient name';
 $lang['Recipient e-mail'] = 'Recipient e-mail';
 $lang['Message (optional)'] = 'Message (optional)';
 $lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = 'Hello <b>%s</b>, %s sent you a photo collection from <a href="%s">%s</a>';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Hello %s, %s sent you a photos collection from "%s"';
 $lang['Click here to view the complete collection'] = 'Click here to view the complete collection';
 $lang['Date added to collection, new &rarr; old'] = 'Date added to collection, new &rarr; old';
 $lang['Date added to collection, old &rarr; new'] = 'Date added to collection, old &rarr; new';
@@ -61,5 +62,11 @@ $lang['Name, A &rarr; Z'] = 'Name, A &rarr; Z';
 $lang['Name, Z &rarr; A'] = 'Name, Z &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Photos number, high &rarr; low';
 $lang['Photos number, low &rarr; high'] = 'Photos number, low &rarr; high';
+$lang['Add'] = 'Add';
+$lang['Cancel'] = 'Cancel';
+$lang['Description'] = 'Description';
+$lang['jump to photo'] = 'jump to photo';
+$lang['Name'] = 'Name';
+$lang['Send'] = 'Send';
 
 ?>

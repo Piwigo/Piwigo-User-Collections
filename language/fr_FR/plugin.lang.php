@@ -54,6 +54,7 @@ $lang['Recipient name'] = 'Nom du destinataire';
 $lang['Recipient e-mail'] = 'E-mail du destinataire';
 $lang['Message (optional)'] = 'Message (optionel)';
 $lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = 'Bonjour <b>%s</b>, %s vous a envoyé une collection de photos depuis <a href="%s">%s</a>';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Bonjour %s, %s vous a envoyé une collection de photos depuis "%s"';
 $lang['Click here to view the complete collection'] = 'Cliquez ici pour voir la collection complète';
 $lang['Date added to collection, new &rarr; old'] = 'Date d\'ajout à la collection, récent &rarr; ancien';
 $lang['Date added to collection, old &rarr; new'] = 'Date d\'ajout à la collection, ancien &rarr; récent';
@@ -61,5 +62,11 @@ $lang['Name, A &rarr; Z'] = 'Nom, A &rarr; Z';
 $lang['Name, Z &rarr; A'] = 'Nom, Z &rarr; A';
 $lang['Photos number, high &rarr; low'] = 'Nombre de photos, élévé &rarr; faible';
 $lang['Photos number, low &rarr; high'] = 'Nombre de photos, faible &rarr; élévé';
+$lang['Add'] = 'Ajouter';
+$lang['Cancel'] = 'Annuler';
+$lang['Description'] = 'Description';
+$lang['jump to photo'] = 'Voir la photo';
+$lang['Name'] = 'Nom';
+$lang['Send'] = 'Envoyer';
 
 ?>

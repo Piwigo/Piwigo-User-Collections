@@ -9,7 +9,7 @@
   #colProperties p:not(.title) {
     margin-bottom:10px;
   }
-  
+
 #publicURL {
   display:inline-block;
   height:22px;
@@ -76,7 +76,7 @@
     border-radius:2px;
     padding:3px;
   }
-  
+
 #share_form .url-base {
   font-size:0.9em;
 }
@@ -103,7 +103,7 @@
   border-top:1px solid #444;
   border-bottom:1px solid #111;
 }
-  
+
 .shares_list tr.row2 td { background-color:#222; }
 .shares_list tr.row1 td { background-color:#333; }
 
