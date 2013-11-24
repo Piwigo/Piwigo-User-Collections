@@ -568,14 +568,14 @@ SELECT
     // template
     $mail_css = file_get_contents(dirname(__FILE__).'/../template/mail.css');
     
-    $share_key = 'mail-' . substr(sha1($this->data['id'].$conf['secret_key']), 0, 11);
+    $share_key = array('share_key'=>'mail-' . substr(sha1($this->data['id'].$conf['secret_key']), 0, 11));
     
     $template->assign(array(
       'GALLERY_URL' => get_gallery_home_url(),
       'PHPWG_URL' => PHPWG_URL,
       'UC_MAIL_CSS' => str_replace("\n", null, $mail_css),
       'MAIL_TITLE' => $this->getParam('name').' ('.sprintf(l10n('by %s'), $params['sender_name']).')',
-      'COL_URL' => $this->addShare(array('share_key'=>$share_key), false),
+      'COL_URL' => $this->addShare($share_key, false),
       'PARAMS' => $params,
       'derivative_params' => ImageStdParams::get_by_type(IMG_SQUARE),
       'thumbnails' => $tpl_vars,
