@@ -326,7 +326,7 @@ DELETE FROM '.COLLECTION_SHARES_TABLE.'
    *          - deadline
    * @return: array errors
    */
-  function addShare($share, $abord_on_duplicate=true)
+  function addShare(&$share, $abord_on_duplicate=true)
   {
     global $conf, $page;
     
@@ -341,12 +341,13 @@ DELETE FROM '.COLLECTION_SHARES_TABLE.'
     }
     else
     {
-      $share['share_key'] = $this->data['id'].'-'.str2url($share['share_key']);
+      $share['share_key'] = str2url($share['share_key']);
+      $share_key = $this->data['id'].'-'.$share['share_key'];
       
       $query = '
 SELECT id FROM '.COLLECTION_SHARES_TABLE.'
   WHERE col_id = '.$this->data['id'].'
-  AND share_key = "'.$share['share_key'].'"
+  AND share_key = "'.$share_key.'"
 ;';
       $result = pwg_query($query);
       if (pwg_db_num_rows($result))
@@ -357,7 +358,7 @@ SELECT id FROM '.COLLECTION_SHARES_TABLE.'
         }
         else
         {
-          return USER_COLLEC_PUBLIC . 'view/' . $share['share_key'];
+          return USER_COLLEC_PUBLIC . 'view/' . $share_key;
         }
       }
     }
@@ -372,7 +373,7 @@ SELECT id FROM '.COLLECTION_SHARES_TABLE.'
     // hash password
     if (!empty($share['password']))
     {
-      $share['password'] = sha1($conf['secret_key'].$share['password'].$share['share_key']);
+      $share['password'] = sha1($conf['secret_key'].$share['password'].$share_key);
     }
     
     if (empty($errors))
@@ -391,14 +392,14 @@ INSERT INTO '.COLLECTION_SHARES_TABLE.'(
   )
   VALUES(
     '.$this->data['id'].',
-    "'.$share['share_key'].'",
+    "'.$share_key.'",
     "'.pwg_db_real_escape_string($params).'",
     "'.date('Y-m-d H:i:s').'"
   )
 ;';
       pwg_query($query);
       
-      return USER_COLLEC_PUBLIC . 'view/' . $share['share_key'];
+      return USER_COLLEC_PUBLIC . 'view/' . $share_key;
     }
     
     return $errors;

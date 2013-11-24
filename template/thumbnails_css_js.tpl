@@ -22,7 +22,7 @@ $cdm.find("a.new").on("click", function(event) {ldelim}
 $cdm.find("input.new").on({ldelim}
   // ENTER or ESC pressed
   "keyup": function(event) {ldelim}
-    if (event.which == 27) {
+    if (event.which == 27) {ldelim}
       jQuery(this).val('').hide().prev().show();
       return;
     }
@@ -160,7 +160,7 @@ $cdm.children(".switchBoxFooter").css("border-top-color", $cdm.children(".switch
   
   <div class="switchBoxFooter">
   <span>&#10010;</span> <a class="new">{'Create a new collection'|@translate}</a>
-  <input class="new" placeholder="{'Name'|@translate}" size="25"/>
+  <input type="text" class="new" placeholder="{'Name'|@translate}" size="25"/>
   </div>
 </div>
 

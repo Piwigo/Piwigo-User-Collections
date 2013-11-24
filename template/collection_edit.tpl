@@ -17,8 +17,12 @@
 {combine_css path=$USER_COLLEC_PATH|cat:'template/resources/jquery-timepicker/jquery-ui-timepicker-addon.css'}
 
 
-<script>
 {footer_script require='jquery,jquery.ui.timepicker'}
+var bg_color = $('#the_page #content').css('background-color');
+if (!bg_color || bg_color=='transparent') {ldelim}
+  bg_color = $('body').css('background-color');
+}
+
 {if isset($U_SHARE)}
 {literal}
   var $share_form = jQuery('#share_form');
@@ -66,7 +70,7 @@
   });
   $share_form.find('.set_share_key').on('click', function() {
       if ($share_form.find('input[name="share_key"]').val().length < 8) {
-          alert("{/literal}{'The key must be at least 8 characters long'|@translate}{literal}");
+          alert("{/literal}{'The key must be at least 8 characters long'|@translate|escape:javascript}{literal}");
       }
       else {
           $share_form.find('.url-more').text($share_form.find('input[name="share_key"]').val());
@@ -106,7 +110,7 @@
     jQuery(".share_colorbox_open").colorbox.close();
     return false;
   });
-  jQuery("#share_form").css('background-color', jQuery("#the_page #content").css('background-color'));
+  jQuery("#share_form").css('background-color', bg_color);
 {/literal}
 {/if}
 
@@ -120,7 +124,9 @@
     jQuery(".mail_colorbox_open").colorbox.close();
     return false;
   });
-  jQuery("#mail_form").css('background-color', jQuery("#the_page #content").css('background-color'));
+  
+  
+  jQuery("#mail_form").css('background-color', bg_color);
 {/literal}
 {/if}
 
@@ -137,7 +143,6 @@ jQuery("#edit_form_hide").click(function() {
 });
 {/literal}
 {/footer_script}
-</script>
 
 
 {* <!-- Menubar & titrePage --> *}

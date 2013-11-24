@@ -9,8 +9,8 @@ jQuery("a.preview-box").colorbox({ldelim}
   href: function() {ldelim} return $(this).data('src'); },
   title: function() {ldelim}
     var title = $(this).children("img.thumbnail").attr("alt");
-    {if $F_ACTION} title+= ' · <a class="addCollection" data-id="'+ $(this).data('id') +'" rel="nofollow">{'Remove from collection'|@translate}</a>';{/if}
-    title+= ' · <a href="'+ $(this).attr('href') +'" target="_blank">{'jump to photo'|@translate} →</a>';
+    {if $F_ACTION} title+= ' · <a class="addCollection" data-id="'+ $(this).data('id') +'" rel="nofollow">{'Remove from collection'|@translate|escape:javascript}</a>';{/if}
+    title+= ' · <a href="'+ $(this).attr('href') +'" target="_blank">{'jump to photo'|@translate|escape:javascript} →</a>';
     return  title;
   }
 });

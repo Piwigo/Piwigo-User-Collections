@@ -123,12 +123,6 @@ case 'edit':
     // add key
     if ($conf['user_collections']['allow_public'])
     {
-      $share = array(
-        'share_key' => get_random_key(16),
-        'password' => null,
-        'deadline' => null,
-        );
-      
       if (isset($_POST['add_share']))
       {
         $share = array(
@@ -164,7 +158,14 @@ case 'edit':
         }
         $share['open'] = true;
       }
-      
+
+      if (!isset($share['share_key']))
+      {
+        $share['share_key'] = get_random_key(16);
+        $share['password'] = null;
+        $share['deadline'] = null;
+      }
+
       $template->assign('share', $share);
     }
     

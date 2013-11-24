@@ -92,7 +92,7 @@ SELECT id, public_id
     }
     
     mass_inserts($prefixeTable.'collection_shares',
-      array('col_id','share_key','add_date'),
+      array('col_id','share_key','params','add_date'),
       $inserts
       );
     
