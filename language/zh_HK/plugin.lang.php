@@ -81,4 +81,11 @@ $lang['Share this collection'] = '分享這照片集';
 $lang['The key must be at least 8 characters long'] = '密鑰必須是至少8個字符長';
 $lang['This key is already used'] = '此密鑰已被使用';
 $lang['This link expired'] = '鏈接已過期';
+$lang['Add'] = '新增';
+$lang['Cancel'] = '取消';
+$lang['Description'] = '描述';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = '您好%s，%s送你的照片是來自%s照片集';
+$lang['Name'] = '名稱';
+$lang['Send'] = '發送';
+$lang['jump to photo'] = '跳至照片';
 ?>
