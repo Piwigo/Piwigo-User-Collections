@@ -81,4 +81,11 @@ $lang['Share'] = 'Delen';
 $lang['Share deleted'] = 'Delen verwijderd';
 $lang['Share key'] = 'Sleutel voor delen';
 $lang['Restricted access'] = 'Beperkte toegang';
+$lang['Add'] = 'Toevoegen';
+$lang['Cancel'] = 'Annuleren';
+$lang['Description'] = 'Beschrijving';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Hallo %s, %s stuurde u een verzameling foto\'s van "%s" ';
+$lang['Name'] = 'Naam';
+$lang['Send'] = 'Verzenden';
+$lang['jump to photo'] = 'Ga naar de foto';
 ?>
