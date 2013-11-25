@@ -1,1 +1,1 @@
-Coleções do Usuário
+Usuários registrados podem selecionar fotos dos álbuns e salvar em coleções, como um favoritos avançado.
