@@ -20,17 +20,11 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['Unsaved collections'] = 'Незаписани колекции';
-$lang['Return to collections list'] = 'Връщате в списъка';
 $lang['You have no collection'] = 'Нямате колекции';
 $lang['Your e-mail'] = 'Вашият имейл';
-$lang['active'] = 'активно';
 $lang['Your name'] = 'Вашето име';
 $lang['Send this collection my mail'] = 'Изпрати тези колекция до имейла ми';
-$lang['See all my collections'] = 'Виж всички мой колекции';
-$lang['Saved collections'] = 'Запис на колекциите';
 $lang['Save'] = 'Запис';
-$lang['Public collection'] = 'Публично';
 $lang['Preview'] = 'Преглед';
 $lang['Number of images'] = 'Брой изображения';
 $lang['Message (optional)'] = 'Съобщение (опция)';
@@ -47,8 +41,6 @@ $lang['Date added to collection, old &rarr; new'] = 'Дата добавена �
 $lang['Clear this collection'] = 'Изчистване на колекцията';
 $lang['Date added to collection, new &rarr; old'] = ' ';
 $lang['Create a new collection'] = 'Създаване нова колекция';
-$lang['Copy to clipboard'] = 'Копиране в клиборда';
-$lang['Copied'] = 'Копирано';
 $lang['Collections'] = 'Колекции';
 $lang['Collection name:'] = 'Име на колекция';
 $lang['Click here to view the complete collection'] = 'Натисни за преглед на завършената колекция';
@@ -62,13 +54,10 @@ $lang['A photo collection by %s'] = 'Колекция снимки от %s';
 $lang['%d more...'] = '%d още...';
 $lang['This collection is empty'] = 'Колекцията е празна';
 $lang['Remove from collection'] = 'Премахване от колекцията';
-$lang['set active'] = 'астивиране';
-$lang['save'] = 'запис';
 $lang['by %s'] = 'от %s';
 $lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = 'Здравейте <b>%s</b>, %s ви изпраща колекция снимки от <a href="%s">%s</a>';
 $lang['You have %d collection'] = 'Вие имате %d колекция';
 $lang['You have %d collections'] = 'Вие имате %d колекции';
-$lang['The collection must be public in order to send it'] = 'Колекцията трябва да е публична за да може да я изберете за изпращане.';
 $lang['Recipient name'] = 'Име на получателя';
 $lang['Recipient e-mail'] = 'Имейл на получателя';
 $lang['Please give a name'] = 'Задайте име';
@@ -92,4 +81,11 @@ $lang['Restricted access'] = 'Ограничен достъп';
 $lang['New share added: <a href="%s">%s</a>'] = 'Ново споделяне е добавено: <a href="%s">%s</a>';
 $lang['Expiration date'] = 'Дата на валидност';
 $lang['Collection not found'] = 'Колекцията не е намерена';
+$lang['Add'] = 'Добави';
+$lang['Cancel'] = 'Откажи';
+$lang['Description'] = 'Описание';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Здравейте, %s, %s Ви изпрати фотоколекция от %s';
+$lang['Name'] = 'Име';
+$lang['Send'] = 'Изпрати';
+$lang['jump to photo'] = 'отиди на снимката';
 ?>
