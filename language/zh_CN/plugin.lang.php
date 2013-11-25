@@ -21,25 +21,15 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['by %s'] = 'by %s';
-$lang['save'] = '保存';
-$lang['active'] = '启用';
-$lang['set active'] = '设置启用';
 $lang['You have no collection'] = '您没有精选集';
 $lang['You have %d collections'] = '您有 %d 个精选集';
 $lang['You have %d collection'] = '您有 %d 个精选集';
-$lang['Unsaved collections'] = '未保存的精选集';
-$lang['See all my collections'] = '查看所有精选集';
 $lang['This collection is empty'] = '此精选集为空';
-$lang['Saved collections'] = '已保存的精选集';
 $lang['Save'] = '保存';
-$lang['Return to collections list'] = '回到列表';
 $lang['Remove from collection'] = '从精选集中删除';
-$lang['Public collection'] = '公开';
 $lang['Please give a name'] = '请输入名称';
 $lang['Invalid collection'] = '无效的精选集';
 $lang['Create a new collection'] = '创建新的精选集';
-$lang['Copy to clipboard'] = '复制到剪贴板';
-$lang['Copied'] = '已复制';
 $lang['Collections'] = '精选集';
 $lang['Collection name:'] = '精选集名称：';
 $lang['Collection'] = '精选集';
@@ -65,7 +55,6 @@ $lang['Recipient e-mail'] = '收件人e-mail';
 $lang['Recipient name'] = '收件人名字';
 $lang['Allow users to send their public collections by mail'] = '允许用户通过e-mail发送其公开精选集';
 $lang['Send this collection my mail'] = '将此精选集发送至我的邮箱';
-$lang['The collection must be public in order to send it'] = '精选集须设为公开后方能发送';
 $lang['Your e-mail'] = '您的e-mail';
 $lang['Your name'] = '您的名字';
 $lang['A photo collection by %s'] = '%s 的图片精选集';
@@ -92,4 +81,11 @@ $lang['This link expired'] = '此链接已过期';
 $lang['Expiration date'] = '到期日';
 $lang['New share added: <a href="%s">%s</a>'] = '已添加新的分享：<a href="%s">%s</a>';
 $lang['Collection not found'] = '未找到精选集';
+$lang['Add'] = '增加';
+$lang['Cancel'] = '取消';
+$lang['Description'] = '描述';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = '你好 %s,%s从%s发送了一个图片集给你';
+$lang['Name'] = '名称';
+$lang['Send'] = '发送';
+$lang['jump to photo'] = '跳到图片';
 ?>
