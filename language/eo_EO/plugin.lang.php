@@ -81,4 +81,11 @@ $lang['You have %d collections'] = 'Vi havas %d kolektojn';
 $lang['You have no collection'] = 'Vi havas neniun kolekton';
 $lang['Your e-mail'] = 'Via retmesaĝo';
 $lang['Your name'] = 'Via nomo';
+$lang['Add'] = 'Aldoni';
+$lang['Cancel'] = 'Nuligi';
+$lang['Description'] = 'Priskribo';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Saluton %s, %s sendis al vi fotokolekto el "%s"';
+$lang['Name'] = 'Nomo';
+$lang['Send'] = 'Sendi';
+$lang['jump to photo'] = 'iri al foto';
 ?>
