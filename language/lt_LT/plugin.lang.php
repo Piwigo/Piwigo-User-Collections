@@ -81,4 +81,11 @@ $lang['Date added to collection, old &rarr; new'] = 'Data, pridėta į kolekcij�
 $lang['Delete this collection'] = 'Pašalinti šią kolekciją';
 $lang['Download CSV file'] = 'Atsisiųsti CSV failą';
 $lang['E-mail sent successfully'] = 'E-mail\'as išsiųstas sėkmingai';
+$lang['jump to photo'] = 'peršokti į nuotrauką';
+$lang['Add'] = 'Pridėti';
+$lang['Cancel'] = 'Atšaukti';
+$lang['Description'] = 'Aprašymas';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Labas %s, %s Jums siunčia nuotraukų kolekciją iš "%s"';
+$lang['Name'] = 'Vardas';
+$lang['Send'] = 'Siųsti';
 ?>
