@@ -81,4 +81,11 @@ $lang['Please enter the recipient name'] = 'Prosimo vpišite ime prejemnika';
 $lang['Please enter your e-mail'] = 'Prosimo vpišite svoj e-poštni naslov';
 $lang['Please enter your name'] = 'Prosimo vpišite svoje ime';
 $lang['Please give a name'] = 'Prosimo vpišite ime';
+$lang['Add'] = 'Dodaj';
+$lang['Cancel'] = 'Razveljavi';
+$lang['Description'] = 'Opis';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Zdravo %s, %s pošiljam fotografije iz albuma "%s"';
+$lang['Name'] = 'Ime';
+$lang['Send'] = 'Pošlji';
+$lang['jump to photo'] = 'Skoči na fotografijo';
 ?>
