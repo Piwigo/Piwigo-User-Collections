@@ -20,7 +20,6 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['Copy to clipboard'] = 'Copiază în clipboard';
 $lang['Date added to collection, new &rarr; old'] = 'Data adăugării la colecție, nou &rarr; vechi';
 $lang['Date added to collection, old &rarr; new'] = 'Data adăugării la colecție, vechi &rarr; nou';
 $lang['Name, A &rarr; Z'] = 'Nume, A &rarr; Z';
@@ -42,17 +41,13 @@ $lang['You have no collection'] = 'Nu ai nicio colecție';
 $lang['Your e-mail'] = 'Adresa ta de e-mail';
 $lang['Your name'] = 'Numele tău';
 $lang['Send this collection my mail'] = 'Trimite-mi această colecție la adresa mea de e-mail';
-$lang['The collection must be public in order to send it'] = 'Această colecție trebuie să fie publică pentru a putea să o trimiți';
 $lang['This collection is empty'] = 'Această colecție este goală';
 $lang['You have %d collection'] = 'Ai %d colecții';
 $lang['Error while sending e-mail'] = 'Eroare de trimitere a e-mail-ului';
 $lang['Recipient name'] = 'Numele destinatarului';
-$lang['Return to collections list'] = 'Înapoi la listă';
-$lang['See all my collections'] = 'Vezi toate colecțiile mele';
 $lang['Save'] = 'Salvează';
 $lang['Remove from collection'] = 'Șterge din colecție';
 $lang['Preview'] = 'Previzualizare';
-$lang['Public collection'] = 'Public';
 $lang['Recipient e-mail'] = 'Destinatar e-mail';
 $lang['E-mail sent successfully'] = 'E-mail trimis cu succes';
 $lang['Export image list'] = 'Exportă lista de imagini';
@@ -72,8 +67,25 @@ $lang['Clear this collection'] = 'Curăță această colecție';
 $lang['Collection'] = 'Colecție';
 $lang['Collection name:'] = 'Numele colecției:';
 $lang['Collections'] = 'Colecții';
-$lang['Copied'] = 'Copiat';
 $lang['Create a new collection'] = 'Crează o colecție nouă';
 $lang['Delete this collection'] = 'Șterge această colecție';
 $lang['Download CSV file'] = 'Descarcă fișier CSV';
+$lang['Add'] = 'Adaugă';
+$lang['Cancel'] = 'Anulează';
+$lang['Collection not found'] = 'Colecția nu a fost găsită';
+$lang['Description'] = 'Descriere';
+$lang['Expiration date'] = 'Data de expirare';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Salut %s, %s ți-a trimis o coleție de fotografii din "%s"';
+$lang['Name'] = 'Nume';
+$lang['New share added: <a href="%s">%s</a>'] = 'O nouă distribuire a fost adăugată: <a href="%s">%s</a>';
+$lang['Restricted access'] = 'Acces restricționat';
+$lang['Send'] = 'Trimite';
+$lang['Share'] = 'Distribuie';
+$lang['Share deleted'] = 'Distribuire ștearsă';
+$lang['Share key'] = 'Cheie de distribuție';
+$lang['Share this collection'] = 'Distribuie această colecție';
+$lang['The key must be at least 8 characters long'] = 'Cheia trebuie să aibă minim 8 caractere';
+$lang['This key is already used'] = 'Această cheie este deja utilizată';
+$lang['This link expired'] = 'Această legătură este expirată';
+$lang['jump to photo'] = 'sari la fotografie';
 ?>
