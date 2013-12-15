@@ -81,4 +81,11 @@ $lang['Add to collection'] = 'إضافة إلى المجموعة';
 $lang['A photo collection by %s'] = 'مجموعة صور من قبل %s';
 $lang['%d more...'] = '%d اكثر ...';
 $lang['(remove)'] = '(إزالة)';
+$lang['jump to photo'] = 'انتقال إلى الصورة';
+$lang['Send'] = 'ارسال';
+$lang['Name'] = 'الاسم';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'مرحبا %s, %s أرسلت لك مجموعة الصور من "%s"';
+$lang['Description'] = 'وصف';
+$lang['Cancel'] = 'الغاء';
+$lang['Add'] = 'إضافة';
 ?>
