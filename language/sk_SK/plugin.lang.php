@@ -36,7 +36,7 @@ $lang['Save'] = 'Uložiť';
 $lang['You have %d collection'] = 'Máte %d kolekciu';
 $lang['You have %d collections'] = 'Máte %d kolekcií';
 $lang['You have no collection'] = 'Nemáte kolekcie';
-$lang['Send this collection my mail'] = 'Poslať túto kolekciu na môj mail';
+$lang['Send this collection by mail'] = 'Poslať túto kolekciu na môj mail';
 $lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = 'Ahoj <b>%s</b>, %s posielam foto kolekciu od <a href="%s">%s</a>';
 $lang['A photo collection by %s'] = 'Kolekcia fotiek %s';
 $lang['Fields'] = 'Polia';

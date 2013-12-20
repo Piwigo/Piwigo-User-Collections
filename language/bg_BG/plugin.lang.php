@@ -23,7 +23,7 @@
 $lang['You have no collection'] = 'Нямате колекции';
 $lang['Your e-mail'] = 'Вашият имейл';
 $lang['Your name'] = 'Вашето име';
-$lang['Send this collection my mail'] = 'Изпрати тези колекция до имейла ми';
+$lang['Send this collection by mail'] = 'Изпрати тези колекция до имейла ми';
 $lang['Save'] = 'Запис';
 $lang['Preview'] = 'Преглед';
 $lang['Number of images'] = 'Брой изображения';

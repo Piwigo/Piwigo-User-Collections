@@ -39,7 +39,7 @@ $lang['by %s'] = 'da %s';
 $lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = 'Ciao <b>%s</b>, %s ti ha inviato una raccolta di foto da <a href="%s">%s</ a>';
 $lang['Your e-mail'] = 'La tua e-mail';
 $lang['Your name'] = 'Il tuo nome';
-$lang['Send this collection my mail'] = 'Invia questa collezione alla mia mail';
+$lang['Send this collection by mail'] = 'Invia questa collezione alla mia mail';
 $lang['Recipient name'] = 'Nome destinatario';
 $lang['Recipient e-mail'] = 'Destinatario e-mail';
 $lang['Preview'] = 'Anteprima';

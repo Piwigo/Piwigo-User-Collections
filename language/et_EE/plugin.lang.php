@@ -23,7 +23,7 @@
 $lang['Save'] = 'Salvesta';
 $lang['Saved collections'] = 'Salvestatud seeriad';
 $lang['See all my collections'] = 'Näita kõik mu seeriad';
-$lang['Send this collection my mail'] = 'Saada antud fotoseeria minu meilile';
+$lang['Send this collection by mail'] = 'Saada antud fotoseeria minu meilile';
 $lang['The collection must be public in order to send it'] = 'Et fotoseeriat saata, peab see olema avalikustatud';
 $lang['This collection is empty'] = 'Fotoseeriast puuduvad pildid';
 $lang['Unsaved collections'] = 'Salvestamata seeriad';

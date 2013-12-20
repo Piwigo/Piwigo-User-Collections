@@ -23,7 +23,7 @@
 $lang['Save'] = 'Spara';
 $lang['Saved collections'] = 'Sparade sammlingar';
 $lang['See all my collections'] = 'Se alla mina sammlingar';
-$lang['Send this collection my mail'] = 'Skicka den här sammlingen till min mail';
+$lang['Send this collection by mail'] = 'Skicka den här sammlingen till min mail';
 $lang['The collection must be public in order to send it'] = 'Sammlingen måste vara publik för att kunna skickas';
 $lang['This collection is empty'] = 'Den här sammlingen är tom';
 $lang['Unsaved collections'] = 'Sammlingar som inte sparats';
