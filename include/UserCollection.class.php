@@ -72,7 +72,7 @@ SELECT image_id
       }
       else
       {
-        throw new Exception(l10n('Invalid collection'), WS_ERR_INVALID_PARAM);
+        throw new Exception(l10n('Invalid collection'));
       }
     }
     // create a new collection

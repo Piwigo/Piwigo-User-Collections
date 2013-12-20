@@ -102,6 +102,8 @@ SELECT id, public_id
 
       pwg_query('ALTER TABLE `'.$prefixeTable.'collections` DROP `public`, DROP `public_id`;');
     }
+    
+    $this->installed = true;
   }
 
   function activate($plugin_version, &$errors=array())
