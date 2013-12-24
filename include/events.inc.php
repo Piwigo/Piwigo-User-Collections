@@ -57,8 +57,8 @@ function user_collections_page()
 
   if (!is_a_guest() && count($page['items']))
   {
-    $template->set_filename('uc_tumbnails_cssjs', realpath(USER_COLLEC_PATH . 'template/thumbnails_css_js.tpl'));
-    $template->parse('uc_tumbnails_cssjs');
+    $template->set_filename('uc_thumbnails_cssjs', realpath(USER_COLLEC_PATH . 'template/thumbnails_css_js.tpl'));
+    $template->parse('uc_thumbnails_cssjs');
   }
 }
 
@@ -136,9 +136,9 @@ function user_collections_thumbnails_list_button($content, &$smarty)
   $replace = '$1
 {strip}<a class="addCollection" data-id="{$thumbnail.id}" data-cols="[{$thumbnail.COLLECTIONS}]" rel="nofollow">
 {if not $UC_IN_EDIT}
-{\'Add to collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" alt="[+]">
+{\'Add to collection\'|translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" alt="[+]">
 {else}
-{\'Remove from collection\'|@translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" alt="[+]">
+{\'Remove from collection\'|translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" alt="[+]">
 {/if}
 </a>{/strip}';
 
