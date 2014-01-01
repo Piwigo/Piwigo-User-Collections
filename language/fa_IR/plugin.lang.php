@@ -78,4 +78,8 @@ $lang['Name'] = 'نام';
 $lang['Restricted access'] = 'دسترسی محدود شده است';
 $lang['Send'] = 'فرستادن';
 $lang['Share'] = 'به اشتراک گذاری';
+$lang['Collection not found'] = 'کلکسیون پیدا نشد';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'درود %s، %s یک کلکسیون عکس از "%s" برای شما فرستاد';
+$lang['This link expired'] = 'این لینک دیگه اعتبار ندارد';
+$lang['jump to photo'] = 'رفتن به عکس';
 ?>
