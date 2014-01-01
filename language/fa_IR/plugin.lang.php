@@ -82,4 +82,10 @@ $lang['Collection not found'] = 'کلکسیون پیدا نشد';
 $lang['Hello %s, %s sent you a photos collection from "%s"'] = 'درود %s، %s یک کلکسیون عکس از "%s" برای شما فرستاد';
 $lang['This link expired'] = 'این لینک دیگه اعتبار ندارد';
 $lang['jump to photo'] = 'رفتن به عکس';
+$lang['New share added: <a href="%s">%s</a>'] = 'اشتراك جديدي اضافه شد: <a href="%s">%s</a>';
+$lang['Share deleted'] = 'اشتراك حذف شد';
+$lang['Share key'] = 'كد رمز اشتراك';
+$lang['Share this collection'] = 'اشتراك گذاري اين مجموعه';
+$lang['The key must be at least 8 characters long'] = 'كد رمز حداقل بايد به طول 8 حرف باشد';
+$lang['This key is already used'] = 'اين كد رمز در حال استفاده است';
 ?>
