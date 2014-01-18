@@ -98,8 +98,8 @@ SELECT * FROM (
       'TN_ALT' =>             strip_tags($category['name']),
       'URL' =>                USER_COLLEC_PUBLIC.'edit/'.$category['id'],
       'CAPTION_NB_IMAGES' =>  empty($counter) ? l10n('%d photo', 0) : $counter,
-      'NAME' =>               trigger_change('render_category_name', $category['name']),
-      'DESCRIPTION' =>        trigger_change('render_category_description', $category['comment'], 'subcatify_category_description'),
+      'NAME' =>               trigger_event('render_category_name', $category['name']),
+      'DESCRIPTION' =>        trigger_event('render_category_description', $category['comment'], 'subcatify_category_description'),
       'INFO_DATES' =>         format_date($category['date_creation'], true),
       'U_DELETE' =>           add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$category['id'])),
       ));
@@ -107,7 +107,7 @@ SELECT * FROM (
     $tpl_thumbnails_var[] = $tpl_var;
   }
 
-  $derivative_params = trigger_change('get_index_album_derivative_params', ImageStdParams::get_by_type(IMG_THUMB) );
+  $derivative_params = trigger_event('get_index_album_derivative_params', ImageStdParams::get_by_type(IMG_THUMB) );
   $template->assign(array(
     'maxRequests' => $conf['max_requests'],
     'category_thumbnails' => $tpl_thumbnails_var,

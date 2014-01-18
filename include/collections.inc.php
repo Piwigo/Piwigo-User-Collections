@@ -266,12 +266,12 @@ case 'edit':
 
     // modify page title
     $template->concat('TITLE',
-      $conf['level_separator'] . trigger_change('render_category_name', $infos['NAME'])
+      $conf['level_separator'] . trigger_event('render_category_name', $infos['NAME'])
       );
 
     // render description
     $template->assign('CONTENT_DESCRIPTION',
-      trigger_change('render_category_description', nl2br($infos['COMMENT']))
+      trigger_event('render_category_description', nl2br($infos['COMMENT']))
       );
   }
   catch (Exception $e)
@@ -368,7 +368,7 @@ SELECT col_id, params
 
       // render description
       $template->assign('CONTENT_DESCRIPTION',
-        trigger_change('render_category_description', nl2br($col['COMMENT']))
+        trigger_event('render_category_description', nl2br($col['COMMENT']))
         );
     }
 
@@ -376,7 +376,7 @@ SELECT col_id, params
     include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
 
     $template->concat('TITLE',
-      $conf['level_separator'] . trigger_change('render_category_name', $col['NAME']) .
+      $conf['level_separator'] . trigger_event('render_category_name', $col['NAME']) .
       ' (' . l10n('by %s', get_username($collection->getParam('user_id'))) . ')'
       );
 

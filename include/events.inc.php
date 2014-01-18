@@ -114,7 +114,7 @@ SELECT id, name, nb_images
 
   foreach ($collections as &$col)
   {
-    $col["name"] = trigger_change('render_category_name', $col["name"]);
+    $col["name"] = trigger_event('render_category_name', $col["name"]);
   }
   unset($col);
 
@@ -184,7 +184,7 @@ SELECT id, name, nb_images
 
   foreach ($collections as &$col)
   {
-    $col["name"] = trigger_change('render_category_name', $col["name"]);
+    $col['name'] = trigger_event('render_category_name', $col["name"]);
   }
   unset($col);
 
@@ -239,7 +239,7 @@ SELECT id, name, nb_images
     $data['collections'] = array();
     for ($i=0; $i<$max && $i<count($collections); $i++)
     {
-      $collections[$i]['name'] = trigger_change('render_category_name', $collections[$i]['name']);
+      $collections[$i]['name'] = trigger_event('render_category_name', $collections[$i]['name']);
       $collections[$i]['u_edit'] = USER_COLLEC_PUBLIC.'edit/'.$collections[$i]['id'];
       $data['collections'][] = $collections[$i];
     }
