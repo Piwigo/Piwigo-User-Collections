@@ -23,6 +23,8 @@ case 'list':
 
   $template->set_filename('uc_page', realpath(USER_COLLEC_PATH.'template/collections_list.tpl'));
 
+  $self_url = USER_COLLEC_PUBLIC . 'list';
+
   // actions
   if (isset($_GET['action']) and preg_match('#^([0-9]+)$#', $_GET['col_id']))
   {

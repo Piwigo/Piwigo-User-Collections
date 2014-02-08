@@ -73,7 +73,8 @@ if (count($page['items']) > $page['nb_image_page'])
     $page['nb_image_page'],
     false
     );
-  $template->assign('navbar', $page['navigation_bar']);
+
+  $template->assign('thumb_navbar', $page['navigation_bar']);
 }
 
 

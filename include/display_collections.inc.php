@@ -28,11 +28,22 @@ SELECT *
 ';
 $categories = hash_from_query($query, 'id');
 
-$template->assign('COLLECTIONS_COUNT', count($categories));
+
+// pagination
+$page['startcat'] = isset($_GET['startcat']) ? $_GET['startcat'] : 0;
+$page['total_categories'] = count($categories);
+
+$template->assign('COLLECTIONS_COUNT', $page['total_categories']);
+
+$categories = array_slice(
+  $categories,
+  $page['startcat'],
+  $conf['nb_categories_page']
+  );
 
 
 // order menu
-if (count($categories))
+if ($page['total_categories'])
 {
   $url = add_url_params(USER_COLLEC_PUBLIC, array('uc_collection_order' => ''));
 
@@ -54,8 +65,10 @@ if (count($categories))
 
 
 // collections details
-if (count($categories))
+if ($page['total_categories'])
 {
+  $categories_id = array_map(create_function('$c', 'return $c["id"];'), $categories);
+
   $query = '
 SELECT * FROM (
   SELECT
@@ -64,7 +77,7 @@ SELECT * FROM (
     FROM '.IMAGES_TABLE.' AS i
     INNER JOIN '.COLLECTION_IMAGES_TABLE.' AS ci
       ON i.id = ci.image_id
-    WHERE col_id IN('.implode(',', array_keys($categories)).')
+    WHERE col_id IN('.implode(',', $categories_id).')
     ORDER BY ci.add_date DESC
   ) AS t
   GROUP BY col_id
@@ -113,6 +126,21 @@ SELECT * FROM (
     'category_thumbnails' => $tpl_thumbnails_var,
     'derivative_params' => $derivative_params,
     ));
+
+  // navigation bar
+  $page['cats_navigation_bar'] = array();
+  if ($page['total_categories'] > $conf['nb_categories_page'])
+  {
+    $page['cats_navigation_bar'] = create_navigation_bar(
+      $self_url,
+      $page['total_categories'],
+      $page['startcat'],
+      $conf['nb_categories_page'],
+      false, 'startcat'
+      );
+
+    $template->assign('cats_navbar', $page['cats_navigation_bar'] );
+  }
 
   $template->set_filename('index_category_thumbnails', 'mainpage_categories.tpl');
   $template->assign_var_from_handle('CATEGORIES', 'index_category_thumbnails');
