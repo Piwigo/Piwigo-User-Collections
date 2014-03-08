@@ -586,7 +586,7 @@ SELECT
    * @param string[] $fields
    * @return string
    */
-  function serialize($params)
+  function serialize($fields)
   {
     $fields = array_intersect($fields, array('id','file','name','url','path','date_creation','collection_add_date','filesize','width','height'));
 
