@@ -120,7 +120,7 @@ $cdm.on('click', '.add, .remove', function(e) {
 });
 
 // main button, open the menu
-jQuery('.addCollection').on('click', function(e) {
+jQuery('#thumbnails').on('click', '.addCollection', function(e) {
   var img_id = jQuery(this).data('id');
   var col_ids = jQuery(this).data('cols');
 
@@ -171,7 +171,7 @@ $cdm.children('.switchBoxFooter').css('border-top-color', $cdm.children('.switch
 {* <!-- collection edit page --> *}
 {else}
 {footer_script require='jquery'}
-jQuery('.addCollection').on('click', function(e) {
+jQuery('#thumbnails').on('click', '.addCollection', function(e) {
   var $trigger = jQuery(this);
   var img_id = jQuery(this).data('id');
   var col_id = {$collection.ID};
