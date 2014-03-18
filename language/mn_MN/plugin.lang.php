@@ -87,4 +87,5 @@ $lang['Export image list'] = 'Зургийн жагсаалтыг экспорт
 $lang['Allow users to send their public collections by mail'] = 'Хэрэглэгчид цуглуулгаа бусдад и-мэйлээр илгээх боломжтой';
 $lang['Allow users to set their collections as public'] = 'Хэрэглэгчид цуглуулгаа нийтэд дэлгэх боломжтой';
 $lang['Clear this collection'] = 'Энэ цуглуулгыг цэвэрлэх';
+$lang['New share added: <a href="%s">%s</a>'] = 'Холбоосийг шинээр үүсгэлээ: <a href="%s">%s</a>';
 ?>
