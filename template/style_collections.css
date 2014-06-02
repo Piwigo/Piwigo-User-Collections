@@ -125,3 +125,16 @@
   background:linear-gradient(top,  #333333 0%,#222222 100%);
   filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#222222',GradientType=0 );
 }
+
+.user-collections-delete-icon {
+  background:transparent url('resources/delete.png') center center no-repeat !important;
+}
+.user-collections-clear-icon {
+  background:transparent url('resources/bin.png') center center no-repeat !important;
+}
+.user-collections-share-icon {
+  background:transparent url('resources/share.png') center center no-repeat !important;
+}
+.user-collections-mail-icon {
+  background:transparent url('resources/mail.png') center center no-repeat !important;
+}

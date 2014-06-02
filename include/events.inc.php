@@ -197,7 +197,7 @@ SELECT id, name, nb_images
     ));
 
   // toolbar button
-  $template->set_filename('usercol_button', realpath(USER_COLLEC_PATH.'template/picture_button.tpl'));
+  $template->set_filename('usercol_button', realpath(USER_COLLEC_PATH.'template/buttons/picture.tpl'));
   $button = $template->parse('usercol_button', true);
   $template->add_picture_button($button, 50);
 }

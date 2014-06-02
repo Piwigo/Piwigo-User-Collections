@@ -5,11 +5,9 @@
 {footer_script require='jquery'}
 var $cdm = jQuery('#collectionsDropdown');
 
-{if not $IN_PICTURE}
 $cdm.on('mouseleave', function() {
   $cdm.hide();
 });
-{/if}
 
 // click on "create collection" button
 $cdm.find('a.new').on('click', function(e) {
@@ -38,6 +36,8 @@ $cdm.find('input.new').on({
     if (name == '' || name == null) {
       return;
     }
+    
+    var first = $cdm.children('.noCollecMsg').length > 0;
 
     jQuery.ajax({
       type: 'GET',
@@ -50,14 +50,19 @@ $cdm.find('input.new').on({
       },
       success: function(data) {
         if (data.stat == 'ok') {
-          var col = data.result;
-          var html = '<span>&#9733;</span> <a class="add" data-id="'+ col.id +'">'+ col.name +'</a> '
+          var col = data.result,
+              html = 
+            '<span>&#9733;</span> <a class="add" data-id="'+ col.id +'">'+ col.name +'</a> '
             +'<span class="menuInfoCat">[<span class="nbImagesCollec-'+ col.id +'">'+ col.nb_images +'</span>]</span> '
             +'<a class="remove" data-id="'+ col.id +'">{'(remove)'|translate|escape:javscript}</a>'
             +'<br>';
 
           $cdm.children('.switchBoxFooter').before(html);
-          $cdm.children('.noCollecMsg').remove();
+          
+          if (first) {
+            $cdm.children('.noCollecMsg').remove();
+            $cdm.children('.add').trigger('click');
+          }
         }
         else {
           alert(data.message);
@@ -76,9 +81,9 @@ $cdm.find('input.new').on({
 
 // add and remove links (delegate for new collections)
 $cdm.on('click', '.add, .remove', function(e) {
-  var img_id = $cdm.data('img_id');
-  var col_id = jQuery(this).data('id');
-  var method = jQuery(this).hasClass('add') ? 'pwg.collections.addImages' : 'pwg.collections.removeImages';
+  var img_id = $cdm.data('img_id'),
+      col_id = jQuery(this).data('id'),
+      method = jQuery(this).hasClass('add') ? 'pwg.collections.addImages' : 'pwg.collections.removeImages';
 
   jQuery.ajax({
     type: 'GET',
@@ -96,8 +101,9 @@ $cdm.on('click', '.add, .remove', function(e) {
         jQuery('.nbImagesCollec-'+ col_id).html(data.result.nb_images);
 
         // update item datas
-        var $target = jQuery('.addCollection[data-id="'+ img_id +'"]');
-        var col_ids = $target.data('cols');
+        var $target = jQuery('.addCollection[data-id="'+ img_id +'"]'),
+            col_ids = $target.data('cols');
+
         if (method == 'pwg.collections.addImages' && col_ids.indexOf(col_id) == -1) {
           col_ids[ col_ids.length ] = col_id;
         }
@@ -120,28 +126,33 @@ $cdm.on('click', '.add, .remove', function(e) {
 });
 
 // main button, open the menu
-jQuery('#thumbnails').on('click', '.addCollection', function(e) {
-  var img_id = jQuery(this).data('id');
-  var col_ids = jQuery(this).data('cols');
+jQuery(document).on('click', '.addCollection', function(e) {
+  var img_id = jQuery(this).data('id'),
+      col_ids = jQuery(this).data('cols');
 
   $cdm.data('img_id', img_id);
 
   $cdm.children('.add').each(function() {
-    if (col_ids.indexOf($(this).data('id')) != -1) {
-      $(this).css('font-weight', 'bold').next().next().show();
+    if (col_ids.indexOf(jQuery(this).data('id')) != -1) {
+      jQuery(this).css('font-weight', 'bold').next().next().show();
     }
     else {
-      $(this).css('font-weight', 'normal').next().next().hide();
+      jQuery(this).css('font-weight', 'normal').next().next().hide();
     }
   });
 
-  {if not $IN_PICTURE}
+  {if $IN_PICTURE}
   $cdm.css({
-    'top': e.pageY-5-$(window).scrollTop(),
-    'left': Math.min(e.pageX-jQuery(window).scrollLeft()-20, jQuery(window).width()-$cdm.outerWidth(true)-5)
+    'left': Math.min(jQuery(this).offset().left, jQuery(window).width()-$cdm.outerWidth(true)-5),
+    'top': jQuery(this).offset().top + jQuery(this).outerHeight(true)
   });
-  $cdm.show();
+  {else}
+  $cdm.css({
+    'left': Math.min(e.pageX-jQuery(window).scrollLeft()-20, jQuery(window).width()-$cdm.outerWidth(true)-5),
+    'top': e.pageY-5-$(window).scrollTop()
+  });
   {/if}
+  $cdm.toggle();
 
   e.preventDefault();
 });
@@ -172,9 +183,9 @@ $cdm.children('.switchBoxFooter').css('border-top-color', $cdm.children('.switch
 {else}
 {footer_script require='jquery'}
 jQuery('#thumbnails').on('click', '.addCollection', function(e) {
-  var $trigger = jQuery(this);
-  var img_id = jQuery(this).data('id');
-  var col_id = {$collection.ID};
+  var $trigger = jQuery(this),
+      img_id = jQuery(this).data('id'),
+      col_id = {$collection.ID};
 
   jQuery.ajax({
     type: 'GET',

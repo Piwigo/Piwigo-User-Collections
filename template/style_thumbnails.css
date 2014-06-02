@@ -46,3 +46,7 @@
 #collectionsDropdown .remove, #collectionsDropdown input.new {
   display:none;
 }
+
+.user-collections-icon {
+  background:transparent url('resources/image_add.png') center center no-repeat !important;
+}
