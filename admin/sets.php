@@ -45,7 +45,7 @@ $sets = hash_from_query($query, 'id');
 foreach ($sets as $row)
 {
   $template->append('sets', array(
-    'NAME' => trigger_event('render_category_name', $row['name']),
+    'NAME' => trigger_change('render_category_name', $row['name']),
     'NB_IMAGES' => $row['nb_images'],
     'DATE_CREATION' => format_date($row['date_creation'], true),
     'USERNAME' => $row['username'],

@@ -15,7 +15,7 @@ function get_collection_preferred_image_orders()
 {
   global $conf;
 
-  return trigger_event('get_category_preferred_image_orders', array(
+  return trigger_change('get_category_preferred_image_orders', array(
     array(l10n('Date added to collection, new &rarr; old'), 'add_date DESC', true),
     array(l10n('Date added to collection, old &rarr; new'), 'add_date ASC',  true),
     array(l10n('Photo title, A &rarr; Z'),        'name ASC',             true),
