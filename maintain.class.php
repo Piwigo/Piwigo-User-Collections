@@ -1,27 +1,39 @@
 <?php
-if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
+defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
 class UserCollections_maintain extends PluginMaintain
 {
-  private $installed = false;
-
+  private $collections;
+  private $collection_images;
+  private $collection_shares;
+  
+  private $default_conf = array(
+    'allow_mails' => true,
+    'allow_public' => true,
+    );
+  
+  function __construct($id)
+  {
+    global $prefixeTable;
+    
+    parent::__construct($id);
+    $this->collections = $prefixeTable . 'collections';
+    $this->collection_images = $prefixeTable . 'collection_images';
+    $this->collection_shares = $prefixeTable . 'collection_shares';
+  }
+  
   function install($plugin_version, &$errors=array())
   {
     global $conf, $prefixeTable;
 
     if (empty($conf['user_collections']))
     {
-      $conf['user_collections'] = serialize(array(
-        'allow_mails' => true,
-        'allow_public' => true,
-        ));
-
-      conf_update_param('user_collections', $conf['user_collections']);
+      conf_update_param('user_collections', $this->default_conf, true);
     }
 
     // create tables
     $query = '
-CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collections` (
+CREATE TABLE IF NOT EXISTS `' . $this->collections . '` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `user_id` smallint(5) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
@@ -34,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collections` (
     pwg_query($query);
 
     $query = '
-CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collection_images` (
+CREATE TABLE IF NOT EXISTS `' . $this->collection_images . '` (
   `col_id` mediumint(8) NOT NULL,
   `image_id` mediumint(8) NOT NULL,
   `add_date` datetime NULL,
@@ -44,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collection_images` (
     pwg_query($query);
 
     $query = '
-CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collection_shares` (
+CREATE TABLE IF NOT EXISTS `' . $this->collection_shares . '` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `col_id` mediumint(8) NOT NULL,
   `share_key` varchar(64) NOT NULL,
@@ -58,28 +70,28 @@ CREATE TABLE IF NOT EXISTS `'.$prefixeTable.'collection_shares` (
 
 
     // version 2.0.0
-    $result = pwg_query('SHOW COLUMNS FROM `'.$prefixeTable.'collection_images` LIKE "add_date";');
+    $result = pwg_query('SHOW COLUMNS FROM `' . $this->collection_images . '` LIKE "add_date";');
     if (!pwg_db_num_rows($result))
     {
-      pwg_query('ALTER TABLE `'.$prefixeTable.'collection_images` ADD `add_date` datetime NULL;');
+      pwg_query('ALTER TABLE `' . $this->collection_images . '` ADD `add_date` datetime NULL;');
     }
 
-    $result = pwg_query('SHOW COLUMNS FROM `'.$prefixeTable.'collections` LIKE "comment";');
+    $result = pwg_query('SHOW COLUMNS FROM `' . $this->collections . '` LIKE "comment";');
     if (!pwg_db_num_rows($result))
     {
-      pwg_query('ALTER TABLE `'.$prefixeTable.'collections` ADD `comment` text NULL;');
-      pwg_query('ALTER TABLE `'.$prefixeTable.'collections` DROP `active`;');
+      pwg_query('ALTER TABLE `' . $this->collections . '` ADD `comment` text NULL;');
+      pwg_query('ALTER TABLE `' . $this->collections . '` DROP `active`;');
     }
 
     // version 2.1.0
-    $result = pwg_query('SHOW COLUMNS FROM `'.$prefixeTable.'collections` LIKE "public";');
+    $result = pwg_query('SHOW COLUMNS FROM `' . $this->collections . '` LIKE "public";');
     if (pwg_db_num_rows($result))
     {
       $now = date('Y-m-d H:i:s');
 
       $query = '
 SELECT id, public_id
-  FROM `'.$prefixeTable.'collections`
+  FROM `' . $this->collections . '`
   WHERE public = 1
 ;';
       $result = pwg_query($query);
@@ -95,35 +107,26 @@ SELECT id, public_id
           );
       }
 
-      mass_inserts($prefixeTable.'collection_shares',
+      mass_inserts($this->collection_shares,
         array('col_id','share_key','params','add_date'),
         $inserts
         );
 
-      pwg_query('ALTER TABLE `'.$prefixeTable.'collections` DROP `public`, DROP `public_id`;');
+      pwg_query('ALTER TABLE `' . $this->collections . '` DROP `public`, DROP `public_id`;');
     }
-    
-    $this->installed = true;
   }
 
-  function activate($plugin_version, &$errors=array())
+  function update($old_version, $new_version, &$errors=array())
   {
-    if (!$this->installed)
-    {
-      $this->install($plugin_version, $errors);
-    }
+    $this->install($new_version, $errors);
   }
-
-  function deactivate(){}
 
   function uninstall()
   {
-    global $prefixeTable;
-
     conf_delete_param('user_collections');
 
-    pwg_query('DROP TABLE IF EXISTS `'.$prefixeTable.'collections`;');
-    pwg_query('DROP TABLE IF EXISTS `'.$prefixeTable.'collection_images`;');
-    pwg_query('DROP TABLE IF EXISTS `'.$prefixeTable.'collection_shares`;');
+    pwg_query('DROP TABLE IF EXISTS `' . $this->collections . '`;');
+    pwg_query('DROP TABLE IF EXISTS `' . $this->collection_images . '`;');
+    pwg_query('DROP TABLE IF EXISTS `' . $this->collection_shares . '`;');
   }
 }

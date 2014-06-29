@@ -8,7 +8,7 @@ if (isset($_POST['save_config']))
     'allow_mails'     => isset($_POST['allow_mails']) && isset($_POST['allow_public']),
     );
 
-  conf_update_param('user_collections', serialize($conf['user_collections']));
+  conf_update_param('user_collections', $conf['user_collections']);
 }
 
 $template->assign(array(

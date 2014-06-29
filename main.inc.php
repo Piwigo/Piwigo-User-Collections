@@ -19,7 +19,6 @@ define('COLLECTION_IMAGES_TABLE', $prefixeTable.'collection_images');
 define('COLLECTION_SHARES_TABLE', $prefixeTable.'collection_shares');
 define('USER_COLLEC_ADMIN',       get_root_url() . 'admin.php?page=plugin-' . USER_COLLEC_ID);
 define('USER_COLLEC_PUBLIC',      get_absolute_root_url() . make_index_url(array('section' => 'collections')) . '/');
-define('USER_COLLEC_VERSION',    'auto');
 
 add_event_handler('init', 'user_collections_init');
 
@@ -29,10 +28,6 @@ add_event_handler('init', 'user_collections_init');
  */
 function user_collections_init()
 {
-  include_once(USER_COLLEC_PATH . 'maintain.inc.php');
-  $maintain = new UserCollections_maintain(USER_COLLEC_ID);
-  $maintain->autoUpdate(USER_COLLEC_VERSION, 'install');
-  
   if (mobile_theme())
   {
     return;
@@ -41,7 +36,7 @@ function user_collections_init()
   load_language('plugin.lang', USER_COLLEC_PATH);
 
   global $conf;
-  $conf['user_collections'] = unserialize($conf['user_collections']);
+  $conf['user_collections'] = safe_unserialize($conf['user_collections']);
   
   require_once(USER_COLLEC_PATH . 'include/ws_functions.inc.php');
   require_once(USER_COLLEC_PATH . 'include/functions.inc.php');
