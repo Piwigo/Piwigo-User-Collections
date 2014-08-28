@@ -53,7 +53,7 @@
     <td>{$set.NB_IMAGES}</td>
     <td style="padding-left:25px;">
       <a href="{$set.U_EDIT}" title="{'Edit this collection'|translate}"><img src="{$themeconf.admin_icon_dir}/edit_s.png"></a>
-      <a href="{$set.U_EXPORT}" title="{'Export image list'|translate}"><img src="{$themeconf.admin_icon_dir}/plug_install.png"><span class="icon-upload"></span></a> <!-- temp 2.5/2.6 -->
+      <a href="{$set.U_EXPORT}" title="{'Export image list'|translate}"><span class="icon-upload"></span></a>
       <a href="{$set.U_DELETE}" title="{'Delete this collection'|translate}" onClick="return confirm('{'Are you sure?'|translate}');"><img src="{$themeconf.admin_icon_dir}/delete.png"></a>
     </td>
   </tr>
