@@ -172,13 +172,15 @@ case 'edit':
     }
 
     // send mail
-    if ($conf['user_collections']['allow_mails'] && $conf['user_collections']['allow_public'])
+    if (($conf['user_collections']['allow_public'] && $conf['user_collections']['allow_mails'])
+        || $conf['user_collections']['allow_send_admin'])
     {
       if (isset($_POST['send_mail']))
       {
         $contact = array(
           'sender_email' =>     trim($_POST['sender_email']),
           'sender_name' =>      trim($_POST['sender_name']),
+          'to' =>               $_POST['to'],
           'recipient_email' =>  trim($_POST['recipient_email']),
           'recipient_name' =>   trim($_POST['recipient_name']),
           'nb_images' =>        $_POST['nb_images'],
@@ -248,11 +250,12 @@ case 'edit':
         user_collections_add_button('share', 'U_SHARE',
           USER_COLLEC_PUBLIC . 'view/' . $page['col_id'] .'-'
           );
-
-        if ($conf['user_collections']['allow_mails'])
-        {
-          user_collections_add_button('mail', 'U_MAIL', true);
-        }
+      }
+      
+      if (($conf['user_collections']['allow_public'] && $conf['user_collections']['allow_mails'])
+        || $conf['user_collections']['allow_send_admin'])
+      {
+        user_collections_add_button('mail', 'U_MAIL', true);
       }
 
       user_collections_add_button('clear', 'U_CLEAR',
@@ -264,7 +267,10 @@ case 'edit':
       add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$page['col_id']))
       );
 
-    $template->assign('UC_TKEY', get_ephemeral_key(3));
+    $template->assign(array(
+      'UC_TKEY' => get_ephemeral_key(3),
+      'UC_CONFIG' => $conf['user_collections']
+      ));
 
     // modify page title
     $template->concat('TITLE',

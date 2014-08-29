@@ -25,6 +25,12 @@ $('input[name="allow_public"]').on('change', function() {
         <b>{'Allow users to send their public collections by mail'|translate}</b>
       </label>
     </li>
+    <li>
+      <label>
+        <input type="checkbox" name="allow_send_admin" {if $user_collections.allow_send_admin}checked="checked"{/if}>
+        <b>{'Allow users to send their collections (public or not) to the admin'|translate}</b>
+      </label>
+    </li>
   </ul>
 </fieldset>
 

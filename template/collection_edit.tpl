@@ -129,6 +129,10 @@ if (!bg_color || bg_color=='transparent') {
     e.preventDefault();
   });
 
+  jQuery('#mail_form [name=to]').on('change', function() {
+    $('.recipient-input').toggle(jQuery(this).val() == 'email');
+    jQuery.colorbox.resize();
+  });
 
   jQuery('#mail_form').css('background-color', bg_color);
 {/if}
@@ -257,13 +261,26 @@ jQuery('#edit_form_hide').click(function() {
           <input type="text" name="sender_email" id="sender_email" size="40" value="{$contact.sender_email}">
         </td>
       </tr>
+      {if $UC_CONFIG.allow_send_admin && !$UC_CONFIG.allow_mails}
       <tr>
+        <td class="title">{'To'|translate}</td>
+        <td>{'Administrator'|translate}</td>
+      </tr>
+      {/if}
+      <tr {if !$UC_CONFIG.allow_send_admin || !$UC_CONFIG.allow_mails}style="display:none"{/if}>
+        <td class="title">{'To'|translate}</td>
+        <td>
+          <label><input type="radio" name="to" value="admin" checked> {'Administrator'|translate}</label>
+          <label><input type="radio" name="to" value="email"> {'Someone else'|translate}</label>
+        </td>
+      </tr>
+      <tr style="display:none" class="recipient-input">
         <td class="title"><label for="recipient_name">{'Recipient name'|translate}</label></td>
         <td>
           <input type="text" name="recipient_name" id="recipient_name" size="40" value="{$contact.recipient_name}">
         </td>
       </tr>
-      <tr>
+      <tr style="display:none" class="recipient-input">
         <td class="title"><label for="recipient_email">{'Recipient e-mail'|translate}</label></td>
         <td>
           <input type="text" name="recipient_email" id="recipient_email" size="40" value="{$contact.recipient_email}">

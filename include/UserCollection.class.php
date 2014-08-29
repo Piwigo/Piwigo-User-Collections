@@ -447,6 +447,7 @@ INSERT INTO '.COLLECTION_SHARES_TABLE.'(
     $comm = array_map('stripslashes', $comm);
 
     $comment_action = 'validate';
+    $for_admin = $comm['to'] == 'admin';
 
     // check author
     if (empty($comm['sender_name']))
@@ -454,7 +455,7 @@ INSERT INTO '.COLLECTION_SHARES_TABLE.'(
       $errors[] = l10n('Please enter your name');
       $comment_action = 'reject';
     }
-    if (empty($comm['recipient_name']))
+    if (!$for_admin && empty($comm['recipient_name']))
     {
       $errors[] = l10n('Please enter the recipient name');
       $comment_action = 'reject';
@@ -471,15 +472,18 @@ INSERT INTO '.COLLECTION_SHARES_TABLE.'(
       $errors[] = l10n('mail address must be like xxx@yyy.eee (example : jack@altern.org)');
       $comment_action = 'reject';
     }
-    if (empty($comm['recipient_email']))
+    if (!$for_admin)
     {
-      $errors[] = l10n('Please enter the recipient e-mail');
-      $comment_action = 'reject';
-    }
-    else if (!empty($comm['recipient_email']) and !email_check_format($comm['recipient_email']))
-    {
-      $errors[] = l10n('mail address must be like xxx@yyy.eee (example : jack@altern.org)');
-      $comment_action = 'reject';
+      if (empty($comm['recipient_email']))
+      {
+        $errors[] = l10n('Please enter the recipient e-mail');
+        $comment_action = 'reject';
+      }
+      else if (!empty($comm['recipient_email']) and !email_check_format($comm['recipient_email']))
+      {
+        $errors[] = l10n('mail address must be like xxx@yyy.eee (example : jack@altern.org)');
+        $comment_action = 'reject';
+      }
     }
 
     // check content
@@ -492,9 +496,12 @@ INSERT INTO '.COLLECTION_SHARES_TABLE.'(
 
     if ($comment_action == 'validate')
     {
-      // switch to guest user for get_sql_condition_FandF
-      $user_save = $user;
-      $user = build_user($conf['guest_id'], true);
+      if (!$for_admin)
+      {
+        // switch to guest user for get_sql_condition_FandF
+        $user_save = $user;
+        $user = build_user($conf['guest_id'], true);
+      }
 
       // get pictures
       $query = '
@@ -516,26 +523,22 @@ SELECT
 ;';
       $pictures = hash_from_query($query, 'id');
 
-      // switch back to current user
-      $user = $user_save;
-      unset($user_save);
-
-      $share_key = array('share_key'=>'mail-' . substr(sha1($this->data['id'].$conf['secret_key']), 0, 11));
-
-      $tpl_vars = array(
-        'COL_URL' => $this->addShare($share_key, false),
-        'PARAMS' => $comm,
-        'derivative_params' => ImageStdParams::get_by_type(IMG_SQUARE),
-        );
+      if (!$for_admin)
+      {
+        // switch back to current user
+        $user = $user_save;
+        unset($user_save);
+      }
 
       // pictures infos
       set_make_full_url();
+      $thumbnails = array();
 
       foreach ($pictures as $row)
       {
         $name = render_element_name($row);
 
-        $tpl_vars['THUMBNAILS'][] = array(
+        $thumbnails[] = array(
           'TN_ALT' => htmlspecialchars(strip_tags($name)),
           'NAME' =>   $name,
           'URL' =>    make_picture_url(array('image_id' => $row['id'])),
@@ -545,27 +548,52 @@ SELECT
 
       unset_make_full_url();
 
-      $result = pwg_mail(
-        array(
-          'name' => $comm['recipient_name'],
-          'email' => $comm['recipient_email'],
-          ),
-        array(
-          'subject' => '['.$conf['gallery_title'].'] '.l10n('A photo collection by %s', $comm['sender_name']),
-          'mail_title' => $this->getParam('name'),
-          'mail_subtitle' => l10n('by %s', $comm['sender_name']),
-          'content_format' => 'text/html',
-          'from' => array(
-            'name' => $comm['sender_name'],
-            'email' => $comm['sender_email'],
-            )
-          ),
-        array(
-          'filename' => 'mail',
-          'dirname' => realpath(USER_COLLEC_PATH . 'template'),
-          'assign' => $tpl_vars,
+      if ($for_admin)
+      {
+        $col_url = USER_COLLEC_PUBLIC.'edit/'.$this->data['id'];
+      }
+      else
+      {
+        $share_key = array('share_key'=>'mail-' . substr(sha1($this->data['id'].$conf['secret_key']), 0, 11));
+        $col_url = $this->addShare($share_key, false);
+      }
+
+      $mail_config = array(
+        'subject' => '['.$conf['gallery_title'].'] '.l10n('A photo collection by %s', $comm['sender_name']),
+        'mail_title' => $this->getParam('name'),
+        'mail_subtitle' => l10n('by %s', $comm['sender_name']),
+        'content_format' => 'text/html',
+        'from' => array(
+          'name' => $comm['sender_name'],
+          'email' => $comm['sender_email'],
           )
         );
+      $mail_tpl = array(
+        'filename' => 'mail',
+        'dirname' => realpath(USER_COLLEC_PATH . 'template'),
+        'assign' => array(
+          'COL_URL' => $col_url,
+          'PARAMS' => $comm,
+          'derivative_params' => ImageStdParams::get_by_type(IMG_SQUARE),
+          'THUMBNAILS' => $thumbnails,
+          )
+        );
+      
+      if ($for_admin)
+      {
+        $result = pwg_mail_admins($mail_config, $mail_tpl);
+      }
+      else
+      {
+        $result = pwg_mail(
+          array(
+            'name' => $comm['recipient_name'],
+            'email' => $comm['recipient_email'],
+            ),
+          $mail_config,
+          $mail_tpl
+          );
+      }
 
       if ($result == false)
       {

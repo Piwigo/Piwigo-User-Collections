@@ -8,6 +8,7 @@ class UserCollections_maintain extends PluginMaintain
   private $collection_shares;
   
   private $default_conf = array(
+    'allow_send_admin' => true,
     'allow_mails' => true,
     'allow_public' => true,
     );
@@ -29,6 +30,16 @@ class UserCollections_maintain extends PluginMaintain
     if (empty($conf['user_collections']))
     {
       conf_update_param('user_collections', $this->default_conf, true);
+    }
+    else
+    {
+      $old_conf = safe_unserialize($conf['user_collections']);
+      
+      if (!isset($old_conf['allow_send_admin']))
+      {
+        $old_conf['allow_send_admin'] = true;
+        conf_update_param('user_collections', $old_conf, true);
+      }
     }
 
     // create tables

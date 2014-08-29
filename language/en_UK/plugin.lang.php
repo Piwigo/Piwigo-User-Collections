@@ -30,6 +30,7 @@ $lang['This key is already used'] = 'This key is already used';
 $lang['This link expired'] = 'This link expired';
 $lang['Allow users to set their collections as public'] = 'Allow users to set their collections as public';
 $lang['Allow users to send their public collections by mail'] = 'Allow users to send their public collections by mail';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Allow users to send their collections (public or not) to the admin';
 $lang['Fields'] = 'Fields';
 $lang['Active'] = 'Active';
 $lang['Inactive'] = 'Inactive';
@@ -68,5 +69,8 @@ $lang['Description'] = 'Description';
 $lang['jump to photo'] = 'jump to photo';
 $lang['Name'] = 'Name';
 $lang['Send'] = 'Send';
+$lang['To'] = 'To';
+$lang['Administrator'] = 'Administrator';
+$lang['Someone else'] = 'Someone else';
 
 ?>
