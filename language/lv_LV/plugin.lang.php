@@ -88,4 +88,7 @@ $lang['Name'] = 'Nosaukums';
 $lang['Description'] = 'Apraksts';
 $lang['Add'] = 'Pievienot';
 $lang['Cancel'] = 'Atcelt';
-?>
+$lang['To'] = 'Uz';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Ļauj lietotājiem sūtīt savas kolekcijas (publiskas vai nē) administratoram';
+$lang['Someone else'] = 'Vēl kāds cits';
+$lang['Administrator'] = 'Administrators';
