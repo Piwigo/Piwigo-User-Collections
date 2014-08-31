@@ -88,4 +88,7 @@ $lang['Cancel'] = 'Abbrechen';
 $lang['Description'] = 'Beschreibung';
 $lang['Name'] = 'Name';
 $lang['Send'] = 'Senden';
-?>
+$lang['Administrator'] = 'Administrator';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Erlaube Benutzern, ihre Sammlungen (öffentlich oder nicht) dem Admin zu senden';
+$lang['Someone else'] = 'Jemand anderes';
+$lang['To'] = 'An';
