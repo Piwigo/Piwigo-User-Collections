@@ -88,4 +88,7 @@ $lang['Description'] = 'Popis';
 $lang['Name'] = 'Názov';
 $lang['Send'] = 'Odoslané';
 $lang['jump to photo'] = 'preskočiť na fotografiu';
-?>
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Povoliť používateľom posielať svoje zbierky (verejnej alebo nie) na admin';
+$lang['To'] = 'Pre';
+$lang['Someone else'] = 'Niekto iný';
+$lang['Administrator'] = 'Administrátor';
