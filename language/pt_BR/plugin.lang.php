@@ -88,4 +88,7 @@ $lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Ola %s, %s lhe e
 $lang['Name'] = 'Nome';
 $lang['Send'] = 'Enviar';
 $lang['jump to photo'] = 'Vá para a foto';
-?>
+$lang['Administrator'] = 'Administrador';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Permite a usuários enviar suas coleções (pública ou não) para o administrador';
+$lang['Someone else'] = 'Outra pessoa';
+$lang['To'] = 'Para';
