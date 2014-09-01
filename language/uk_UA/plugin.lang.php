@@ -88,4 +88,7 @@ $lang['Description'] = 'Опис';
 $lang['Name'] = 'Назва';
 $lang['Send'] = 'Надіслати';
 $lang['jump to photo'] = 'перейти до фото';
-?>
+$lang['To'] = 'Кому:';
+$lang['Administrator'] = 'Адміністратор';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Дозволити користувачам відправляти свої колекції (приватні чи ні) до адміністратора';
+$lang['Someone else'] = 'Хтось інший';
