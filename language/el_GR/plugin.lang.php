@@ -88,4 +88,7 @@ $lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Γεια σας 
 $lang['Description'] = 'Περιγραφή';
 $lang['Add'] = 'Προσθήκη ';
 $lang['Cancel'] = 'Ακύρωση';
-?>
+$lang['To'] = 'Προς';
+$lang['Someone else'] = 'Κάποιος άλλος';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Επιτρέπει στους χρήστες να στείλουν τις συλλογές τους (δημόσια ή μη) στο διαχειριστή';
+$lang['Administrator'] = 'Διαχειριστής';
