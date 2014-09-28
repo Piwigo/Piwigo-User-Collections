@@ -88,4 +88,7 @@ $lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Merhaba %s, %s s
 $lang['Name'] = 'İsim';
 $lang['Send'] = 'Gönder';
 $lang['jump to photo'] = 'Resme Git';
-?>
+$lang['Administrator'] = 'Yönetici';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Kullanıcıların kendi kolleksiyonlarını (genel veya değil) yöneticiye göndermesini sağlar';
+$lang['Someone else'] = 'Başka biri';
+$lang['To'] = 'Kime';
