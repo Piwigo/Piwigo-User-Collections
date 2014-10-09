@@ -1,0 +1,1 @@
+Registrerte brukere kan velge bilder fra galleriet og lagre dem i samlinger, som avanserte favoritter.
