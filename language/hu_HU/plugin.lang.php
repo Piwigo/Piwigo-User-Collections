@@ -81,4 +81,15 @@ $lang['Share this collection'] = 'Osszuk meg ezt a gyűjteményt';
 $lang['The key must be at least 8 characters long'] = 'A kulcs legalább 8 karakteres legyen';
 $lang['This key is already used'] = 'Ez a kulcs már használatban van';
 $lang['This link expired'] = 'Ez a link lejárt';
-?>
+$lang['Add'] = 'Hozzáadás';
+$lang['Administrator'] = 'Adminisztrátor';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Afelhasználok elküldhetik (akár nyilvános, akár nem) gyűjteményüket az adminisztrátornak';
+$lang['Cancel'] = 'Mégsem';
+$lang['Description'] = 'Leírás';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = '
+Szia %s, %s küldött neked egy fotó-gyűjteményt innen: "%s"';
+$lang['Name'] = 'Név';
+$lang['Send'] = 'Küldés';
+$lang['Someone else'] = 'Valaki más';
+$lang['To'] = 'Címzett';
+$lang['jump to photo'] = 'fotóhoz ugrás';
