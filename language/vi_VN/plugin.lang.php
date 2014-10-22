@@ -88,4 +88,7 @@ $lang['Create a new collection'] = 'Tạo bộ sưu tập mới';
 $lang['Date added to collection, new &rarr; old'] = 'Ngày tháng được thêm vào bộ sưu tập, new &rarr; old';
 $lang['Date added to collection, old &rarr; new'] = 'Ngày tháng được thêm vào bộ sưu tập, old &rarr; new';
 $lang['Delete this collection'] = 'Xóa bộ sưu tập này';
-?>
+$lang['To'] = 'Đến';
+$lang['Someone else'] = 'Một ai khác';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Chấp nhận người dùng gửi hình của họ(phổ biến hoặc không) đến người admin';
+$lang['Administrator'] = 'Administrator';
