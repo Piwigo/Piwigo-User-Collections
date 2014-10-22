@@ -84,8 +84,11 @@ $lang['Invalid collection'] = 'Буруу цуглуулга';
 $lang['Date added to collection, new &rarr; old'] = 'Цуглуулганд нэмсэн огноо, шинэ &rarr; хуучин';
 $lang['Date added to collection, old &rarr; new'] = 'Цуглуулганд нэмсэн огноо, хуучин &rarr; шинэ';
 $lang['Export image list'] = 'Зургийн жагсаалтыг экспортлох';
-$lang['Allow users to send their public collections by mail'] = 'Хэрэглэгчид цуглуулгаа бусдад и-мэйлээр илгээх боломжтой';
-$lang['Allow users to set their collections as public'] = 'Хэрэглэгчид цуглуулгаа нийтэд дэлгэх боломжтой';
+$lang['Allow users to send their public collections by mail'] = 'Хэрэглэгч цуглуулгаа бусдад и-мэйлээр илгээх боломжтой';
+$lang['Allow users to set their collections as public'] = 'Хэрэглэгч цуглуулгаа нийтэд дэлгэх боломжтой';
 $lang['Clear this collection'] = 'Энэ цуглуулгыг цэвэрлэх';
 $lang['New share added: <a href="%s">%s</a>'] = 'Холбоосийг шинээр үүсгэлээ: <a href="%s">%s</a>';
-?>
+$lang['Someone else'] = 'Өөр хэн нэгэн';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Хэрэглэгч цуглуулгаа зохицуулагчид илгээх боломжтой';
+$lang['To'] = 'Хүлээн авагч';
+$lang['Administrator'] = 'Зохицуулагч';
