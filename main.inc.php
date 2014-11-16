@@ -10,15 +10,25 @@ Author URI: http://www.strangeplanet.fr
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
+if (basename(dirname(__FILE__)) != 'UserCollections')
+{
+  add_event_handler('init', 'user_collections_error');
+  function user_collections_error()
+  {
+    global $page;
+    $page['errors'][] = 'User Collections folder name is incorrect, uninstall the plugin and rename it to "UserCollections"';
+  }
+  return;
+}
+
 global $conf, $prefixeTable;
 
-define('USER_COLLEC_ID',          basename(dirname(__FILE__)));
-define('USER_COLLEC_PATH',        PHPWG_PLUGINS_PATH . USER_COLLEC_ID . '/');
+define('USER_COLLEC_PATH',   PHPWG_PLUGINS_PATH . 'UserCollections/');
+define('USER_COLLEC_ADMIN',  get_root_url() . 'admin.php?page=plugin-UserCollections');
+define('USER_COLLEC_PUBLIC', get_absolute_root_url() . make_index_url(array('section' => 'collections')) . '/');
 define('COLLECTIONS_TABLE',       $prefixeTable.'collections');
 define('COLLECTION_IMAGES_TABLE', $prefixeTable.'collection_images');
 define('COLLECTION_SHARES_TABLE', $prefixeTable.'collection_shares');
-define('USER_COLLEC_ADMIN',       get_root_url() . 'admin.php?page=plugin-' . USER_COLLEC_ID);
-define('USER_COLLEC_PUBLIC',      get_absolute_root_url() . make_index_url(array('section' => 'collections')) . '/');
 
 add_event_handler('init', 'user_collections_init');
 
