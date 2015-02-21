@@ -88,4 +88,7 @@ $lang['The key must be at least 8 characters long'] = 'Cheia trebuie să aibă m
 $lang['This key is already used'] = 'Această cheie este deja utilizată';
 $lang['This link expired'] = 'Această legătură este expirată';
 $lang['jump to photo'] = 'sari la fotografie';
-?>
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Permite utilizatorilor sa trimita colectiilor lor (publice sau nu) catre administrator';
+$lang['To'] = 'Catre';
+$lang['Someone else'] = 'Altcineva';
+$lang['Administrator'] = 'Administrator';
