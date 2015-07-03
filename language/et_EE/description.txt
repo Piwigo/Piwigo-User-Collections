@@ -1,1 +1,1 @@
-Võimaldab registreeritud kasutajatel valida fotosid galleriist ja salvestada need kollektsioonidesse (valikutesse), see on "lemmikute" (favorites) edasiarendus.
+Võimaldab registreeritud kasutajatel valida fotosid galeriist ja salvestada need kollektsioonidesse (valikutesse), see on "lemmikute" (favorites) edasiarendus.
