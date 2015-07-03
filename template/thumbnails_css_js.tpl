@@ -1,7 +1,7 @@
 {combine_css path=$USER_COLLEC_PATH|cat:'template/style_thumbnails.css'}
 
 {* <!-- all pages but collection edit page --> *}
-{if not $UC_IN_EDIT}
+{if not isset($UC_IN_EDIT)}
 {footer_script require='jquery'}
 var $cdm = jQuery('#collectionsDropdown');
 
@@ -40,11 +40,10 @@ $cdm.find('input.new').on({
     var first = $cdm.children('.noCollecMsg').length > 0;
 
     jQuery.ajax({
-      type: 'GET',
+      type: 'POST',
       dataType: 'json',
-      url: '{$ROOT_URL}ws.php',
+      url: '{$ROOT_URL}ws.php?format=json',
       data: {
-        format: 'json',
         method: 'pwg.collections.create',
         name: name,
       },
@@ -82,18 +81,19 @@ $cdm.find('input.new').on({
 // add and remove links (delegate for new collections)
 $cdm.on('click', '.add, .remove', function(e) {
   var img_id = $cdm.data('img_id'),
+      album_id = $cdm.data('album_id'),
       col_id = jQuery(this).data('id'),
-      method = jQuery(this).hasClass('add') ? 'pwg.collections.addImages' : 'pwg.collections.removeImages';
+      method = 'pwg.collections.' + (album_id ? 'addAlbum' : jQuery(this).hasClass('add') ? 'addImages' : 'removeImages');
 
   jQuery.ajax({
-    type: 'GET',
+    type: 'POST',
     dataType: 'json',
-    url: '{$ROOT_URL}ws.php',
+    url: '{$ROOT_URL}ws.php?format=json',
     data: {
-      format: 'json',
       method: method,
       col_id: col_id,
-      image_ids: img_id
+      image_ids: img_id,
+      album_id: album_id
     },
     success: function(data) {
       if (data.stat == 'ok') {
@@ -101,16 +101,19 @@ $cdm.on('click', '.add, .remove', function(e) {
         jQuery('.nbImagesCollec-'+ col_id).html(data.result.nb_images);
 
         // update item datas
-        var $target = jQuery('.addCollection[data-id="'+ img_id +'"]'),
-            col_ids = $target.data('cols');
-
-        if (method == 'pwg.collections.addImages' && col_ids.indexOf(col_id) == -1) {
-          col_ids[ col_ids.length ] = col_id;
-        }
-        else if (method == 'pwg.collections.removeImages') {
-          col_ids.splice(col_ids.indexOf(col_id), 1);
-        }
-        $target.data('col', col_ids);
+        var $target = album_id ? jQuery('.addCollection[data-id]') : jQuery('.addCollection[data-id="'+ img_id +'"]');
+        
+        $target.each(function() {
+          var col_ids = $(this).data('cols');
+          
+          if (method == 'pwg.collections.removeImages') {
+            col_ids.splice(col_ids.indexOf(col_id), 1);
+          }
+          else if (col_ids.indexOf(col_id) == -1) {
+            col_ids[ col_ids.length ] = col_id;
+          }
+          $(this).data('col', col_ids);
+        });
       }
       else {
         alert(data.message);
@@ -128,12 +131,14 @@ $cdm.on('click', '.add, .remove', function(e) {
 // main button, open the menu
 jQuery(document).on('click', '.addCollection', function(e) {
   var img_id = jQuery(this).data('id'),
+      album_id = jQuery(this).data('albumId'),
       col_ids = jQuery(this).data('cols');
 
   $cdm.data('img_id', img_id);
+  $cdm.data('album_id', album_id);
 
   $cdm.children('.add').each(function() {
-    if (col_ids.indexOf(jQuery(this).data('id')) != -1) {
+    if (col_ids && col_ids.indexOf(jQuery(this).data('id')) != -1) {
       jQuery(this).css('font-weight', 'bold').next().next().show();
     }
     else {
@@ -141,7 +146,7 @@ jQuery(document).on('click', '.addCollection', function(e) {
     }
   });
 
-  {if $IN_PICTURE}
+  {if isset($IN_PICTURE)}
   $cdm.css({
     'left': Math.min(jQuery(this).offset().left, jQuery(window).width()-$cdm.outerWidth(true)-5),
     'top': jQuery(this).offset().top + jQuery(this).outerHeight(true)
@@ -188,11 +193,10 @@ jQuery('#thumbnails').on('click', '.addCollection', function(e) {
       col_id = {$collection.ID};
 
   jQuery.ajax({
-    type: 'GET',
+    type: 'POST',
     dataType: 'json',
-    url: '{$ROOT_URL}ws.php',
+    url: '{$ROOT_URL}ws.php?format=json',
     data: {
-      format: 'json',
       method: 'pwg.collections.removeImages',
       col_id: col_id,
       image_ids: img_id

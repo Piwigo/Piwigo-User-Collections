@@ -9,7 +9,7 @@ jQuery('a.preview-box').colorbox({
   },
   title: function() {
     var title = jQuery(this).children('img.thumbnail').attr("alt");
-    {if $F_ACTION} title+= ' · <a class="addCollection" data-id="'+ jQuery(this).data('id') +'" rel="nofollow">{'Remove from collection'|translate|escape:javascript}</a>';{/if}
+    {if isset($F_ACTION)} title+= ' · <a class="addCollection" data-id="'+ jQuery(this).data('id') +'" rel="nofollow">{'Remove from collection'|translate|escape:javascript}</a>';{/if}
     title+= ' · <a href="'+ jQuery(this).attr('href') +'" target="_blank">{'jump to photo'|translate|escape:javascript} →</a>';
     return  title;
   }

@@ -36,9 +36,9 @@ $lang['Active'] = 'Actifs';
 $lang['Inactive'] = 'Inactifs';
 $lang['Download CSV file'] = 'Télécharger le fichier CSV';
 $lang['Preview'] = 'Aperçu';
-$lang['Number of images'] = 'Nombre d\'images';
+$lang['Number of images'] = 'Nombre de photos';
 $lang['Edit this collection'] = 'Editer celle collection';
-$lang['Export image list'] = 'Exporter la liste d\'images';
+$lang['Export image list'] = 'Exporter la liste de photos';
 $lang['Delete this collection'] = 'Supprimer la collection';
 $lang['Send this collection by mail'] = 'Envoyer cette collection par mail';
 $lang['Clear this collection'] = 'Vider cette collection';
@@ -72,5 +72,4 @@ $lang['Send'] = 'Envoyer';
 $lang['To'] = 'Pour';
 $lang['Administrator'] = 'Administrateur';
 $lang['Someone else'] = 'Quelqu\'un d\'autre';
-
-?>
+$lang['Add all photos of this album to a collection'] = 'Ajouter toutes les photos de cet album à une collection';

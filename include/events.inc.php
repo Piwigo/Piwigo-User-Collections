@@ -60,6 +60,18 @@ function user_collections_page()
     $template->set_filename('uc_thumbnails_cssjs', realpath(USER_COLLEC_PATH . 'template/thumbnails_css_js.tpl'));
     $template->parse('uc_thumbnails_cssjs');
   }
+  
+  if (isset($page['section']) and $page['section'] == 'categories' and isset($page['category']))
+  {
+    $template->assign(array(
+      'CATEGORY_ID' => $page['category']['id'],
+      'USER_COLLEC_PATH' => USER_COLLEC_PATH,
+      'USER_COLLEC_ABS_PATH' => realpath(USER_COLLEC_PATH).'/',
+      ));
+    
+    $template->set_filename('uc_button_category', realpath(USER_COLLEC_PATH.'template/buttons/album.tpl'));
+    $template->add_index_button($template->parse('uc_button_category', true));
+  }
 }
 
 
@@ -135,7 +147,7 @@ function user_collections_thumbnails_list_button($content, &$smarty)
   $search = '#(<li>|<li class="gthumb">)#';
   $replace = '$1
 {strip}<a class="addCollection" data-id="{$thumbnail.id}" data-cols="[{$thumbnail.COLLECTIONS}]" rel="nofollow">
-{if not $UC_IN_EDIT}
+{if not isset($UC_IN_EDIT)}
 {\'Add to collection\'|translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" alt="[+]">
 {else}
 {\'Remove from collection\'|translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" alt="[+]">

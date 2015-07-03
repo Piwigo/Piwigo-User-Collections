@@ -37,7 +37,7 @@ $('input[name="download"]').click(function() {
 	<h2>User Collections</h2>
 </div>
 
-{if $COL_ID}
+{if isset($COL_ID)}
 <form method="post" action="" class="properties" id="export_form">
 <fieldset>
   <legend>{'Fields'|translate}</legend>

@@ -12,7 +12,11 @@ function user_collections_ws_add_methods($arr)
     array(
       'name' => array(),
       'comment' => array('default' => null),
-      'user_id' => array('default' => null, 'info'=>'Admin parameter, default is current user'),
+      'user_id' => array(
+        'type'=>WS_TYPE_ID,
+        'default' => null,
+        'info'=>'Admin parameter, default is current user'
+        ),
       ),
     'Create a new User Collection.'
     );
@@ -21,7 +25,10 @@ function user_collections_ws_add_methods($arr)
     'pwg.collections.delete',
     'ws_collections_delete',
     array(
-      'col_id' => array('info'=>'The current user must be admin or owner of the collection'),
+      'col_id' => array(
+        'type'=>WS_TYPE_ID,
+        'info'=>'The current user must be admin or owner of the collection'
+        ),
       ),
     'Delete a User Collection.'
     );
@@ -30,13 +37,21 @@ function user_collections_ws_add_methods($arr)
     'pwg.collections.getList',
     'ws_collections_getList',
     array(
-      'user_id' => array('default' => null, 'info'=>'Admin parameter, default is current user'),
+      'user_id' => array(
+        'type'=>WS_TYPE_ID,
+        'default' => null,
+        'info'=>'Admin parameter, default is current user'
+      ),
       'name' => array('default' => null),
       'per_page' => array(
+        'type'=>WS_TYPE_INT, 
         'default'=>min(100,ceil($conf['ws_max_images_per_page']/10)),
         'maxValue'=>ceil($conf['ws_max_images_per_page']/10)
       ),
-      'page' => array('default'=>0),
+      'page' => array(
+        'type'=>WS_TYPE_INT,
+        'default'=>0
+        ),
       'order' => array('default'=>'username ASC, name ASC'),
       ),
     'Returns a list of collections.'
@@ -46,8 +61,14 @@ function user_collections_ws_add_methods($arr)
     'pwg.collections.addImages',
     'ws_collections_addImages',
     array(
-      'col_id' => array('info'=>'The current user must be admin or owner of the collection'),
-      'image_ids' => array('flags'=>WS_PARAM_FORCE_ARRAY),
+      'col_id' => array(
+        'type'=>WS_TYPE_ID,
+        'info'=>'The current user must be admin or owner of the collection'
+        ),
+      'image_ids' => array(
+        'type'=>WS_TYPE_ID,
+        'flags'=>WS_PARAM_FORCE_ARRAY
+        ),
       ),
     'Add images to a collection.'
     );
@@ -56,19 +77,45 @@ function user_collections_ws_add_methods($arr)
     'pwg.collections.removeImages',
     'ws_collections_removeImages',
     array(
-      'col_id' => array('info'=>'The current user must be admin or owner of the collection'),
-      'image_ids' => array('flags'=>WS_PARAM_FORCE_ARRAY),
+      'col_id' => array(
+        'type'=>WS_TYPE_ID,
+        'info'=>'The current user must be admin or owner of the collection'
+        ),
+      'image_ids' => array(
+        'type'=>WS_TYPE_ID,
+        'flags'=>WS_PARAM_FORCE_ARRAY
+        ),
       ),
     'Remove images from a collection.'
+    );
+
+  $service->addMethod(
+    'pwg.collections.addAlbum',
+    'ws_collections_addAlbum',
+    array(
+      'col_id' => array(
+        'type'=>WS_TYPE_ID,
+        'info'=>'The current user must be admin or owner of the collection'
+        ),
+      'album_id' => array('type'=>WS_TYPE_ID),
+      ),
+    'Add all images of an album to a collection.'
     );
 
   $service->addMethod(
     'pwg.collections.getImages',
     'ws_collections_getImages',
     array(
-      'col_id' => array(),
-      'per_page' => array('default'=>min(100,$conf['ws_max_images_per_page']), 'maxValue'=>$conf['ws_max_images_per_page']),
-      'page' => array('default'=>0),
+      'col_id' => array('type'=>WS_TYPE_ID),
+      'per_page' => array(
+        'type'=>WS_TYPE_INT,
+        'default'=>min(100,$conf['ws_max_images_per_page']),
+        'maxValue'=>$conf['ws_max_images_per_page']
+        ),
+      'page' => array(
+        'type'=>WS_TYPE_INT,
+        'default'=>0
+        ),
       'order' => array('default'=>null),
       ),
     'Returns elements for the corresponding  collection.'
@@ -78,7 +125,7 @@ function user_collections_ws_add_methods($arr)
     'pwg.collections.getSerialized',
     'ws_collections_getSerialized',
     array(
-      'col_id' => array(),
+      'col_id' => array('type'=>WS_TYPE_ID),
       'content' => array(
         'default'=>array('id','name','url','path'),
         'flags'=>WS_PARAM_FORCE_ARRAY,
@@ -92,7 +139,10 @@ function user_collections_ws_add_methods($arr)
     'pwg.collections.getInfo',
     'ws_collections_getInfo',
     array(
-      'col_id' => array('info'=>'The current user must be admin or owner of the collection'),
+      'col_id' => array(
+        'type'=>WS_TYPE_ID,
+        'info'=>'The current user must be admin or owner of the collection'
+        ),
       ),
     'Returns basic info about a collection.'
     );
@@ -298,6 +348,50 @@ function ws_collections_removeImages($params, &$service)
     $collection->checkUser();
 
     $collection->removeImages($params['image_ids']);
+
+    return array('nb_images' => $collection->getParam('nb_images'));
+  }
+  catch (Exception $e)
+  {
+    return new PwgError($e->getCode(), $e->getMessage());
+  }
+}
+
+/**
+ * add album to a collection
+ */
+function ws_collections_addAlbum($params, &$service)
+{
+  global $conf, $user;
+
+  // check status
+  if (is_a_guest() && !$conf['UserCollections']['allow_add_albums'])
+  {
+    return new PwgError(403, 'Forbidden');
+  }
+
+  try {
+    $collection = new UserCollection($params['col_id']);
+    $collection->checkUser();
+    
+    $query = '
+SELECT DISTINCT(image_id)
+  FROM '.IMAGE_CATEGORY_TABLE.'
+    INNER JOIN '.IMAGES_TABLE.' ON id = image_id
+  WHERE
+    category_id = '.$params['album_id'].'
+'.get_sql_condition_FandF(
+      array(
+        'forbidden_categories' => 'category_id',
+        'visible_categories' => 'category_id',
+        'visible_images' => 'id'
+        ),
+      'AND'
+).'
+;';
+
+    $images = query2array($query, null, 'image_id');
+    $collection->addImages($images);
 
     return array('nb_images' => $collection->getParam('nb_images'));
   }
