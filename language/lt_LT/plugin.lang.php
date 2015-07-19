@@ -88,4 +88,8 @@ $lang['Description'] = 'Aprašymas';
 $lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Labas %s, %s Jums siunčia nuotraukų kolekciją iš "%s"';
 $lang['Name'] = 'Vardas';
 $lang['Send'] = 'Siųsti';
-?>
+$lang['Add all photos of this album to a collection'] = 'Pridėti visas šio albumo nuotraukas į kolekciją';
+$lang['Administrator'] = 'Administratorius';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Leisti vartotojams siųsti savo viešas ir privačias kolekcijas administratoriui';
+$lang['Someone else'] = 'Kam nors kitam';
+$lang['To'] = 'Skirta';
