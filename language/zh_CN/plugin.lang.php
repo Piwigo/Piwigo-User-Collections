@@ -92,3 +92,4 @@ $lang['To'] = '至';
 $lang['Someone else'] = '其他人';
 $lang['Administrator'] = '管理员';
 $lang['Allow users to send their collections (public or not) to the admin'] = '允许用户向管理员发送他们（公开或非公开）的精选集';
+$lang['Add all photos of this album to a collection'] = '添加此相册所有相片到一个集合里';
