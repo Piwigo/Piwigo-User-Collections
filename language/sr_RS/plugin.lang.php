@@ -92,3 +92,4 @@ $lang['Date added to collection, old &rarr; new'] = 'Датум додавања
 $lang['Delete this collection'] = 'Датум настанка збирке';
 $lang['%d more...'] = 'Још %d...';
 $lang['(remove)'] = '(уклони)';
+$lang['Add all photos of this album to a collection'] = 'Додај све фотографије из овог албума у збирку';
