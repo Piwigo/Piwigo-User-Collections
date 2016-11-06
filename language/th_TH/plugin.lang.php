@@ -38,3 +38,5 @@ $lang['You have no collection'] = 'คุณยังไม่มีคอลเ
 $lang['by %s'] = 'โดย %s';
 $lang['Add'] = 'เพิ่ม';
 $lang['Cancel'] = 'ยกเลิก';
+$lang['Description'] = 'คำอธิบาย';
+$lang['Download CSV file'] = 'ดาวน์โหลดเป็นไฟล์ CSV';
