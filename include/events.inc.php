@@ -265,7 +265,8 @@ SELECT id, name, nb_images
     $data['U_LIST'] = USER_COLLEC_PUBLIC;
 
     $block->set_title('<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>');
-    $block->template = realpath(USER_COLLEC_PATH . 'template/menublock.tpl');
+    $template->set_template_dir(USER_COLLEC_PATH.'template/');
+    $block->template = 'menubar_user_collections.tpl';
     $block->data = $data;
   }
 }
