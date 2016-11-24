@@ -22,29 +22,21 @@
 // +-----------------------------------------------------------------------+
 $lang['%d more...'] = '%d เพิ่มเติม...';
 $lang['Clear'] = 'ล้าง';
-$lang['Copied'] = 'คัดลอก';
-$lang['Public collection'] = 'สาธารณะ';
 $lang['Save'] = 'บันทึก';
-$lang['set active'] = 'ตั้งค่าใช้งาน';
 $lang['Add to collection'] = 'เพิ่มคอลเลกชัน';
 $lang['Collection'] = 'คอลเลกชัน';
 $lang['Collection name:'] = 'ชื่อคอลเลกชัน :';
 $lang['Collections'] = 'คอลเลกชัน';
-$lang['Copy to clipboard'] = 'คัดลอกไปที่คลิปบอร์ด';
 $lang['Create a new collection'] = 'สร้างคอลเลกชันใหม่';
 $lang['Invalid collection'] = 'คอลเลกชันที่ไม่ถูกต้อง';
 $lang['Please give a name'] = 'กรุณาตั้งชื่อชื่อ';
 $lang['Remove from collection'] = 'ลบออกจากคอลเลกชัน';
-$lang['Return to collections list'] = 'กลับไปที่รายการ';
-$lang['Saved collections'] = 'ได้ถูกบันทึกไปยังคอลเลกชัน';
-$lang['See all my collections'] = 'ดูคอลเลกชันทั้งหมดของฉัน';
 $lang['This collection is empty'] = 'คอลเลกชันนี้ว่างเปล่า';
-$lang['Unsaved collections'] = 'คอลเลกชันที่ไม่ได้บันทึก
-';
 $lang['You have %d collection'] = 'คุณมี %d คอลเลกชัน';
 $lang['You have %d collections'] = 'คุณมี %d คอลเลกชัน';
 $lang['You have no collection'] = 'คุณยังไม่มีคอลเลกชัน';
-$lang['active'] = 'ใช้งาน';
 $lang['by %s'] = 'โดย %s';
-$lang['save'] = 'บันทึก';
-?>
+$lang['Add'] = 'เพิ่ม';
+$lang['Cancel'] = 'ยกเลิก';
+$lang['Description'] = 'คำอธิบาย';
+$lang['Download CSV file'] = 'ดาวน์โหลดเป็นไฟล์ CSV';

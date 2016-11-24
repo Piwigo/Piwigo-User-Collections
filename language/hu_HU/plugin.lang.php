@@ -93,3 +93,4 @@ $lang['Send'] = 'Küldés';
 $lang['Someone else'] = 'Valaki más';
 $lang['To'] = 'Címzett';
 $lang['jump to photo'] = 'fotóhoz ugrás';
+$lang['Add all photos of this album to a collection'] = 'Az ebben az albumban szereplő összes fotó hozzáadása egy gyűjteményhez';

@@ -92,3 +92,4 @@ $lang['Administrator'] = 'Administratör';
 $lang['Allow users to send their collections (public or not) to the admin'] = 'Tillåt användarna att skicka sina samlingar (publika eller inte) till administratören';
 $lang['Someone else'] = 'Någon annan';
 $lang['To'] = 'Till';
+$lang['Add all photos of this album to a collection'] = 'Lägg till alla bilder i detta album till en samling';

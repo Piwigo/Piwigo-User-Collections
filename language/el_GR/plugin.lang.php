@@ -92,3 +92,4 @@ $lang['To'] = 'Προς';
 $lang['Someone else'] = 'Κάποιος άλλος';
 $lang['Allow users to send their collections (public or not) to the admin'] = 'Επιτρέπει στους χρήστες να στείλουν τις συλλογές τους (δημόσια ή μη) στο διαχειριστή';
 $lang['Administrator'] = 'Διαχειριστής';
+$lang['Add all photos of this album to a collection'] = 'Προσθέστε όλες τις φωτογραφίες αυτου του λευκώματος στη συλλογή';
