@@ -88,4 +88,8 @@ $lang['Hello %s, %s sent you a photos collection from "%s"'] = '您好%s，%s送
 $lang['Name'] = '名稱';
 $lang['Send'] = '發送';
 $lang['jump to photo'] = '跳至照片';
-?>
+$lang['Add all photos of this album to a collection'] = '添加此相冊所有相片到一個集合內';
+$lang['Administrator'] = '管理員';
+$lang['Allow users to send their collections (public or not) to the admin'] = '允許用戶將自己的收藏（公開或不公開）發送給管理員';
+$lang['Someone else'] = '其他人';
+$lang['To'] = '到';
