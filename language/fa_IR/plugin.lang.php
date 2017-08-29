@@ -88,4 +88,6 @@ $lang['Share key'] = 'كد رمز اشتراك';
 $lang['Share this collection'] = 'اشتراك گذاري اين مجموعه';
 $lang['The key must be at least 8 characters long'] = 'كد رمز حداقل بايد به طول 8 حرف باشد';
 $lang['This key is already used'] = 'اين كد رمز در حال استفاده است';
-?>
+$lang['Add all photos of this album to a collection'] = 'افزودن تمام عکس های این البوم به مجموعه ';
+$lang['Administrator'] = 'مدیریت';
+$lang['To'] = 'به';
