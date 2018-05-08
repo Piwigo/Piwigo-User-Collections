@@ -67,7 +67,7 @@ if ($page['total_categories'])
 // collections details
 if ($page['total_categories'])
 {
-  $categories_id = array_map(create_function('$c', 'return $c["id"];'), $categories);
+  $categories_id = array_column($categories, 'id');
 
   $query = '
 SELECT * FROM (

@@ -91,7 +91,7 @@ function user_collections_thumbnails_list($tpl_thumbnails_var, $pictures)
     return $tpl_thumbnails_var;
   }
 
-  $image_ids = array_map(create_function('$i', 'return $i["id"];'), $pictures);
+  $image_ids = array_column($pictures, 'id');
 
   // get collections for each picture
   $query = '
