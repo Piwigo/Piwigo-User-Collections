@@ -67,7 +67,10 @@ if ($page['total_categories'])
 // collections details
 if ($page['total_categories'])
 {
-  $categories_id = array_column($categories, 'id');
+  $categories_id = array();
+  foreach ($categories as $category) {
+      $category_id[] = $category['id'];
+  }
 
   $query = '
 SELECT * FROM (
