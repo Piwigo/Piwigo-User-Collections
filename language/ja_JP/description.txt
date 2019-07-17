@@ -1,0 +1,2 @@
+登録したユーザは、先進的なお気に入りのように、ギャラリーから写真を選択してコレクションに保存することができる。
+Registered users can select pictures from the gallery and save them into collections, like advanced favorites.
