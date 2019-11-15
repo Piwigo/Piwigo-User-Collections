@@ -3,6 +3,15 @@
 {* <!-- all pages but collection edit page --> *}
 {if not isset($UC_IN_EDIT)}
 {footer_script require='jquery'}
+
+{* add css class to selected items on load, only for bootstrap theme *}
+jQuery(".addCollection").each(function() {
+    var col_ids = jQuery(this).data('cols');
+    if (col_ids != '') {
+      jQuery(this).closest('.card.card-thumbnail').addClass('user-collection-selected');
+    }
+});
+
 var $cdm = jQuery('#collectionsDropdown');
 
 $cdm.on('mouseleave', function() {
@@ -108,9 +117,13 @@ $cdm.on('click', '.add, .remove', function(e) {
           
           if (method == 'pwg.collections.removeImages') {
             col_ids.splice(col_ids.indexOf(col_id), 1);
+            if (col_ids == ''){
+              $(this).closest('.card.card-thumbnail').removeClass('user-collection-selected');
+            }
           }
           else if (col_ids.indexOf(col_id) == -1) {
             col_ids[ col_ids.length ] = col_id;
+            $(this).closest('.card.card-thumbnail').addClass('user-collection-selected');
           }
           $(this).data('col', col_ids);
         });
@@ -203,7 +216,8 @@ jQuery('#thumbnails').on('click', '.addCollection', function(e) {
     },
     success: function(data) {
       if (data.stat == 'ok') {
-        $trigger.parent('li').hide('fast', function() {
+        {* col-outer is for bootstrap themes *}
+        $trigger.closest('li, .col-outer').hide('fast', function() {
           jQuery(this).remove();
           if (typeof GThumb != 'undefined') {
             GThumb.build();
