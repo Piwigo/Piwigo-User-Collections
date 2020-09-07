@@ -44,6 +44,7 @@ function user_collections_init()
   }
 
   load_language('plugin.lang', USER_COLLEC_PATH);
+  load_language('lang', PHPWG_ROOT_PATH.PWG_LOCAL_DIR, array('no_fallback'=>true, 'local'=>true) );
 
   global $conf;
   $conf['user_collections'] = safe_unserialize($conf['user_collections']);
