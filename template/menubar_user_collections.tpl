@@ -1,3 +1,12 @@
+{function name=collectionsMenuItem}
+{function collectionsMenuItem}
+  <li class="mbUCItem-{$coll_id}" data-id="{$coll_id}" {if $coll_id == "coll_template"}style="display:none"{/if}>
+    <a href="{$coll_edit}">{$coll_name}</a>&nbsp;
+    <span class="menuInfoCat">[<span class="nbImagesCollec-{$coll_id}">{$coll_nb_images}</span>]</span>
+  </li>
+{/function}
+{/function}
+
 <dt>{$block->get_title()}</dt>
 <dd>
   <p>{strip}
@@ -9,11 +18,19 @@
   {/strip}</p>
   {if $block->data.collections}
   <ul>
+    {collectionsMenuItem
+      coll_id = "coll_template" 
+      coll_name = "coll_name"
+      coll_edit = "coll_edit"
+      coll_nb_images = "coll_nb_images"
+    }
 		{foreach from=$block->data.collections item=col}{strip}
-		<li>
-      <a href="{$col.u_edit}">{$col.name}</a>&nbsp;
-      <span class="menuInfoCat">[<span class="nbImagesCollec-{$col.id}">{$col.nb_images}</span>]</span>
-    </li>
+      {collectionsMenuItem
+        coll_id = $col.id
+        coll_name = $col.name
+        coll_edit = $col.u_edit
+        coll_nb_images = $col.nb_images
+      }
 		{/strip}{/foreach}
     {if isset($block->data.MORE)}<li class="menuInfoCat"><a href="{$block->data.U_LIST}">{'%d more...'|translate:$block->data.MORE}</a></li>{/if}
 	</ul>

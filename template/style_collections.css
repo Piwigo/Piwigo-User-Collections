@@ -138,3 +138,7 @@
 .user-collections-mail-icon {
   background:transparent url('resources/mail.png') center center no-repeat !important;
 }
+
+.collection-edit {
+  text-align: center;
+}
