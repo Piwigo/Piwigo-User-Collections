@@ -43,6 +43,9 @@ function user_collections_init()
     return;
   }
 
+  global $template;
+  $template->set_template_dir(USER_COLLEC_PATH.'template/');
+
   load_language('plugin.lang', USER_COLLEC_PATH);
   load_language('lang', PHPWG_ROOT_PATH.PWG_LOCAL_DIR, array('no_fallback'=>true, 'local'=>true) );
 

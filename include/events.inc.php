@@ -48,7 +48,7 @@ function user_collections_section_init()
 /* collections section */
 function user_collections_page()
 {
-  global $page, $template;
+  global $page, $template, $user;
 
   if (isset($page['section']) and $page['section'] == 'collections')
   {
@@ -57,8 +57,24 @@ function user_collections_page()
 
   if (!is_a_guest() && count($page['items']))
   {
-    $template->set_filename('uc_thumbnails_cssjs', realpath(USER_COLLEC_PATH . 'template/thumbnails_css_js.tpl'));
+    $template->assign('USER_THEME', $user['theme']);
+    
+    // Add thumbnail action
+    $template->set_filename('uc_thumbnail_action', 'thumbnails_user_collections_action.tpl');
+    $template->assign_var_from_handle('UC_THUMBNAIL_ACTION', 'uc_thumbnail_action');
+    
+    if (isset($page['section']) and $page['section'] == 'categories' and isset($page['category']))
+    {
+      $template->assign('IMAGES_COLLECTIONS', get_collection_on_category($page['category']['id']));
+    }
+    
+    $template->set_filename('uc_thumbnails_cssjs', 'thumbnails_css_js.tpl');
     $template->parse('uc_thumbnails_cssjs');
+    
+    $template->set_filename('uc_tooltip', 'tooltip_user_collections.tpl');
+    $template->parse('uc_tooltip');
+    
+    $template->clear_assign('IMAGES_COLLECTIONS');
   }
   
   if (isset($page['section']) and $page['section'] == 'categories' and isset($page['category']))
@@ -69,9 +85,26 @@ function user_collections_page()
       'USER_COLLEC_ABS_PATH' => realpath(USER_COLLEC_PATH).'/',
       ));
     
-    $template->set_filename('uc_button_category', realpath(USER_COLLEC_PATH.'template/buttons/album.tpl'));
+    $template->set_filename('uc_button_category', 'button_user_collections_album.tpl');
     $template->add_index_button($template->parse('uc_button_category', true));
   }
+}
+
+function get_collection_on_category($cat_id)
+{
+  $query = '
+SELECT
+    image_id, 
+    GROUP_CONCAT(col_id) AS col_ids
+  FROM '.COLLECTION_IMAGES_TABLE.'
+  WHERE image_id IN (
+    SELECT image_id 
+    FROM '.IMAGE_CATEGORY_TABLE.'
+    WHERE category_id = '.$cat_id.'
+  )
+  GROUP BY image_id
+;';
+  return simple_hash_from_query($query, 'image_id', 'col_ids');
 }
 
 
@@ -137,29 +170,11 @@ SELECT id, name, nb_images
     'COLLECTIONS' => $collections,
     'USER_COLLEC_PATH' => USER_COLLEC_PATH,
     ));
-
-  // thumbnails buttons
-  $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_button');
+  
+  
 
   return $tpl_thumbnails_var;
 }
-
-// add links
-function user_collections_thumbnails_list_button($content, &$smarty)
-{
-  $search = '#(<li>|<li class="gthumb">)#';
-  $replace = '$1
-{strip}<a class="addCollection" data-id="{$thumbnail.id}" data-cols="[{$thumbnail.COLLECTIONS}]" rel="nofollow">
-{if not isset($UC_IN_EDIT)}
-{\'Add to collection\'|translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_add.png" alt="[+]">
-{else}
-{\'Remove from collection\'|translate}&nbsp;<img src="{$ROOT_URL}{$USER_COLLEC_PATH}template/resources/image_delete.png" alt="[+]">
-{/if}
-</a>{/strip}';
-
-  return preg_replace($search, $replace, $content);
-}
-
 
 // +-----------------------------------------------------------------------+
 // | PICTURE PAGE
@@ -212,9 +227,16 @@ SELECT id, name, nb_images
     ));
 
   // toolbar button
-  $template->set_filename('usercol_button', realpath(USER_COLLEC_PATH.'template/buttons/picture.tpl'));
+  $template->set_filename('usercol_button', 'button_user_collections_picture.tpl');
   $button = $template->parse('usercol_button', true);
   $template->add_picture_button($button, 50);
+
+  $template->set_filename('uc_thumbnails_cssjs', 'thumbnails_css_js.tpl');
+  $template->parse('uc_thumbnails_cssjs');
+  
+  $template->set_filename('uc_tooltip', 'tooltip_user_collections.tpl');
+  $template->parse('uc_tooltip');
+
 }
 
 
@@ -268,7 +290,6 @@ SELECT id, name, nb_images
     $data['U_LIST'] = USER_COLLEC_PUBLIC;
 
     $block->set_title('<a href="'.USER_COLLEC_PUBLIC.'">'.l10n('Collections').'</a>');
-    $template->set_template_dir(USER_COLLEC_PATH.'template/');
     $block->template = 'menubar_user_collections.tpl';
     $block->data = $data;
   }

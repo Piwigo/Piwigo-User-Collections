@@ -21,7 +21,8 @@ case 'list':
     access_denied();
   }
 
-  $template->set_filename('uc_page', realpath(USER_COLLEC_PATH.'template/collections_list.tpl'));
+  $template->set_filename('uc_page', 'collections_list.tpl');
+  
 
   $self_url = USER_COLLEC_PUBLIC . 'list';
 
@@ -93,8 +94,6 @@ case 'edit':
     $_SESSION['page_errors'][] = l10n('Invalid collection');
     redirect(USER_COLLEC_PUBLIC);
   }
-
-  $template->set_filename('uc_page', realpath(USER_COLLEC_PATH.'template/collection_edit.tpl'));
 
   $self_url = USER_COLLEC_PUBLIC . 'edit/' . $page['col_id'];
 
@@ -228,9 +227,8 @@ case 'edit':
 
 
     // add remove item links
-    $template->set_prefilter('index_thumbnails', 'user_collections_thumbnails_list_button');
     $template->set_prefilter('index_thumbnails', 'user_collections_add_colorbox');
-
+    
     // thumbnails
     include(USER_COLLEC_PATH . '/include/display_thumbnails.inc.php');
 
@@ -261,6 +259,10 @@ case 'edit':
       user_collections_add_button('clear', 'U_CLEAR',
         add_url_params($self_url, array('action'=>'clear'))
         );
+    } else {
+      $template->assign('URL_DELETE',
+        add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$page['col_id']))
+      );
     }
 
     user_collections_add_button('delete', 'U_DELETE',
@@ -286,6 +288,11 @@ case 'edit':
   {
     $page['errors'][] = $e->getMessage();
   }
+
+  $template->set_filename('uc_page', 'collection_edit.tpl');
+  $template->set_filename('uc_js', 'collection_js.tpl');
+
+  $template->assign_var_from_handle('UC_JS', 'uc_js');
 
   break;
 }
@@ -329,7 +336,7 @@ SELECT col_id, params
 
   $self_url = USER_COLLEC_PUBLIC . 'view/' . $page['col_key'];
 
-  $template->set_filename('uc_page', realpath(USER_COLLEC_PATH.'template/collection_view.tpl'));
+  $template->set_filename('uc_page', 'collection_view.tpl');
 
   try {
     $collection = new UserCollection($page['col_id']);
@@ -430,6 +437,6 @@ function user_collections_add_button($tpl_file, $tpl_var, $value)
   global $template;
 
   $template->assign($tpl_var, $value);
-  $template->set_filename('uc_button_'.$tpl_file, realpath(USER_COLLEC_PATH.'template/buttons/'. $tpl_file .'.tpl'));
+  $template->set_filename('uc_button_'.$tpl_file, 'button_user_collections_'. $tpl_file .'.tpl');
   $template->add_index_button($template->parse('uc_button_'.$tpl_file, true));
 }

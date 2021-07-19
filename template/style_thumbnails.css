@@ -16,7 +16,7 @@
   color:#eee;
   white-space:nowrap;
 }
-#thumbnails li:hover .addCollection {
+#thumbnails li:hover .addCollection, #thumbnails div:hover .addCollection {
   display:block !important;
 }
 
@@ -39,14 +39,38 @@
   margin-top:5px;
 }
 
+.collectionsItem {
+  display: block;
+}
+
+.remove-legend {
+  opacity: 0.7;
+}
+
+#collectionsDropdown a {
+  border-bottom: none;
+}
+
 #collectionsDropdown a, a.addCollection {
   cursor:pointer;
 }
 
-#collectionsDropdown .remove, #collectionsDropdown input.new {
+#collectionsDropdown .remove-legend, #collectionsDropdown input.new {
   display:none;
 }
 
 .user-collections-icon {
   background:transparent url('resources/image_add.png') center center no-repeat !important;
+}
+
+.addCollection i {
+  font-size: 14px;
+}
+
+.uc-icon-star-filled, .uc-icon-star {
+  color: rgb(255, 174, 0);
+}
+
+.pwg-button i {
+  font-size: 20px !important;
 }
