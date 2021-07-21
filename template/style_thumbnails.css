@@ -43,8 +43,8 @@
   display: block;
 }
 
-.remove-legend {
-  opacity: 0.7;
+.collectionsItem.remove {
+  font-weight: bold;
 }
 
 #collectionsDropdown a {
@@ -55,7 +55,7 @@
   cursor:pointer;
 }
 
-#collectionsDropdown .remove-legend, #collectionsDropdown input.new {
+#collectionsDropdown input.new {
   display:none;
 }
 
@@ -73,4 +73,15 @@
 
 .pwg-button i {
   font-size: 20px !important;
+}
+
+.uc-badge {
+  display: inline-flex;
+  background: #0000004d;
+  min-width: 2em;
+  border-radius: 1em;
+  font-size: 90%;
+  font-weight: bold;
+  color: white;
+  justify-content: center;
 }
