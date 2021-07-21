@@ -68,11 +68,11 @@ function user_collections_page()
       $template->assign('IMAGES_COLLECTIONS', get_collection_on_category($page['category']['id']));
     }
     
-    $template->set_filename('uc_thumbnails_cssjs', 'thumbnails_css_js.tpl');
+    $template->set_filename('uc_thumbnails_cssjs', 'thumbnails_js.tpl');
     $template->parse('uc_thumbnails_cssjs');
     
-    $template->set_filename('uc_tooltip', 'tooltip_user_collections.tpl');
-    $template->parse('uc_tooltip');
+    $template->set_filename('uc_dropdown', 'dropdown_user_collections.tpl');
+    $template->parse('uc_dropdown');
     
     $template->clear_assign('IMAGES_COLLECTIONS');
   }
@@ -231,11 +231,11 @@ SELECT id, name, nb_images
   $button = $template->parse('usercol_button', true);
   $template->add_picture_button($button, 50);
 
-  $template->set_filename('uc_thumbnails_cssjs', 'thumbnails_css_js.tpl');
+  $template->set_filename('uc_thumbnails_cssjs', 'thumbnails_js.tpl');
   $template->parse('uc_thumbnails_cssjs');
   
-  $template->set_filename('uc_tooltip', 'tooltip_user_collections.tpl');
-  $template->parse('uc_tooltip');
+  $template->set_filename('uc_dropdown', 'dropdown_user_collections.tpl');
+  $template->parse('uc_dropdown');
 
 }
 

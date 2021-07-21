@@ -1,8 +1,21 @@
+<style>
+  .uc-menu-badge {
+    display: inline-flex;
+    background: #0000004d;
+    min-width: 2em;
+    border-radius: 1em;
+    font-size: 90%;
+    font-weight: bold;
+    color: white;
+    justify-content: center;
+  }
+</style>
+
 {function name=collectionsMenuItem}
 {function collectionsMenuItem}
   <li class="mbUCItem-{$coll_id}" data-id="{$coll_id}" {if $coll_id == "coll_template"}style="display:none"{/if}>
     <a href="{$coll_edit}">{$coll_name}</a>&nbsp;
-    <span class="menuInfoCat">[<span class="nbImagesCollec-{$coll_id}">{$coll_nb_images}</span>]</span>
+    <span class="uc-menu-badge nbImagesCollec-{$coll_id}">{$coll_nb_images}</span>
   </li>
 {/function}
 {/function}
