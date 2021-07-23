@@ -61,6 +61,18 @@
       "src": "fontelico"
     },
     {
+      "uid": "1e77a2yvsq3owssduo2lcgsiven57iv5",
+      "css": "pencil",
+      "code": 59398,
+      "src": "typicons"
+    },
+    {
+      "uid": "8f28d948aa6379b1a69d2a090e7531d4",
+      "css": "warning-empty",
+      "code": 59399,
+      "src": "typicons"
+    },
+    {
       "uid": "0d6ab2d08779e9f9d2b9199270b95909",
       "css": "user-minus",
       "code": 59451,
