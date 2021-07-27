@@ -6,6 +6,7 @@ global $page, $template, $conf, $user;
 $template->assign(array(
   'USER_COLLEC_PATH' => USER_COLLEC_PATH,
   'USER_COLLEC_ABS_PATH' => realpath(USER_COLLEC_PATH).'/',
+  'USER_THEME' => $user['theme'],
   ));
 
 
@@ -98,7 +99,6 @@ case 'edit':
   $self_url = USER_COLLEC_PUBLIC . 'edit/' . $page['col_id'];
 
   $template->assign(array(
-    'F_ACTION' => $self_url,
     'U_LIST' => USER_COLLEC_PUBLIC,
     'UC_IN_EDIT' => true,
     ));
@@ -256,18 +256,19 @@ case 'edit':
         user_collections_add_button('mail', 'U_MAIL', true);
       }
 
+      user_collections_add_button('edit', 'U_COLL_EDIT', $self_url);
+
       user_collections_add_button('clear', 'U_CLEAR',
         add_url_params($self_url, array('action'=>'clear'))
         );
-    } else {
-      $template->assign('URL_DELETE',
+      
+      user_collections_add_button('delete', 'U_DELETE',
         add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$page['col_id']))
-      );
+        );
+    } else {
+      $template->assign('U_DELETE', add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$page['col_id'])));
     }
-
-    user_collections_add_button('delete', 'U_DELETE',
-      add_url_params(USER_COLLEC_PUBLIC, array('action'=>'delete','col_id'=>$page['col_id']))
-      );
+    
 
     $template->assign(array(
       'UC_TKEY' => get_ephemeral_key(3),
@@ -289,9 +290,16 @@ case 'edit':
     $page['errors'][] = $e->getMessage();
   }
 
-  $template->set_filename('uc_page', 'collection_edit.tpl');
+  $template->set_filename('uc_page', 'collection.tpl');
+
+  $template->set_filename('uc_edit', 'collection_edit.tpl');
+  $template->set_filename('uc_mail', 'collection_mail.tpl');
+  $template->set_filename('uc_share', 'collection_share.tpl');
   $template->set_filename('uc_js', 'collection_js.tpl');
 
+  $template->assign_var_from_handle('UC_EDIT', 'uc_edit');
+  $template->assign_var_from_handle('UC_MAIL', 'uc_mail');
+  $template->assign_var_from_handle('UC_SHARE', 'uc_share');
   $template->assign_var_from_handle('UC_JS', 'uc_js');
 
   break;
@@ -410,14 +418,11 @@ $template->assign_var_from_handle('CONTENT', 'uc_page');
 
 
 // modification on mainpage_categories.tpl
-function user_collections_categories_list($content, &$samrty)
+function user_collections_categories_list($content, &$smarty)
 {
   $search = '<div class="thumbnailCategory">';
-  $replace = '<div class="thumbnailCategory">
-  <div class="collectionActions">
-    <a href="{$cat.URL}" rel="nofollow">{"Edit"|@translate}</a>
-    | <a href="{$cat.U_DELETE}" onClick="return confirm(\'{"Are you sure?"|@translate}\');" rel="nofollow">{"Delete"|@translate}</a>
-  </div>';
+
+  $replace = $search . file_get_contents(realpath(USER_COLLEC_PATH . 'template\thumbnail_collection.tpl'));
 
   return str_replace($search, $replace, $content);
 }

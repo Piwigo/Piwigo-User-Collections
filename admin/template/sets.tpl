@@ -1,4 +1,8 @@
 {combine_css path=$USER_COLLEC_PATH|cat:'admin/template/style.css'}
+{combine_css path=$USER_COLLEC_PATH|cat:'template/fontello/css/fontello.css'}
+{combine_script id='uc_collection_common' require='jquery' load='footer' path='plugins/UserCollections/template/js/collectionCommon.js'}
+{combine_script id='jquery.confirm' load='footer' require='jquery' path='themes/default/js/plugins/jquery-confirm.min.js'}
+{combine_css path="themes/default/js/plugins/jquery-confirm.min.css"}
 
 <div class="titrePage">
 	<h2>User Collections</h2>
@@ -52,9 +56,16 @@
     <td style="text-align:center;">{$set.DATE_CREATION}</td>
     <td>{$set.NB_IMAGES}</td>
     <td style="padding-left:25px;">
-      <a href="{$set.U_EDIT}" title="{'Edit this collection'|translate}"><img src="{$themeconf.admin_icon_dir}/edit_s.png"></a>
-      <a href="{$set.U_EXPORT}" title="{'Export image list'|translate}"><span class="icon-upload"></span></a>
-      <a href="{$set.U_DELETE}" title="{'Delete this collection'|translate}" onClick="return confirm('{'Are you sure?'|translate}');"><img src="{$themeconf.admin_icon_dir}/delete.png"></a>
+      <a href="{$set.U_EDIT}" title="{'Edit this collection'|translate}"><i class="uc-icon-pencil"></i></a>
+      <a href="{$set.U_EXPORT}" title="{'Export image list'|translate}"><i class="icon-upload"></i></a>
+      <a href="{$set.U_DELETE}" title="{'Delete this collection'|translate}"
+        class="uc-confirm-link" 
+        data-icon="uc-icon-cancel" 
+        data-validate="{'Delete'|translate}"
+        data-content="{'Are you sure?'|translate}" 
+        data-cancel="{'Cancel'|translate}" 
+        rel="nofollow"
+      ><i class="uc-icon-cancel"></i></a>
     </td>
   </tr>
   {/foreach}

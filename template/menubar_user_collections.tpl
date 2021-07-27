@@ -29,14 +29,14 @@
       <a href="{$block->data.U_LIST}">{$pwg->l10n_dec('You have %d collection', 'You have %d collections', $block->data.NB_COL)}</a>
     {/if}
   {/strip}</p>
-  {if $block->data.collections}
-  <ul>
-    {collectionsMenuItem
+  {collectionsMenuItem
       coll_id = "coll_template" 
       coll_name = "coll_name"
       coll_edit = "coll_edit"
       coll_nb_images = "coll_nb_images"
     }
+  <ul>
+  {if $block->data.collections}
 		{foreach from=$block->data.collections item=col}{strip}
       {collectionsMenuItem
         coll_id = $col.id
@@ -46,6 +46,6 @@
       }
 		{/strip}{/foreach}
     {if isset($block->data.MORE)}<li class="menuInfoCat"><a href="{$block->data.U_LIST}">{'%d more...'|translate:$block->data.MORE}</a></li>{/if}
-	</ul>
   {/if}
+	</ul>
 </dd>
