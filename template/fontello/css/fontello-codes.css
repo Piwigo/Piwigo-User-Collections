@@ -1,5 +1,4 @@
 
-.uc-icon-trash:before { content: '\e800'; } /* '' */
 .uc-icon-link:before { content: '\e801'; } /* '' */
 .uc-icon-star:before { content: '\e802'; } /* '' */
 .uc-icon-star-filled:before { content: '\e803'; } /* '' */
@@ -7,6 +6,9 @@
 .uc-icon-plus:before { content: '\e805'; } /* '' */
 .uc-icon-pencil:before { content: '\e806'; } /* '' */
 .uc-icon-warning-empty:before { content: '\e807'; } /* '' */
+.uc-icon-trash:before { content: '\e808'; } /* '' */
+.uc-icon-folder:before { content: '\e80a'; } /* '' */
+.uc-icon-broom:before { content: '\e80c'; } /* '' */
 .uc-icon-spin1:before { content: '\e830'; } /* '' */
 .uc-icon-mail-alt:before { content: '\f0e0'; } /* '' */
 .uc-icon-share:before { content: '\f1e0'; } /* '' */
