@@ -1,126 +1,53 @@
 {footer_script require='jquery'}
-var bg_color = jQuery('#the_page #content').css('background-color');
-if (!bg_color || bg_color=='transparent') {
-  bg_color = jQuery('body').css('background-color');
-}
 
-console.log('{$U_SHARE}');
+{* Pass data to JS*}
 
-{if isset($U_SHARE)}
-  var $share_form = jQuery('#share_form');
+var uc_share_open = {if isset($share.open)}true{else}false{/if};
 
-  // functions
-  jQuery.fn.extend({
-      hideVis: function() {
-          jQuery(this).css('visibility', 'hidden');
-          return this;
-      },
-      showVis: function() {
-          jQuery(this).css('visibility', 'visible');
-          return this;
-      },
-      toggleVis: function(toggle) {
-          if (jQuery(this).css('visibility')=='hidden' || toggle === true){
-              return jQuery(this).showVis();
-          } else {
-              return jQuery(this).hideVis();
-          }
-      }
-  });
+var uc_mail_open = {if isset($contact.open)}true{else}false{/if};
 
-  function enterShareKeyEdit() {
-      $share_form.find('.url-edit').show();
-      $share_form.find('.url-normal').hide();
-      jQuery('.share_colorbox_open').colorbox.resize({ldelim}speed:0});
-  }
-  function exitShareKeyEdit() {
-      $share_form.find('.url-edit').hide();
-      $share_form.find('.url-normal').show();
-      jQuery('.share_colorbox_open').colorbox.resize({ldelim}speed:0});
-  }
+var uc_remove_action = true;
 
-  // hide some inputs
-  exitShareKeyEdit();
+var user_theme = '{$USER_THEME}'; 
 
-  // display key
-  $share_form.find('.url-more').text($share_form.find('input[name="share_key"]').val());
+{* Pass HTML form *}
 
-  // url edition
-  $share_form.find('.edit_share_key').on('click', function(e) {
-      enterShareKeyEdit();
-      e.preventDefault();
-  });
-  $share_form.find('.set_share_key').on('click', function(e) {
-      if ($share_form.find('input[name="share_key"]').val().length < 8) {
-          alert('{'The key must be at least 8 characters long'|translate|escape:javascript}');
-      }
-      else {
-          $share_form.find('.url-more').text($share_form.find('input[name="share_key"]').val());
-          exitShareKeyEdit();
-      }
-      e.preventDefault();
-  });
-  $share_form.find('.cancel_share_key').on('click', function(e) {
-      $share_form.find('input[name="share_key"]').val($share_form.find('.url-more').text());
-      exitShareKeyEdit();
-      e.preventDefault();
-  });
-  $share_form.find('.url-more').on('dblclick', function() {
-      enterShareKeyEdit();
-  });
+var uc_mail_form = `{$UC_MAIL}`;
+var uc_share_form = `{$UC_SHARE}`;
+var uc_edit_form = `{$UC_EDIT}`;
 
-  // optional inputs
-  $share_form.find('.share-option').each(function() {
-      $share_form.find('input[name="'+ jQuery(this).data('for') +'"]').hideVis();
-  }).on('change', function() {
-      $share_form.find('input[name="'+ jQuery(this).data('for') +'"]').toggleVis($(this).is(':checked'));
-  });
+{* Language variable *}
 
-  // datetime picker
-  $share_form.find('input[name="share_deadline"]').datetimepicker({
-      dateFormat: 'yy-mm-dd',
-      minDate: new Date()
-  });
+var str_char_constraint = '{'The key must be at least 8 characters long'|translate|escape:javascript}';
+var str_mail_title = '{'Send this collection by mail'|translate}';
+var str_share_title = '{'Share this collection'|translate}';
+var str_send = '{'Send'|translate}';
+var str_cancel = '{'Cancel'|translate}';
+var str_close = '{'Close'|translate}';
+var str_add = '{'Add'|translate}';
+var str_delete_col = '{'Delete this collection'|translate}';
+var str_clear_col = '{'Clear this collection'|translate}';
+var str_are_you_sure = '{'Are you sure?'|translate}';
+var str_remove_from_col = '{'Remove from collection'|translate}';
+var str_jump_to_photo = '{'jump to photo'|translate|escape:javascript}';
+var str_save = '{'Save'|translate|escape:javascript}';
+var str_edit_col = '{'Edit this collection'|translate|escape:javascript}';
 
+{/footer_script}
 
-  // popup
-  jQuery('.share_colorbox_open').colorbox({
-    {if isset($share.open)}open: true, transition:"none",{/if}
-    inline:true
-  });
-  jQuery('.share_colorbox_close').click(function(e) {
-    jQuery('.share_colorbox_open').colorbox.close();
-    e.preventDefault();
-  });
-  jQuery('#share_form').css('background-color', bg_color);
-{/if}
+{combine_script id='uc_collection_common' require='jquery' load='footer' path='plugins/UserCollections/template/js/collectionCommon.js'}
 
 {if isset($U_MAIL)}
-  jQuery('.mail_colorbox_open').colorbox({
-    {if isset($contact.open)}open: true, transition:"none",{/if}
-    inline:true
-  });
-  jQuery('.mail_colorbox_close').click(function(e) {
-    jQuery('.mail_colorbox_open').colorbox.close();
-    e.preventDefault();
-  });
-
-  jQuery('#mail_form [name=to]').on('change', function() {
-    $('.recipient-input').toggle(jQuery(this).val() == 'email');
-    jQuery.colorbox.resize();
-  });
-
-  jQuery('#mail_form').css('background-color', bg_color);
+    {combine_script id='uc_collection_mail' require='jquery' load='footer' path='plugins/UserCollections/template/js/collectionMail.js'}
 {/if}
 
-jQuery('#edit_form_show').click(function() {
-  jQuery('.collection-edit').hide();
-  jQuery('.additional_info').hide();
-  jQuery('#edit_form').show();
-});
-jQuery('#edit_form_hide').click(function() {
-  jQuery('.collection-edit').show();
-  jQuery('.additional_info').show();
-  jQuery('#edit_form').hide();
-});
-{/footer_script}
+{if isset($U_SHARE)}
+    {combine_script id='uc_collection_share' require='jquery' load='footer' path='plugins/UserCollections/template/js/collectionShare.js'}
+{/if}
+
+{combine_script id='uc_collection_zoom' require='jquery' load='footer' path='plugins/UserCollections/template/js/collectionZoom.js'}
+
+{combine_script id='jquery.confirm' load='footer' require='jquery' path='themes/default/js/plugins/jquery-confirm.min.js'}
+{combine_css path="themes/default/js/plugins/jquery-confirm.min.css"}
+{combine_script id='jquery.colorbox' load='footer' require='jquery' path='themes/default/js/plugins/jquery.colorbox.min.js'}
+{combine_css id='colorbox' path='themes/default/js/plugins/colorbox/style2/colorbox.css'}

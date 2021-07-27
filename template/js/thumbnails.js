@@ -64,7 +64,6 @@ jQuery(document).ready(function () {
                     .then((col) => {
                         if (first) {
                             $cdm.children('.noCollecMsg').remove();
-                            $cdm.children('.add').trigger('click');
                         }
                         changeLink('addImages', col.id, $cdm.data('img_id'));
                     })
