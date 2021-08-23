@@ -9,79 +9,79 @@
     {
       "uid": "815503841e980c848f55e0271deacead",
       "css": "link",
-      "code": 59393,
+      "code": 59649,
       "src": "entypo"
     },
     {
       "uid": "ccc2329632396dc096bb638d4b46fb98",
       "css": "mail-alt",
-      "code": 61664,
+      "code": 59650,
       "src": "fontawesome"
     },
     {
       "uid": "bcdc294bb787b15203b82f2be8096548",
       "css": "star",
-      "code": 59394,
+      "code": 59651,
       "src": "typicons"
     },
     {
       "uid": "vyuzsm6wijlfwtjo4ifkoblfmsepk6g8",
       "css": "star-filled",
-      "code": 59395,
+      "code": 59652,
       "src": "typicons"
     },
     {
       "uid": "1dq4tek4k8ea7zlj4kc3w83itnutaxg5",
       "css": "cancel",
-      "code": 59396,
+      "code": 59653,
       "src": "typicons"
     },
     {
       "uid": "1gf923f9wvaezxmfon515dglxa3drf0e",
       "css": "plus",
-      "code": 59397,
+      "code": 59654,
       "src": "typicons"
     },
     {
       "uid": "4aad6bb50b02c18508aae9cbe14e784e",
       "css": "share",
-      "code": 61920,
+      "code": 59655,
       "src": "fontawesome"
     },
     {
       "uid": "72109d2fb3088d0e66ea6a9204297651",
       "css": "spin1",
-      "code": 59440,
+      "code": 59656,
       "src": "fontelico"
     },
     {
       "uid": "1e77a2yvsq3owssduo2lcgsiven57iv5",
       "css": "pencil",
-      "code": 59398,
+      "code": 59657,
       "src": "typicons"
     },
     {
       "uid": "8f28d948aa6379b1a69d2a090e7531d4",
       "css": "warning-empty",
-      "code": 59399,
+      "code": 59658,
       "src": "typicons"
     },
     {
       "uid": "83e7b366e9b39bc4006b821f7c5efa4d",
       "css": "folder",
-      "code": 59402,
+      "code": 59659,
       "src": "typicons"
     },
     {
       "uid": "csuoy0rqoun3unhsgjoy2uumpldzbfmt",
       "css": "trash",
-      "code": 59400,
+      "code": 59660,
       "src": "typicons"
     },
     {
       "uid": "94b84434a1db56de3c3403261c073421",
       "css": "broom",
-      "code": 59404,
+      "code": 59661,
       "src": "custom_icons",
       "selected": true,
       "svg": {
