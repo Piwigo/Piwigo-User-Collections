@@ -4,9 +4,13 @@ $(function () {
     let getTitle = (node) => $(node).closest('.wrap1').find('.thumbName').html();
     
     if (user_theme === 'modus') {
-        selector = '#thumbnails > li > a:not(.addCollection)';
-        getSrc = (node) => $(node).find('img').attr('src');
-        getTitle = (node) => $(node).parent().find('.overDesc').html();
+        selector = '#thumbnails > li a:not(.addCollection)';
+        getSrc = (node) => {
+            let initialSrc = $(node).find('img').attr('src');
+            let match = [...initialSrc.matchAll(/(upload\S*)-[^._]+.(\S+)/gm)][0];
+            return "i.php?/"+match[1]+'-me.'+match[2];
+        };
+        getTitle = (node) => $(node).parent().find('img').attr('title');
     } else if (user_theme === 'bootstrap_darkroom') {
         getTitle = (node) => $(node).closest('.card-thumbnail').find('.card-title').html();
     }
