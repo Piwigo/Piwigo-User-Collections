@@ -418,7 +418,7 @@ $template->assign_var_from_handle('CONTENT', 'uc_page');
 
 
 // modification on mainpage_categories.tpl
-function user_collections_categories_list($content, &$smarty)
+function user_collections_categories_list($content)
 {
   $search = '<div class="thumbnailCategory">';
 
