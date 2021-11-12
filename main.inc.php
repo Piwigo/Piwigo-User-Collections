@@ -6,6 +6,7 @@ Description: Registered users can select pictures from the gallery and save them
 Plugin URI: auto
 Author: Mistic
 Author URI: http://www.strangeplanet.fr
+Has Settings: true
 */
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
@@ -59,11 +60,7 @@ function user_collections_init()
   
   add_event_handler('ws_add_methods', 'user_collections_ws_add_methods');
 
-  if (defined('IN_ADMIN'))
-  {
-    add_event_handler('get_admin_plugin_menu_links', 'user_collections_admin_menu');
-  }
-  else
+  if (!defined('IN_ADMIN'))
   {
     // collections page
     add_event_handler('loc_end_section_init', 'user_collections_section_init');
@@ -79,17 +76,4 @@ function user_collections_init()
   // menu
   add_event_handler('blockmanager_register_blocks', 'user_collections_add_menublock');
   add_event_handler('blockmanager_apply', 'user_collections_applymenu');
-}
-
-/**
- * admin plugins menu
- */
-function user_collections_admin_menu($menu)
-{
-  $menu[] = array(
-    'NAME' => 'User Collections',
-    'URL' => USER_COLLEC_ADMIN,
-    );
-
-  return $menu;
 }
