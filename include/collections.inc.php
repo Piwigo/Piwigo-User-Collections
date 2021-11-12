@@ -422,7 +422,7 @@ function user_collections_categories_list($content)
 {
   $search = '<div class="thumbnailCategory">';
 
-  $replace = $search . file_get_contents(realpath(USER_COLLEC_PATH . 'template\thumbnail_collection.tpl'));
+  $replace = $search . file_get_contents(realpath(USER_COLLEC_PATH . 'template/thumbnail_collection.tpl'));
 
   return str_replace($search, $replace, $content);
 }
