@@ -73,3 +73,4 @@ $lang['To'] = 'Pour';
 $lang['Administrator'] = 'Administrateur';
 $lang['Someone else'] = 'Quelqu\'un d\'autre';
 $lang['Add all photos of this album to a collection'] = 'Ajouter toutes les photos de cet album à une collection';
+$lang['Open'] = 'Ouvrir';
