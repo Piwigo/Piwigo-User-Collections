@@ -69,6 +69,7 @@ $lang['Description'] = 'Description';
 $lang['jump to photo'] = 'jump to photo';
 $lang['Name'] = 'Name';
 $lang['Send'] = 'Send';
+$lang['Open'] = 'Open';
 $lang['To'] = 'To';
 $lang['Administrator'] = 'Administrator';
 $lang['Someone else'] = 'Someone else';
