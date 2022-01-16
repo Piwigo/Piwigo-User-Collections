@@ -4,12 +4,22 @@ jQuery(document).ready(function () {
 
     thumbnails.each((index, elem) => {
 
-        let match = /picture\.php\?\/(\d+)/.exec($(elem).find('a').attr('href'));
+        let id = null;
+
+        if ($(elem).find('a').attr('data-id')) {
+            id = $(elem).find('a').attr('data-id');
+        } else { //For Modus, the prefilter that add the "data-id" don't work
+            let match = /\?\/(\d+)/.exec($(elem).find('a').attr('href'));
+            
+            if (match) {
+                id = match[1]
+            }
+        }
+
 
         let nodeAction = htmlThumbnailAction;
 
-        if (match) {
-            let id = match[1];
+        if (id) {
             nodeAction = nodeAction.replace('%id%', id);
             if (collectionImage && collectionImage[id])
                 nodeAction = nodeAction.replace('%collections%', collectionImage[id])

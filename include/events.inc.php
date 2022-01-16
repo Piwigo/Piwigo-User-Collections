@@ -170,10 +170,19 @@ SELECT id, name, nb_images
     'COLLECTIONS' => $collections,
     'USER_COLLEC_PATH' => USER_COLLEC_PATH,
     ));
-  
-  
 
-  return $tpl_thumbnails_var;
+    $template->set_prefilter('index_thumbnails', 'user_collections_add_picture_id');
+    
+    return $tpl_thumbnails_var;
+}
+
+function user_collections_add_picture_id($content)
+{
+  $search = '<a href="{$thumbnail.URL}"';
+  
+  $replace = $search . ' data-id="{$thumbnail.id}"';
+  
+  return str_replace($search, $replace, $content);
 }
 
 // +-----------------------------------------------------------------------+
