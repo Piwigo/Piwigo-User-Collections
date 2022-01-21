@@ -93,3 +93,4 @@ $lang['Allow users to send their collections (public or not) to the admin'] = '�
 $lang['To'] = 'Хүлээн авагч';
 $lang['Administrator'] = 'Зохицуулагч';
 $lang['Add all photos of this album to a collection'] = 'Энэ цомгийн бүх зургийг цуглуулганд нэмэх';
+$lang['Open'] = 'Нээх';
