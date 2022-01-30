@@ -20,9 +20,9 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['%d more...'] = '%in več';
+$lang['%d more...'] = '%d več ...';
 $lang['(remove)'] = '(odstrani)';
-$lang['A photo collection by %s'] = 'Zbirka fotografij uporabnika %';
+$lang['A photo collection by %s'] = 'Zbirka fotografij uporabnika %s';
 $lang['Active'] = 'Aktivno';
 $lang['Add to collection'] = 'Dodaj v zbirko';
 $lang['Allow users to send their public collections by mail'] = 'Dovoli uporabnikom pošiljanje javnih zbirk po e-pošti';
