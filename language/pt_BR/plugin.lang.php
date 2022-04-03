@@ -93,3 +93,4 @@ $lang['Allow users to send their collections (public or not) to the admin'] = 'P
 $lang['Someone else'] = 'Outra pessoa';
 $lang['To'] = 'Para';
 $lang['Add all photos of this album to a collection'] = 'Adicionar todas as fotos deste album a uma coleção';
+$lang['Open'] = 'Aberto';
