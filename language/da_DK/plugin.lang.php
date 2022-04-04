@@ -93,3 +93,4 @@ $lang['Administrator'] = 'Administrator';
 $lang['Someone else'] = 'En anden';
 $lang['To'] = 'Til';
 $lang['Add all photos of this album to a collection'] = 'Tilføj alle dette albums fotografier til en samling';
+$lang['Open'] = 'Åbn';
