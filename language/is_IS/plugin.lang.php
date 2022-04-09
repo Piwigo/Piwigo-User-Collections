@@ -1,0 +1,81 @@
+<?php
+// +-----------------------------------------------------------------------+
+// | This file is part of Piwigo.                                          |
+// |                                                                       |
+// | For copyright and license information, please view the COPYING.txt    |
+// | file that was distributed with this source code.                      |
+// +-----------------------------------------------------------------------+
+$lang['Share this collection'] = 'Deila þessu safni';
+$lang['Someone else'] = 'Einhver annar';
+$lang['The key must be at least 8 characters long'] = 'Lykillinn verður að vera að minnsta kosti 8 stafir að lengd';
+$lang['This collection is empty'] = 'Þetta safn er tómt';
+$lang['This key is already used'] = 'Þessi lykill er þegar í notkun';
+$lang['This link expired'] = 'Þessi hlekkur er útrunninn';
+$lang['To'] = 'Til';
+$lang['You have %d collection'] = 'Þú ert með %d safn';
+$lang['You have %d collections'] = 'Þú ert með %d söfn';
+$lang['You have no collection'] = 'Þú ert ekki með neitt safn';
+$lang['Your e-mail'] = 'Þitt netfang';
+$lang['Your name'] = 'Þitt nafn';
+$lang['by %s'] = 'eftir %s';
+$lang['jump to photo'] = 'hoppa í mynd';
+$lang['Number of images'] = 'Fjöldi mynda';
+$lang['Open'] = 'Opið';
+$lang['Photos number, high &rarr; low'] = 'Fjöldi mynda, hátt &rarr; lágt';
+$lang['Photos number, low &rarr; high'] = 'Fjöldi mynda, lágt &rarr; hátt';
+$lang['Please enter the recipient e-mail'] = 'Vinsamlega sláðu inn netfang viðtakenda';
+$lang['Please enter the recipient name'] = 'Vinsamlega sláðu inn nafn viðtakenda';
+$lang['Please enter your e-mail'] = 'Vinsamlega sláðu inn þitt netfang';
+$lang['Please enter your name'] = 'Vinsamlega sláðu inn þitt nafn';
+$lang['Please give a name'] = 'Vinsamlegast gefðu upp nafn';
+$lang['Preview'] = 'Forskoða';
+$lang['Recipient e-mail'] = 'Netfang viðtakanda';
+$lang['Recipient name'] = 'Nafn viðtakanda';
+$lang['Remove from collection'] = 'Fjarlægja frá safni';
+$lang['Restricted access'] = 'Takmarkaður aðgangur';
+$lang['Save'] = 'Vista';
+$lang['Send'] = 'Senda';
+$lang['Send this collection by mail'] = 'Senda þetta safn með tölvupósti';
+$lang['Share'] = 'Deila';
+$lang['Share deleted'] = 'Deilingu eytt';
+$lang['Share key'] = 'Deilingarlykill';
+$lang['Date added to collection, new &rarr; old'] = 'Dagsetning bætt við safn, ný &rarr; eldri';
+$lang['Date added to collection, old &rarr; new'] = 'Dagsetning bætt við safn, eldri &rarr; ný';
+$lang['Delete this collection'] = 'Eyða þessu safni';
+$lang['Description'] = 'Lýsing';
+$lang['Download CSV file'] = 'Hlaða niður CSV skrá';
+$lang['E-mail sent successfully'] = 'Tölvupóstur sendur';
+$lang['Edit this collection'] = 'Breyta þessu safni';
+$lang['Error while sending e-mail'] = 'Villa við að senda tölvupóst';
+$lang['Expiration date'] = 'Gildistími';
+$lang['Export image list'] = 'Flytja út myndalista';
+$lang['Fields'] = 'Reitir';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Halló %s, %s sendi þér myndasafn frá “%s”';
+$lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = 'Halló <b>%s</b>, %s sendi þér myndasafn frá <a href="%s">%s</a>';
+$lang['Inactive'] = 'Óvirk';
+$lang['Invalid collection'] = 'Ógilt safn';
+$lang['Message (optional)'] = 'Skilaboð (valfrjálst)';
+$lang['Name'] = 'Nafn';
+$lang['Name, A &rarr; Z'] = 'Nafn, A &rarr; Ö';
+$lang['Name, Z &rarr; A'] = 'Nafn, Ö &rarr; A';
+$lang['New share added: <a href="%s">%s</a>'] = 'Nýrri deilingu bætt við: <a href="%s">%s</a>';
+$lang['%d more...'] = '%d meira...';
+$lang['(remove)'] = '(fjarlægja)';
+$lang['A photo collection by %s'] = 'Myndasafn eftir %s';
+$lang['Active'] = 'Virk';
+$lang['Add'] = 'Bæta við';
+$lang['Add all photos of this album to a collection'] = 'Bættu öllum myndum af þessu albúmi í safn';
+$lang['Add to collection'] = 'Bæta í safn';
+$lang['Administrator'] = 'Stjórnandi';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Leyfa notendum að senda söfnin sín (opinber eða ekki) til stjórnanda';
+$lang['Allow users to send their public collections by mail'] = 'Leyfa notendum að senda opinber söfn sín með pósti';
+$lang['Allow users to set their collections as public'] = 'Leyfa notendum að stilla söfn sín sem opinber';
+$lang['Cancel'] = 'Hætta við';
+$lang['Clear'] = 'Hreinsa';
+$lang['Clear this collection'] = 'Hreinsa þetta safn';
+$lang['Click here to view the complete collection'] = 'Smelltu hér til að skoða heildarsafnið';
+$lang['Collection'] = 'Safn';
+$lang['Collection name:'] = 'Safnheiti:';
+$lang['Collection not found'] = 'Safn finnst ekki';
+$lang['Collections'] = 'Söfn';
+$lang['Create a new collection'] = 'Stofna nýtt safn';
