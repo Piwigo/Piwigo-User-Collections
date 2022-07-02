@@ -28,11 +28,13 @@ var collectionMenuNbImages = '.nbImagesCollec-%id%';
 var collectionMenuTemplate = '.mbUCItem-coll_template'
 var mbUserCollection = '#mbUserCollection ul';
 
-{if ($USER_THEME=='bootstrap_darkroom')}
+{if ($USER_THEME=='bootstrap_darkroom') }
 
+{if (!$GTHUMB_ACTIVE)}
 thumbnailsActions = '#thumbnails .card';
 findThumbnailToHide = '.col-outer';
 thumbnailAction = '#thumbnails .addCollection';
+{/if}
 collectionMenuTemplate = '#menu-info-coll-coll_template';
 collectionMenuNbImages = "#menu-info-coll-%id% .badge";
 mbUserCollection = '#menu-info-coll-container';

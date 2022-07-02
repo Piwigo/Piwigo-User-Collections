@@ -20,6 +20,12 @@
   display:block !important;
 }
 
+#thumbnails li.gthumb .addCollection {
+  font-size: 12px;
+  text-align: center;
+  height: 24px;
+}
+
 #collectionsDropdown {
   display:none;
   position:fixed;
