@@ -214,7 +214,7 @@ jQuery(document).ready(function () {
                     'top': jQuery(this).offset().top + jQuery(this).outerHeight(true)
                 });
             } else {
-                
+
                 $cdm.css({
                     'left': Math.min(e.pageX - jQuery(window).scrollLeft() - 20, jQuery(window).width() - $cdm.outerWidth(true) - 5),
                     'top':  Math.min(e.pageY - jQuery(window).scrollTop() - 5, jQuery(window).height() - $cdm.outerHeight(true)-5)
