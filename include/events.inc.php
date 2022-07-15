@@ -48,7 +48,7 @@ function user_collections_section_init()
 /* collections section */
 function user_collections_page()
 {
-  global $page, $template, $user;
+  global $page, $template, $user, $pwg_loaded_plugins;
   include_once(PHPWG_ROOT_PATH.'admin/include/plugins.class.php');
 
   if (isset($page['section']) and $page['section'] == 'collections')
@@ -61,23 +61,7 @@ function user_collections_page()
     $template->assign('USER_THEME', $user['theme']);
 
     // Check if GThumb is activated
-    $gthumbActive = false;
-
-    $plugins = new plugins();
-  
-    foreach ($plugins->fs_plugins as $plugin_id => $fs_plugin)
-    {
-      if (
-        $fs_plugin['name'] == "GThumb+"
-        && isset($plugins->db_plugins_by_id[$plugin_id])
-        && $plugins->db_plugins_by_id[$plugin_id]['state'] == "active"
-      )
-      {
-        $gthumbActive = true;
-      }
-    }
-
-    $template->assign('GTHUMB_ACTIVE', $gthumbActive);
+    $template->assign('GTHUMB_ACTIVE', isset($pwg_loaded_plugins['GThumb']));
     
     // Add thumbnail action
     $template->set_filename('uc_thumbnail_action', 'thumbnails_user_collections_action.tpl');
