@@ -93,3 +93,4 @@ $lang['Allow users to send their collections (public or not) to the admin'] = '�
 $lang['Allow users to send their public collections by mail'] = 'ユーザがパブリックなコレクションをメールで送信することを許可する';
 $lang['Allow users to set their collections as public'] = 'ユーザが彼らのコレクションをパブリックに設定することを許可する';
 $lang['Cancel'] = '取り消す';
+$lang['Open'] = '開く';
