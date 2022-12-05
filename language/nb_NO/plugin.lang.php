@@ -94,3 +94,4 @@ $lang['Create a new collection'] = 'Opprette en ny samling';
 $lang['Date added to collection, new &rarr; old'] = 'Dato lagt til samlingen, ny &rarr; gammel';
 $lang['Add all photos of this album to a collection'] = 'Legg alle bilder i dette album til en samling
 ';
+$lang['Open'] = 'Åpen';
