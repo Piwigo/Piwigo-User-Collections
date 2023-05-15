@@ -1,4 +1,4 @@
-{math assign=tn_width equation="min(x,150)"  x=$derivative_params->max_width()}
+{$tn_width = min($derivative_params->max_width(), 150)}
 <style type="text/css">{strip}
 #contentTable {
   width:{math equation="x*4+200" x=$tn_width}px;
