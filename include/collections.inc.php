@@ -202,7 +202,7 @@ case 'edit':
         else
         {
           $contact = array();
-          $page['infos'] = l10n('E-mail sent successfully');
+          $page['infos'][] = l10n('E-mail sent successfully');
         }
       }
 
