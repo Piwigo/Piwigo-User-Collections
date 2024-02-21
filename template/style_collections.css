@@ -45,14 +45,22 @@
 .thumbnailCategory {
   position:relative;
 }
-.thumbnailCategory .collectionActions {
-  display:none;
-  position:absolute;
-  right:5px;
-  bottom:5px;
+
+#theCollectionPage .thumbnailCategory{
+  height:auto!important;
+  padding:10px 0;
 }
-.thumbnailCategory:hover .collectionActions {
-  display:block;
+
+.thumbnailCategory .collectionActions {
+  position:relative;
+  display:flex;
+  width:100%;
+  top: unset!important;
+  right: unset!important;
+  transform: unset!important;
+  margin-bottom:10px;
+  /* align-items: unset!important; */
+  justify-content:center;
 }
 
 /* MAIL AND SHARE POPIN */
