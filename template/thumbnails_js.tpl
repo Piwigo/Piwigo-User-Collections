@@ -5,8 +5,8 @@
 
 {* Data *}
 
-var collectionImage = JSON.parse('{json_encode($IMAGES_COLLECTIONS)}');
-var htmlThumbnailAction = '{$UC_THUMBNAIL_ACTION}';
+var collectionImage = {if isset($IMAGES_COLLECTIONS)}JSON.parse('{json_encode($IMAGES_COLLECTIONS)}'){else}null{/if};
+var htmlThumbnailAction = {if isset($UC_THUMBNAIL_ACTION)}'{$UC_THUMBNAIL_ACTION}'{else}null{/if};
 var rootUrl = '{$ROOT_URL}';
 
 {* Language variable *}
@@ -30,7 +30,7 @@ var mbUserCollection = '#mbUserCollection ul';
 
 {if ($USER_THEME=='bootstrap_darkroom') }
 
-{if (!$GTHUMB_ACTIVE)}
+{if isset($GTHUMB_ACTIVE) && (!$GTHUMB_ACTIVE)}
 thumbnailsActions = '#thumbnails .card';
 findThumbnailToHide = '.col-outer';
 thumbnailAction = '#thumbnails .addCollection';

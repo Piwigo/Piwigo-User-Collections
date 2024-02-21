@@ -46,7 +46,7 @@
       <td class="action">{'Actions'|translate}</td>
     </tr>
   </thead>
-
+{if isset($sets)}
   {foreach from=$sets item=set name=sets_loop}
   <tr class="{if $smarty.foreach.sets_loop.index is odd}row1{else}row2{/if}">
     <td>
@@ -70,7 +70,7 @@
   </tr>
   {/foreach}
 
-  {if not $sets}
+  {else}
   <tr class="row2">
     <td colspan="8" style="text-align:center;font-style:italic;">{'No results'|translate}</td>
   </tr>

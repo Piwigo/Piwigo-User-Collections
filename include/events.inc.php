@@ -237,6 +237,7 @@ SELECT id, name, nb_images
     'USER_COLLEC_PATH' => USER_COLLEC_PATH,
     'USER_COLLEC_ABS_PATH' => realpath(USER_COLLEC_PATH).'/',
     'IN_PICTURE' => true,
+    'USER_THEME' => $user['theme'],
     ));
 
   // toolbar button
