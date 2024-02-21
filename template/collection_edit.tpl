@@ -1,4 +1,4 @@
-<form action="{$F_ACTION}" method="post" class="uc_form" id="edit_form">
+<form method="post" class="uc_form" id="edit_form">
   <div class="uc_input_group">
     <label for="name">{'Name'|translate}</label>
     <input type="text" name="name" id="name" value="{$collection.NAME|escape:html}" size="60">

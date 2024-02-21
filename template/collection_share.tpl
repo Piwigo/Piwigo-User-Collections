@@ -1,5 +1,10 @@
-<form id="share_form" class="uc_form" action="{$F_ACTION}" method="post">
-    {include file='infos_errors.tpl' errors=$share.errors infos=$share.infos}
+<form id="share_form" class="uc_form" method="post">
+{if isset($share.errors)}
+    {include file='infos_errors.tpl' errors=$share.errors }
+{/if}
+{if isset($share.infos)}
+  {include file='infos_errors.tpl' infos=$share.infos}
+{/if}
     
     <div class="uc_share_url">
         <span class="url-base">{$U_SHARE}</span><span class="url-more url-normal"></span>
