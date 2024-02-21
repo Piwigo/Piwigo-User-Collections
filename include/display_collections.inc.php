@@ -89,11 +89,8 @@ SELECT * FROM (
 
   $thumbnails[0] = array(
     'id' => 0,
-    'path' => 'themes/default/icon/img_small.png',
+    'path' => USER_COLLEC_PATH.'template/images/image.png',
     'picture_ext' => 'png',
-    'width' => 32,
-    'height' => 32,
-    'rotation' => 0,
     );
 
   foreach ($thumbnails as &$info)
