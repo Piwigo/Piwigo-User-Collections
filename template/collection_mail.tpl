@@ -8,19 +8,9 @@
 {/if}
   
 
-    <div class="uc_input_group">
-        <label for="sender_name">{'Your name'|translate}</label>  
-        <input type="text" name="sender_name" id="sender_name" size="40" value="{$contact.sender_name}">
-    </div>
-
-    <div class="uc_input_group">
-        <label for="sender_email">{'Your e-mail'|translate}</label> 
-        <input type="text" name="sender_email" id="sender_email" size="40" value="{$contact.sender_email}">
-    </div>
-
     {if $UC_CONFIG.allow_send_admin && !$UC_CONFIG.allow_mails}
     <div>
-        <span>{'To'|translate} {'Administrator'|translate}</span>
+        <span>{'To'|translate} {'All Administrators'|translate}</span>
     </div>
     {/if}
 
@@ -30,7 +20,7 @@
         <label for="to_other">{'Someone else'|translate}</label>
 
         <input type="radio" name="to" value="admin" id="to_admin">
-        <label for="to_admin">{'Administrator'|translate}</label>
+        <label for="to_admin">{'All Administrators'|translate}</label>
     </div>
 
     <div class="recipient-input uc_input_group">
@@ -45,7 +35,7 @@
 
     <div class="uc_input_group">
         <label for="message">{'Message'|translate}</label>
-        <textarea name="message" id="message" rows="6">{$contact.message}</textarea>
+        <textarea name="message" id="message" rows="3">{$contact.message}</textarea>
     </div>
 
     <input type="hidden" name="key" value="{$UC_TKEY}">
