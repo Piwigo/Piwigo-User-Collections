@@ -1,0 +1,81 @@
+<?php
+// +-----------------------------------------------------------------------+
+// | This file is part of Piwigo.                                          |
+// |                                                                       |
+// | For copyright and license information, please view the COPYING.txt    |
+// | file that was distributed with this source code.                      |
+// +-----------------------------------------------------------------------+
+$lang['You have %d collection'] = 'Sinulla on %d kokoelma';
+$lang['You have %d collections'] = 'Sinulla on %d kokoelmaa';
+$lang['You have no collection'] = 'Sinulla ei ole kokoelmia';
+$lang['Your e-mail'] = 'Sähköpostiosoitteesi';
+$lang['Your name'] = 'Nimesi';
+$lang['by %s'] = '%s:tä';
+$lang['jump to photo'] = 'hyppää kuvaan';
+$lang['New share added: <a href="%s">%s</a>'] = 'Uusi jako lisätty: <a href="%s">%s</a>';
+$lang['The key must be at least 8 characters long'] = 'Avaimen on oltava ainakin 8 merkkiä pitkä';
+$lang['This collection is empty'] = 'Tämä kokoelma on tyhjä';
+$lang['This key is already used'] = 'Tämä avain on jo käytössä';
+$lang['This link expired'] = 'Linkki on vanhentunut';
+$lang['To'] = 'Vastaanottaja';
+$lang['Send'] = 'Lähetä';
+$lang['Send this collection by mail'] = 'Lähetä tämä kokoelma sähköpostilla';
+$lang['Share'] = 'Jaa';
+$lang['Share deleted'] = 'Jako poistettu';
+$lang['Share key'] = 'Jakoavain';
+$lang['Share this collection'] = 'Jaa tämä kokoelma';
+$lang['Someone else'] = 'Joku muu';
+$lang['Number of images'] = 'Kuvien lukumäärä';
+$lang['Please enter your name'] = 'Anna nimesi';
+$lang['Please give a name'] = 'Anna nimi';
+$lang['Preview'] = 'Esikatselu';
+$lang['Recipient e-mail'] = 'Vastaanottajan sähköpostiosoite';
+$lang['Recipient name'] = 'Vastaanottajan nimi';
+$lang['Remove from collection'] = 'Poista kokoelmasta';
+$lang['Restricted access'] = 'Rajattu pääsy';
+$lang['Save'] = 'Tallenna';
+$lang['Name, A &rarr; Z'] = 'Nimi, A &rarr; Ö';
+$lang['Name, Z &rarr; A'] = 'Nimi, Ö &rarr; A';
+$lang['Inactive'] = 'Ei-aktiivinen';
+$lang['Invalid collection'] = 'Virheellinen kokoelma';
+$lang['Message (optional)'] = 'Viesti (valinnainen)';
+$lang['Name'] = 'Nimi';
+$lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = 'Hei <b>%s</b>, %s lähetti sinulle kuvakokoelman <a href="%s">%s:stä</a>';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = 'Hei %s, %s lähetti sinulle kuvia kokoelmasta "%s"';
+$lang['Date added to collection, new &rarr; old'] = 'Päivä jolloin lisättiin kokoelmaan, uusi &rarr; vanha';
+$lang['Date added to collection, old &rarr; new'] = 'Päivä jolloin lisättiin kokoelmaan, vanha &rarr; uusi';
+$lang['Please enter the recipient e-mail'] = 'Anna vastaanottajan sähköpostiosoite';
+$lang['Please enter the recipient name'] = 'Anna vastaanottajan nimi';
+$lang['Please enter your e-mail'] = 'Anna sähköpostiosoite';
+$lang['Open'] = 'Avaa';
+$lang['Photos number, high &rarr; low'] = 'Kuvan numero, suuri &rarr; pieni';
+$lang['Photos number, low &rarr; high'] = 'Kuvan numero, pieni &rarr; suuri';
+$lang['Click here to view the complete collection'] = 'Klikkaa tästä nähdäkseksi koko kokoelman';
+$lang['Allow users to send their collections (public or not) to the admin'] = 'Salli käyttäjien lähettä kokoelmansa (julkisia tai ei) ylläpitäjälle';
+$lang['Allow users to send their public collections by mail'] = 'Salli käyttäjien lähettää julkiset kokoelmansa sähköpostilla';
+$lang['Allow users to set their collections as public'] = 'Salli käyttäjien tehdä kokoelmistaan julkisia';
+$lang['Error while sending e-mail'] = 'Virhe sähköpostin lähetyksessä';
+$lang['Export image list'] = 'Valokuvien vientilista';
+$lang['Delete this collection'] = 'Poista tämä kokoelma';
+$lang['Description'] = 'Kuvaus';
+$lang['Download CSV file'] = 'Lataa CSV-tiedosto';
+$lang['E-mail sent successfully'] = 'Sähköposti lähetettiin onnistuneesti';
+$lang['Edit this collection'] = 'Muokkaa tätä kokoelmaa';
+$lang['Expiration date'] = 'Vanhenemispäivä';
+$lang['Fields'] = 'Kentät';
+$lang['Add all photos of this album to a collection'] = 'Lisää kaikki tämän albumin kuvat kokoelmaan';
+$lang['Add to collection'] = 'Lisää kokoelmaan';
+$lang['Administrator'] = 'Ylläpitäjä';
+$lang['Cancel'] = 'Peru';
+$lang['Clear'] = 'Tyhjennä';
+$lang['Clear this collection'] = 'Tyhjennä tämä kokoelma';
+$lang['Collection'] = 'Kokoelma';
+$lang['Collection name:'] = 'Kokoelman nimi:';
+$lang['Collection not found'] = 'Kokoelmaa ei löytynyt';
+$lang['Collections'] = 'Kokoelmat';
+$lang['Create a new collection'] = 'Luo uusi kokoelma';
+$lang['A photo collection by %s'] = '%s:n valokuvakokoelma';
+$lang['Active'] = 'Aktiivinen';
+$lang['Add'] = 'Lisää';
+$lang['%d more...'] = '%d lisää...';
+$lang['(remove)'] = '(poista)';
