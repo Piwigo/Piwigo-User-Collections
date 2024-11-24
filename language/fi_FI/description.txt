@@ -1,0 +1,1 @@
+Rekisteröidyt käyttävät voivat valita kuvia galleriasta ja tallentaa ne kokoelmiin, jotka on eräänlainen edistynyt suosikit-toiminto.
