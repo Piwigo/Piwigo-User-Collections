@@ -72,5 +72,6 @@ $lang['Send'] = 'Send';
 $lang['Open'] = 'Open';
 $lang['To'] = 'To';
 $lang['Administrator'] = 'Administrator';
+$lang['All Administrators'] = 'All Administrators';
 $lang['Someone else'] = 'Someone else';
 $lang['Add all photos of this album to a collection'] = 'Add all photos of this album to a collection';
