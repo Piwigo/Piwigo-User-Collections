@@ -78,9 +78,8 @@ SELECT image_id
     // create a new collection
     else if ($col_id == 'new')
     {
-      $this->data['name'] = $name;
+      $this->data['name'] =  pwg_db_real_escape_string(strip_tags($name));
       $this->data['comment'] = $comment;
-
       $query = '
 INSERT INTO '.COLLECTIONS_TABLE.'(
     user_id,
@@ -131,8 +130,9 @@ INSERT INTO '.COLLECTIONS_TABLE.'(
   {
     if ($value != $this->data[$name])
     {
-      $this->data[$name] = $value;
-      pwg_query('UPDATE '.COLLECTIONS_TABLE.' SET '.$name.' = "'.pwg_db_real_escape_string($value).'" WHERE id = '.$this->data['id'].';');
+      $this->data[$name] = pwg_db_real_escape_string(strip_tags($value));
+      pwg_query('UPDATE '.COLLECTIONS_TABLE.' SET '.$name.' = "'.$value.'" WHERE id = '.$this->data['id'].';');
+
     }
   }
 
