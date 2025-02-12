@@ -60,6 +60,8 @@ function user_collections_init()
   
   add_event_handler('ws_add_methods', 'user_collections_ws_add_methods');
 
+  add_event_handler('delete_elements', 'user_collections_delete_elements');
+
   if (!defined('IN_ADMIN'))
   {
     // collections page
@@ -76,4 +78,14 @@ function user_collections_init()
   // menu
   add_event_handler('blockmanager_register_blocks', 'user_collections_add_menublock');
   add_event_handler('blockmanager_apply', 'user_collections_applymenu');
+}
+
+function user_collections_delete_elements($ids)
+{
+    // when an image is deleted, remove from collection
+    $query = '
+DELETE FROM '.COLLECTION_IMAGES_TABLE.'
+WHERE image_id IN ('.implode(',', $ids).')
+;';
+    pwg_query($query);
 }

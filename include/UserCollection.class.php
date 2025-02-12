@@ -51,15 +51,6 @@ SELECT *
           pwg_db_fetch_assoc($result)
           );
 
-        // make sure all pictures of the collection exist
-        $query = '
-DELETE FROM '.COLLECTION_IMAGES_TABLE.'
-  WHERE image_id NOT IN (
-    SELECT id FROM '.IMAGES_TABLE.'
-    )
-;';
-        pwg_query($query);
-
         // select images of the collection
         $query = '
 SELECT image_id
