@@ -93,3 +93,4 @@ $lang['Someone else'] = 'Ktoś inny';
 $lang['To'] = 'Do';
 $lang['Administrator'] = 'Administrator';
 $lang['Add all photos of this album to a collection'] = 'Dodaj wszystkie zdjęcia z tego albumu do kolekcji';
+$lang['Open'] = 'Otwórz';
