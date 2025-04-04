@@ -174,18 +174,17 @@ case 'edit':
     if (($conf['user_collections']['allow_public'] && $conf['user_collections']['allow_mails'])
         || $conf['user_collections']['allow_send_admin'])
     {
-      if (isset($_POST['send_mail']))
-      {
+      if (isset($_POST['message'])) {
         $contact = array(
-          'sender_email' =>     trim($_POST['sender_email']),
-          'sender_name' =>      trim($_POST['sender_name']),
+          'sender_email' =>     trim(get_webmaster_mail_address()),
+          'sender_name' =>      trim($user['username']),
           'to' =>               $_POST['to'],
           'recipient_email' =>  trim($_POST['recipient_email']),
           'recipient_name' =>   trim($_POST['recipient_name']),
           'nb_images' =>        $_POST['nb_images'],
           'message' =>          $_POST['message'],
           );
-
+  
         if (!verify_ephemeral_key(@$_POST['key']))
         {
           $result = array(l10n('Invalid key'));
@@ -206,7 +205,7 @@ case 'edit':
         }
       }
 
-      if (!isset($contact['sender_email']))
+      if (!isset($contact['message']))
       {
         $contact['sender_name'] =     $user['username'];
         $contact['sender_email'] =    $user['email'];
