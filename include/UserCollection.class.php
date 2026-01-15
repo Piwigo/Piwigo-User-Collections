@@ -559,14 +559,17 @@ SELECT
           'email' => $comm['sender_email'],
           )
         );
+
+      $derivative_params = ImageStdParams::get_by_type(IMG_SQUARE);
       $mail_tpl = array(
         'filename' => 'mail',
         'dirname' => realpath(USER_COLLEC_PATH . 'template'),
         'assign' => array(
           'COL_URL' => $col_url,
           'PARAMS' => $comm,
-          'derivative_params' => ImageStdParams::get_by_type(IMG_SQUARE),
+          'derivative_params' => $derivative_params,
           'THUMBNAILS' => $thumbnails,
+          'tn_width' => min($derivative_params->max_width(), 150),
           )
         );
       
