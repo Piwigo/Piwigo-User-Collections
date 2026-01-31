@@ -1,0 +1,81 @@
+<?php
+// +-----------------------------------------------------------------------+
+// | This file is part of Piwigo.                                          |
+// |                                                                       |
+// | For copyright and license information, please view the COPYING.txt    |
+// | file that was distributed with this source code.                      |
+// +-----------------------------------------------------------------------+
+$lang['by %s'] = '%s별';
+$lang['Share this collection'] = '이 컬렉션 공유하기';
+$lang['Someone else'] = '다른 사람';
+$lang['The key must be at least 8 characters long'] = '키는 최소 8자 이상이어야 합니다';
+$lang['This collection is empty'] = '이 컬렉션은 비어 있습니다';
+$lang['This key is already used'] = '이 키는 이미 사용 중입니다';
+$lang['This link expired'] = '이 링크는 만료되었습니다';
+$lang['To'] = '받는 사람';
+$lang['You have %d collection'] = '당신은 %d개의 컬렉션을 가지고 있습니다';
+$lang['You have %d collections'] = '당신은 %d개의 컬렉션을 가지고 있습니다';
+$lang['You have no collection'] = '당신은 컬렉션이 없습니다';
+$lang['Your e-mail'] = '당신의 이메일';
+$lang['Your name'] = '당신의 이름';
+$lang['jump to photo'] = '사진으로 이동';
+$lang['Number of images'] = '사진 수';
+$lang['Open'] = '열기';
+$lang['Photos number, high &rarr; low'] = '사진 수, 높은 순 &rarr; 낮은 순';
+$lang['Photos number, low &rarr; high'] = '사진 수, 낮은 순 &rarr; 높은 순';
+$lang['Please enter the recipient e-mail'] = '수신자 이메일 입력';
+$lang['Please enter the recipient name'] = '수신자 이름 입력';
+$lang['Please enter your e-mail'] = '귀하의 이메일 입력';
+$lang['Please enter your name'] = '귀하의 이름 입력';
+$lang['Please give a name'] = '이름 지정';
+$lang['Preview'] = '미리 보기';
+$lang['Recipient e-mail'] = '수신자 이메일';
+$lang['Recipient name'] = '수신자 이름';
+$lang['Remove from collection'] = '컬렉션에서 제거';
+$lang['Restricted access'] = '제한된 접근';
+$lang['Save'] = '저장';
+$lang['Send'] = '보내기';
+$lang['Send this collection by mail'] = '이 컬렉션을 메일로 보내기';
+$lang['Share'] = '공유';
+$lang['Share deleted'] = '공유 해제';
+$lang['Share key'] = '공유 키';
+$lang['Date added to collection, new &rarr; old'] = '컬렉션 추가 날짜, 최신 &rarr; 오래된 순';
+$lang['Date added to collection, old &rarr; new'] = '컬렉션 추가 날짜, 오래된 &rarr; 최신 순';
+$lang['Delete this collection'] = '이 컬렉션 삭제';
+$lang['Description'] = '설명';
+$lang['Download CSV file'] = 'CSV 파일 다운로드';
+$lang['E-mail sent successfully'] = '이메일 전송 성공';
+$lang['Edit this collection'] = '이 컬렉션 편집';
+$lang['Error while sending e-mail'] = '이메일 전송 중 오류 발생';
+$lang['Expiration date'] = '유효 기간';
+$lang['Export image list'] = '사진 목록 내보내기';
+$lang['Fields'] = '필드';
+$lang['Hello %s, %s sent you a photos collection from "%s"'] = '안녕하세요 %s님, %s님이 "%s"에서 사진 컬렉션을 보내셨습니다';
+$lang['Hello <b>%s</b>, %s sent you a photos collection from <a href="%s">%s</a>'] = '안녕하세요 <b>%s</b>님, %s님이 <a href="%s">%s</a>에서 사진 컬렉션을 보내셨습니다';
+$lang['Inactive'] = '비활성화';
+$lang['Invalid collection'] = '잘못된 컬렉션';
+$lang['Message (optional)'] = '메시지 (선택 사항)';
+$lang['Name'] = '이름';
+$lang['Name, A &rarr; Z'] = '이름, A &rarr; Z';
+$lang['Name, Z &rarr; A'] = '이름, Z &rarr; A';
+$lang['New share added: <a href="%s">%s</a>'] = '새 공유 추가됨: <a href="%s">%s</a>';
+$lang['Allow users to send their public collections by mail'] = '사용자가 자신의 공개 컬렉션을 이메일로 전송할 수 있도록 허용';
+$lang['Allow users to set their collections as public'] = '사용자가 자신의 컬렉션을 공개로 설정할 수 있도록 허용';
+$lang['A photo collection by %s'] = '%s의 사진 컬렉션';
+$lang['%d more...'] = '그리고 %d 개 더...';
+$lang['(remove)'] = '(삭제)';
+$lang['Active'] = '활성화';
+$lang['Add'] = '추가';
+$lang['Add all photos of this album to a collection'] = '이 앨범의 모든 사진을 컬렉션에 추가';
+$lang['Add to collection'] = '컬렉션에 추가';
+$lang['Administrator'] = '관리자';
+$lang['Allow users to send their collections (public or not) to the admin'] = '사용자가 자신의 컬렉션(공용이든 아니든)을 관리자에게 보낼 수 있도록 허용';
+$lang['Cancel'] = '취소';
+$lang['Clear'] = '지우기';
+$lang['Clear this collection'] = '이 컬렉션을 지우기';
+$lang['Click here to view the complete collection'] = '전체 컬렉션을 보려면 여기를 클릭하십시오.';
+$lang['Collection'] = '컬렉션';
+$lang['Collection name:'] = '컬렉션 이름:';
+$lang['Collection not found'] = '컬렉션을 찾을 수 없음';
+$lang['Collections'] = '컬렉션';
+$lang['Create a new collection'] = '새 컬렉션 만들기';
